@@ -5,11 +5,12 @@ the stops still to deliver, it returns a sequence per van. Lateness is allowed
 but costs per minute, and it costs more for a pharmacy than for a house, so the
 plan sacrifices the right deliveries when the day goes wrong.
 """
+import os
 from ortools.constraint_solver import pywrapcp, routing_enums_pb2
 
 LATE_COST_PER_MIN = {"pharmacy": 60, "clinic": 50, "restaurant": 25, "home": 4}
 DROP_COST = 10_000_000  # only if a stop truly cannot fit
-MOVE_COST = 60          # handing a stop to a different driver; about 15 min late for a house
+MOVE_COST = int(os.environ.get("DETOUR_MOVE_COST", 250))  # handing a stop to a different driver; about an hour late for a house
 
 
 class NoSolution(Exception):
@@ -50,7 +51,8 @@ def plan(day, vans, todo, *, travel, now_min, extra_priority=(), earliest=None, 
     for k, v in enumerate(vans):
         def cost(i, j, vid=v["id"]):
             b = nodes[mgr.IndexToNode(j)]
-            moved = current.get(b) not in (None, vid) and current.get(b) in van_ids
+            # An urgent stop goes with whichever van can reach it first; keeping it put is not worth a late.
+            moved = current.get(b) not in (None, vid) and current.get(b) in van_ids and b not in extra_priority
             return cb(i, j) + (MOVE_COST if moved else 0)
         rt.SetArcCostEvaluatorOfVehicle(rt.RegisterTransitCallback(cost), k)
     horizon = 24 * 60

@@ -11,13 +11,13 @@ import random
 from .world import hhmm
 
 
-def _pick(world, rng, kinds=None, on_van=None, pending=True):
+def _pick(world, rng, kinds=None, on_van=None, pending=True, ok=None):
     """A target for an event: any order not yet delivered, whichever van holds it, so the
     same seed hits the same order whatever the dispatcher did earlier."""
     holder = {n: v["id"] for v in world.vans.values() for n in v["plan"]}
     cands = [(holder.get(n), n) for n, o in enumerate(world.orders, 1)
              if (kinds is None or o["kind"] in kinds) and (not pending or n not in world.delivered)
-             and (not on_van or holder.get(n) == on_van)]
+             and (not on_van or holder.get(n) == on_van) and (ok is None or ok(n))]
     return rng.choice(cands) if cands else (None, None)
 
 
@@ -28,7 +28,7 @@ class Chaos:
         self.rng = random.Random(seed)
         self.script = [
             (9 * 60 + 40, self.traffic),
-            (10 * 60 + 5, self.urgent),
+            (9 * 60 + 50, self.urgent),
             (10 * 60 + 15, self.breakdown),
             (10 * 60 + 30, self.closure),
             (10 * 60 + 50, self.not_home),
@@ -67,9 +67,18 @@ class Chaos:
         return self._msg(world, f"driver {v['name']}", "stuck behind a crash on the 60, barely moving. prob 25 min behind", van=v["id"])
 
     def urgent(self, world):
-        vid, n = _pick(world, self.rng, kinds={"pharmacy"})
-        if not n:  # every pharmacy already served: the medicine is for a clinic instead
-            vid, n = _pick(world, self.rng, kinds={"clinic"})
+        # The warehouse only asks for what a van could still manage: pick a medicine stop
+        # that the nearest working van can reach with ten minutes to spare.
+        deadline = 10 * 60 + 45
+
+        def reachable(n):
+            vans = world.available_vans()
+            return any(max(world.clock, v["free_min"]) + world.travel(v["at"], n) / 60 <= deadline - 10 for v in vans)
+
+        for kinds in ({"pharmacy"}, {"clinic"}):
+            vid, n = _pick(world, self.rng, kinds=kinds, ok=reachable)
+            if n:
+                break
         if not n:
             return None
         o = world.orders[n - 1]
