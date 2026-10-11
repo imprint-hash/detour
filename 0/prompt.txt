@@ -1,0 +1,1 @@
+Read CLAUDE.md and NOTES-v1.md. Then make the four v1 → v2 fixes listed there, rerun seed 7 with --version v2, and show me the before and after report cards side by side. Commit when it’s better.
