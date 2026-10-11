@@ -57,7 +57,9 @@
   .dec p { margin-top:3px; font-size:13px; }
   .chip { display:inline-block; font:600 11px var(--body); border-radius:4px; padding:2px 6px; margin:5px 4px 0 0; }
   .chip.no { background:#fde8e6; color:var(--late); } .chip.ok { background:#e5f4ea; color:var(--ok); } .chip.mgr { background:#fff4ec; color:var(--sign-ink); border:1px solid var(--sign); }
-  .thumb { padding:2px 7px; font-size:13px; line-height:1.2; text-align:center; }
+  .ico { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; vertical-align:-2px; }
+  .thumb { padding:3px 7px; line-height:1; text-align:center; }
+  button.thumb svg { margin:0; width:15px; height:15px; vertical-align:-3px; }
   .fb { margin-top:7px; display:grid; gap:6px; }
   .fb textarea { font:13px var(--body); border:1px solid var(--ink); border-radius:6px; padding:6px 8px; resize:vertical; min-height:52px; }
   .fb .row { display:flex; gap:6px; } .fb .row button { flex:1; text-align:center; padding:6px; }
@@ -99,7 +101,7 @@
       <button data-k="locked"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Gate locked</button>
     </div>
   </section>
-  <section><h2>Decisions <span class="empty" style="text-transform:none;letter-spacing:0;font:400 12px var(--body)">👎 one to teach neatlogs a rule</span></h2>
+  <section><h2>Decisions <span class="empty" style="text-transform:none;letter-spacing:0;font:400 12px var(--body)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/></svg> one to teach neatlogs a rule</span></h2>
     <div id="mrules"></div>
     <div id="decisions" class="feed"><p class="empty">Each batch of messages gets one decision, checked against the rules and traced in neatlogs.</p></div></section>
   <section id="approvals-wrap" hidden><h2>Needs your OK</h2><div id="approvals" class="feed"></div></section>
@@ -170,7 +172,7 @@ function panel(s) {
     `<div class="msg ${m.handled ? "" : "open"}"><div class="who"><span>${esc(m.from)}</span><span>${esc(m.t)}</span></div><p>${esc(m.text)}</p>${m.summary ? `<div class="did">✓ ${esc(m.summary)}</div>` : ""}</div>`).join("") : '<p class="empty">Quiet so far.</p>';
   $("drivers").innerHTML = s.to_drivers.length ? s.to_drivers.slice().reverse().map((m) => `<div class="line"><time>${esc(m.t)}</time><span><b>${esc(m.van)}</b> ${esc(m.text)}</span></div>`).join("") : '<p class="empty">Nothing yet.</p>';
   $("refunds").innerHTML = s.refunds.length ? s.refunds.map((r) => `<div class="line"><time>${esc(r.order)}</time><span><b>$${(+r.amount).toFixed(2)}</b> ${esc(r.late_min)} min late · ${esc(r.status)} · ${esc(r.via || "")}</span></div>`).join("") : '<p class="empty">None.</p>';
-  $("mrules").innerHTML = (s.manager_rules || []).map((r) => `<span class="chip mgr" title="Manager rule, watched by neatlogs">👀 ${esc(r)}</span>`).join("");
+  $("mrules").innerHTML = (s.manager_rules || []).map((r) => `<span class="chip mgr" title="Manager rule, watched by neatlogs">${EYE} ${esc(r)}</span>`).join("");
   if (openTurn === null) {   // don't redraw under someone typing a note
     $("decisions").innerHTML = (s.decisions || []).length ? s.decisions.slice().reverse().map(decision).join("") : '<p class="empty">No decisions yet.</p>';
   }
@@ -178,13 +180,15 @@ function panel(s) {
   $("approvals").innerHTML = s.approvals.map((a) => `<div class="approve"><div><b>Refund $${a.req.amount.toFixed(2)}</b> to ${esc(a.req.order)} (${esc(a.req.kind)}), ${a.req.late_min} min late. Over the $10 automatic limit.</div><div class="row"><button data-a="${a.id}" data-y="1">Approve</button><button data-a="${a.id}" data-y="0">Decline</button></div></div>`).join("");
 }
 
+const THUMB = `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/></svg>`;
+const EYE = `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>`;
 let openTurn = null;
 function decision(d) {
   const fb = d.feedback;
   const chips = d.broken.length ? d.broken.map((b) => `<span class="chip no" title="${esc(b.why)}">✕ ${esc(b.rule)}</span>`).join("") : '<span class="chip ok">✓ rules kept</span>';
   const link = d.link ? `<a href="${esc(d.link)}" target="_blank" rel="noopener">neatlogs trace ↗</a>` : "";
-  const thumb = fb ? "" : `<button class="thumb" data-t="${d.turn}" aria-label="Thumbs down on the ${esc(d.t)} decision" title="Not how I'd do it">👎</button>`;
-  const fbLine = fb ? `<div class="fb-done">👎 “${esc(fb.note)}” · ${fb.status === "watching" ? "neatlogs is now watching for this on every run" : fb.status === "adding" ? "adding the rule to neatlogs…" : "could not add: " + esc(fb.error || "")}</div>` : "";
+  const thumb = fb ? "" : `<button class="thumb" data-t="${d.turn}" aria-label="Thumbs down on the ${esc(d.t)} decision" title="Not how I'd do it">${THUMB}</button>`;
+  const fbLine = fb ? `<div class="fb-done">${THUMB} “${esc(fb.note)}” · ${fb.status === "watching" ? "neatlogs is now watching for this on every run" : fb.status === "adding" ? "adding the rule to neatlogs…" : "could not add: " + esc(fb.error || "")}</div>` : "";
   return `<div class="dec ${d.broken.length ? "bad" : ""}" data-turn="${d.turn}"><div class="who"><span>${esc(d.t)} · ${esc(d.messages.join(", "))}</span><span>${link} ${thumb}</span></div>`
     + `<p>${esc(d.summary)}</p><div>${chips}</div>${fbLine}</div>`;
 }
