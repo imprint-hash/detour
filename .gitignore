@@ -6,3 +6,4 @@ data/amazon/*.json
 .server.pid
 .server.log
 runs/
+.mcp.json

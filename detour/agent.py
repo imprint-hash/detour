@@ -72,6 +72,7 @@ class Dispatcher:
         url_env, key_env, model_env, default_model = PROVIDERS[provider]
         self.client = OpenAI(base_url=os.environ.get(url_env), api_key=os.environ.get(key_env), max_retries=0)
         self.model = model or os.environ.get(model_env, default_model)
+        self.usage = {"calls": 0, "prompt": 0, "completion": 0}
         self.decisions = []   # every tool call the model made, for review
         self.recoveries = []  # every time something broke and the dispatcher carried on
         self._turn = 0
@@ -239,7 +240,12 @@ class Dispatcher:
         for attempt in range(6):
             try:
                 self.faults.llm()
-                return self.client.chat.completions.create(**kw)
+                r = self.client.chat.completions.create(**kw)
+                self.usage["calls"] += 1
+                if r.usage:
+                    self.usage["prompt"] += r.usage.prompt_tokens
+                    self.usage["completion"] += r.usage.completion_tokens
+                return r
             except (openai.RateLimitError, openai.APIConnectionError, openai.APITimeoutError, openai.InternalServerError, openai.BadRequestError) as e:
                 if isinstance(e, openai.BadRequestError) and "parse" not in str(e).lower():
                     raise

@@ -51,7 +51,7 @@ def main():
     card = report(w)
     unhandled = [m for m in w.inbox if not m["handled"]]
     out = {"run": run_id, "version": a.version, "seed": a.seed, "provider": a.provider, "model": d.model, "faults": a.fault, "tag": a.tag,
-           "decisions": d.decisions, "recoveries": d.recoveries, "injected": d.faults.injected, "score": s, "seconds": round(time.time() - t0),
+           "usage": d.usage, "decisions": d.decisions, "recoveries": d.recoveries, "injected": d.faults.injected, "score": s, "seconds": round(time.time() - t0),
            "unhandled_messages": [m["text"][:80] for m in unhandled],
            "inbox": w.inbox, "to_drivers": w.messages_out, "refunds": list(w.refunds.values()),
            "late": [e for e in w.events if e["kind"] == "delivered" and e["late_min"] > 0],
