@@ -5,157 +5,291 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Detour</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
-  :root { --ink:#11161c; --ink2:#4a535d; --line:#dfe3e6; --paper:#f5f6f3; --card:#fff; --sign:#f26b1d; --sign-ink:#1b1206;
-    --ok:#16834a; --late:#d0352b; --pharm:#d0352b; --clinic:#2563c9; --rest:#c88a04; --home:#7b8590; --disp:"Barlow Condensed",sans-serif;
-    --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace; }
+  /* A dispatch room at night: near-black panels, one orange for Detour, status colours that mean something. */
+  :root { --bg:#0b0c0e; --panel:#111316; --panel2:#16191d; --raise:#1b1f24; --line:#23282e; --line2:#2e343b;
+    --ink:#eceef1; --ink2:#a3aab3; --mute:#6e7680; --sign:#ff7a2e; --sign-ink:#1a0d03;
+    --ok:#3ecf8e; --late:#ff5d5d; --route:#6f9bff; --wait:#f5b544;
+    --sans:"Geist",system-ui,sans-serif; --mono:"Geist Mono",ui-monospace,monospace; color-scheme:dark; }
   * { box-sizing:border-box; margin:0; }
   html,body { height:100%; }
-  body { background:var(--paper); color:var(--ink); font:14px/1.45 var(--body); display:grid; grid-template-columns:minmax(0,1fr) 420px; height:100vh; overflow:hidden; }
-  #map { height:100vh; }
-  aside { height:100vh; overflow-y:auto; border-left:1px solid var(--line); background:var(--paper); display:flex; flex-direction:column; }
-  header { padding:16px 18px 14px; display:flex; align-items:center; gap:14px; border-bottom:1px solid var(--line); background:var(--card); position:sticky; top:0; z-index:5; }
-  .sign { font:800 26px/1 var(--disp); letter-spacing:.06em; background:var(--sign); color:var(--sign-ink); padding:6px 12px 5px; border-radius:4px; box-shadow:inset 0 0 0 2px var(--sign-ink); display:flex; align-items:center; gap:8px; }
-  .sign svg { width:20px; height:20px; }
-  .clock { margin-left:auto; text-align:right; }
-  .clock b { font:700 30px/1 var(--disp); letter-spacing:.02em; display:block; font-variant-numeric:tabular-nums; }
-  .clock small { color:var(--ink2); font-size:12px; }
-  .score { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border-bottom:1px solid var(--line); }
-  .score div { background:var(--card); padding:10px 12px; }
-  .score b { font:700 24px/1 var(--disp); display:block; font-variant-numeric:tabular-nums; }
-  .score span { font-size:11px; color:var(--ink2); text-transform:uppercase; letter-spacing:.06em; }
-  section { padding:14px 18px; border-bottom:1px solid var(--line); }
-  h2 { font:700 15px/1 var(--disp); letter-spacing:.08em; text-transform:uppercase; color:var(--ink2); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
-  .chaos { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-  button { font:600 13px var(--body); border:1px solid var(--ink); background:var(--card); color:var(--ink); border-radius:6px; padding:9px 10px; cursor:pointer; text-align:left; }
-  button:hover { background:#fff4ec; border-color:var(--sign); }
-  button:focus-visible { outline:3px solid var(--sign); outline-offset:2px; }
-  button svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; vertical-align:-3px; margin-right:7px; }
-  button.go { background:var(--sign); color:var(--sign-ink); border-color:var(--sign-ink); font-weight:700; grid-column:1/-1; text-align:center; font-size:14px; }
-  button:disabled { opacity:.45; cursor:default; }
-  .think { font:600 12px var(--mono); color:var(--sign); display:none; }
-  .think.on { display:inline; animation:blink 1s infinite; }
-  @keyframes blink { 50% { opacity:.35; } }
-  .feed { display:flex; flex-direction:column; gap:8px; }
-  .msg { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:9px 11px; }
-  .msg .who { font:500 11px var(--mono); color:var(--ink2); display:flex; justify-content:space-between; gap:8px; }
-  .msg p { margin-top:3px; }
-  .msg .did { margin-top:6px; padding-top:6px; border-top:1px dashed var(--line); color:var(--ok); font-size:13px; }
-  .msg.open { border-color:var(--sign); box-shadow:0 0 0 1px var(--sign); }
-  .line { font-size:13px; color:var(--ink2); padding:3px 0; display:grid; grid-template-columns:44px 1fr; gap:6px; }
+  body { background:var(--bg); color:var(--ink); font:13px/1.45 var(--sans); overflow:hidden;
+    display:grid; grid-template-columns:56px 344px minmax(0,1fr); grid-template-rows:60px minmax(0,1fr); height:100vh; }
+  button { font:inherit; color:inherit; cursor:pointer; }
+  button:focus-visible, a:focus-visible, textarea:focus-visible { outline:2px solid var(--sign); outline-offset:2px; }
+  .mono { font-family:var(--mono); }
+
+  .rail { grid-row:1/3; background:var(--panel); border-right:1px solid var(--line); display:flex; flex-direction:column; align-items:center; padding:12px 0; gap:6px; }
+  .logo { width:34px; height:34px; border-radius:9px; background:var(--sign); color:var(--sign-ink); display:grid; place-items:center; margin-bottom:14px; }
+  .logo svg { width:20px; height:20px; }
+  .rail i { width:36px; height:36px; border-radius:9px; display:grid; place-items:center; color:var(--mute); }
+  .rail i.on { background:var(--raise); color:var(--ink); }
+  .rail svg, .ico { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+
+  header { grid-column:2/4; display:flex; align-items:center; gap:18px; padding:0 18px; border-bottom:1px solid var(--line); background:var(--panel); min-width:0; }
+  .title { font:600 15px var(--sans); display:flex; align-items:center; gap:10px; white-space:nowrap; }
+  .title b { font:700 11px var(--mono); letter-spacing:.14em; color:var(--sign); border:1px solid #ff7a2e55; border-radius:5px; padding:2px 6px; }
+  .clock { font:500 22px var(--mono); font-variant-numeric:tabular-nums; letter-spacing:-.02em; }
+  .status { font:500 11px var(--mono); color:var(--mute); text-transform:uppercase; letter-spacing:.08em; white-space:nowrap; }
+  .think { font:600 11px var(--mono); color:var(--sign); letter-spacing:.1em; opacity:0; transition:opacity .2s; white-space:nowrap; }
+  .think.on { opacity:1; animation:pulse 1.1s infinite; }
+  @keyframes pulse { 50% { opacity:.35; } }
+  .scores { display:flex; gap:4px; margin-left:auto; }
+  .score { background:var(--panel2); border:1px solid var(--line); border-radius:8px; padding:5px 10px; min-width:78px; }
+  .score b { display:block; font:600 16px var(--mono); font-variant-numeric:tabular-nums; }
+  .score span { font:500 10px var(--mono); color:var(--mute); text-transform:uppercase; letter-spacing:.08em; }
+
+  .fleet { grid-row:2; background:var(--panel); border-right:1px solid var(--line); display:flex; flex-direction:column; min-height:0; }
+  .fhead { padding:14px 16px 10px; display:flex; align-items:center; justify-content:space-between; }
+  .fhead h2 { font:600 14px var(--sans); }
+  .count { font:500 11px var(--mono); color:var(--mute); background:var(--raise); border-radius:6px; padding:2px 7px; margin-left:8px; }
+  .chaos { padding:0 16px 12px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; }
+  .chaos button { background:var(--panel2); border:1px solid var(--line); border-radius:8px; padding:7px 6px; font:500 11px var(--sans); color:var(--ink2); display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .chaos button:hover { border-color:var(--sign); color:var(--ink); }
+  .chaos .go { grid-column:1/-1; background:var(--sign); color:var(--sign-ink); border-color:var(--sign); font:600 13px var(--sans); flex-direction:row; justify-content:center; padding:9px; }
+  .chaos .go:disabled { background:var(--raise); color:var(--mute); border-color:var(--line); cursor:default; }
+  .label { font:500 10px var(--mono); color:var(--mute); text-transform:uppercase; letter-spacing:.12em; padding:6px 16px 8px; }
+  .vans { overflow-y:auto; padding:0 12px 14px; display:flex; flex-direction:column; gap:8px; min-height:0; }
+  .van { background:var(--panel2); border:1px solid var(--line); border-radius:10px; padding:11px 12px; }
+  .van.broken { border-color:#ff5d5d55; }
+  .van .top { display:flex; align-items:center; justify-content:space-between; }
+  .van .id { font:600 13px var(--mono); display:flex; align-items:center; gap:8px; }
+  .van .id i { width:8px; height:8px; border-radius:50%; }
+  .tag { font:600 9.5px var(--mono); letter-spacing:.08em; padding:3px 7px; border-radius:5px; text-transform:uppercase; }
+  .t-route { background:#6f9bff1f; color:var(--route); } .t-serve { background:#f5b5441f; color:var(--wait); }
+  .t-broken { background:#ff5d5d22; color:var(--late); } .t-done { background:#3ecf8e1f; color:var(--ok); } .t-idle { background:var(--raise); color:var(--mute); }
+  .track { display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:8px; margin:10px 0 8px; font:500 10px var(--mono); color:var(--mute); }
+  .bar { height:3px; background:var(--line2); border-radius:3px; position:relative; }
+  .bar i { position:absolute; inset:0 auto 0 0; border-radius:3px; }
+  .van .nxt { display:flex; justify-content:space-between; gap:8px; font-size:12px; }
+  .van .nxt span:first-child { color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .van .nxt span:last-child { color:var(--mute); font-family:var(--mono); font-size:11px; white-space:nowrap; }
+
+  main { grid-row:2; grid-column:3; display:grid; grid-template-rows:minmax(0,1fr) 270px; min-width:0; min-height:0; }
+  .mapwrap { position:relative; min-height:0; border-bottom:1px solid var(--line); }
+  #map { position:absolute; inset:0; background:#0e1013; }
+  .leaflet-container { font-family:var(--sans); background:#0e1013; }
+  .leaflet-tile-pane { filter:brightness(.8) contrast(1.15) saturate(0); }
+  .leaflet-control-attribution { background:#0b0c0ecc !important; color:var(--mute) !important; font:10px var(--mono); }
+  .leaflet-control-attribution a { color:var(--ink2) !important; }
+  .leaflet-bar a { background:var(--panel2) !important; color:var(--ink2) !important; border-color:var(--line) !important; }
+  .overlay { position:absolute; z-index:500; display:flex; gap:6px; pointer-events:none; }
+  .ov-tl { top:12px; left:12px; } .ov-tr { top:12px; right:12px; }
+  .pill { background:#111316e6; border:1px solid var(--line2); border-radius:7px; padding:5px 9px; font:500 11px var(--mono); color:var(--ink2); display:flex; align-items:center; gap:6px; }
+  .pill i { width:7px; height:7px; border-radius:50%; display:inline-block; }
+  .live i { background:var(--ok); box-shadow:0 0 8px var(--ok); }
+  .vpin { font:600 11px/22px var(--mono); height:24px; padding:0 8px; border-radius:6px; color:#0b0c0e; white-space:nowrap; border:1px solid #0b0c0e; text-align:center; }
+  .vpin.broken { background:#2a0f10 !important; color:var(--late); border-color:var(--late); }
+  .hq { font:600 10px/20px var(--mono); padding:0 7px; border-radius:5px; background:var(--ink); color:#0b0c0e; letter-spacing:.06em; text-align:center; }
+  .leaflet-tooltip.tt { background:#111316f2; color:var(--ink); border:1px solid var(--line2); border-radius:7px; font:500 11px var(--mono); box-shadow:none; padding:5px 8px; }
+  .leaflet-tooltip.tt::before { display:none; }
+  .tt small { color:var(--mute); }
+  .leaflet-tooltip.closed { background:#2a0f10e6; color:var(--late); border-color:var(--late); }
+
+  .bottom { background:var(--panel); display:flex; flex-direction:column; min-height:0; }
+  .tabs { display:flex; gap:2px; padding:0 18px; border-bottom:1px solid var(--line); align-items:center; }
+  .tabs button { background:none; border:0; border-bottom:2px solid transparent; padding:12px 10px 10px; font:500 12.5px var(--sans); color:var(--mute); }
+  .tabs button.on { color:var(--ink); border-bottom-color:var(--ink); }
+  .tabs .n { font:500 10px var(--mono); color:var(--mute); margin-left:5px; }
+  .tabs .hint { margin-left:auto; font:500 11px var(--mono); color:var(--mute); display:flex; align-items:center; gap:6px; }
+  .pane { overflow-y:auto; padding:12px 18px 16px; min-height:0; display:none; }
+  .pane.on { display:block; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:10px; }
+  .card { background:var(--panel2); border:1px solid var(--line); border-radius:10px; padding:11px 13px; min-width:0; }
+  .card.bad { border-color:#ff5d5d66; }
+  .card.open { border-color:#ff7a2e88; }
+  .card .who { display:flex; justify-content:space-between; align-items:center; gap:8px; font:500 11px var(--mono); color:var(--mute); }
+  .card .who a { color:var(--route); text-decoration:none; }
+  .card .who a:hover { text-decoration:underline; }
+  .card p { margin-top:6px; color:var(--ink); }
+  .chips { display:flex; flex-wrap:wrap; gap:5px; margin-top:8px; }
+  .chip { font:500 10.5px var(--mono); padding:3px 7px; border-radius:5px; }
+  .chip.ok { background:#3ecf8e17; color:var(--ok); } .chip.no { background:#ff5d5d1c; color:var(--late); }
+  .chip.mgr { background:#ff7a2e17; color:var(--sign); border:1px solid #ff7a2e40; display:inline-flex; align-items:center; gap:6px; }
+  .chip.mgr .ico { width:13px; height:13px; }
+  .thumb { background:var(--raise); border:1px solid var(--line2); border-radius:6px; padding:3px 6px; line-height:1; color:var(--ink2); }
+  .thumb:hover { border-color:var(--sign); color:var(--sign); }
+  .thumb .ico { width:14px; height:14px; vertical-align:-2px; }
+  .fb { margin-top:10px; display:grid; gap:6px; }
+  .fb label { color:var(--ink2); font-size:12px; }
+  .fb textarea { font:12.5px var(--sans); background:var(--bg); color:var(--ink); border:1px solid var(--line2); border-radius:7px; padding:7px 9px; resize:vertical; min-height:54px; }
+  .fb .row { display:flex; gap:6px; }
+  .fb .row button { border-radius:7px; padding:6px 10px; border:1px solid var(--line2); background:var(--raise); font-size:12px; }
+  .fb .row #fbsend { background:var(--sign); color:var(--sign-ink); border-color:var(--sign); font-weight:600; }
+  .fb-done { margin-top:8px; color:var(--sign); font-size:12px; display:flex; gap:6px; align-items:flex-start; }
+  .fb-done .ico { width:14px; height:14px; flex:none; margin-top:2px; }
+  .mrules { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+  .mrules:empty { display:none; }
+  .line { display:grid; grid-template-columns:52px 1fr; gap:8px; padding:6px 0; border-bottom:1px solid var(--line); font-size:12.5px; color:var(--ink2); }
+  .line time { font:500 11px var(--mono); color:var(--mute); padding-top:1px; }
   .line b { color:var(--ink); font-weight:600; }
-  .line time { font:500 11px var(--mono); padding-top:2px; }
-  .approve { background:#fff4ec; border:1px solid var(--sign); border-radius:8px; padding:10px 12px; display:grid; gap:8px; }
-  .approve .row { display:flex; gap:8px; } .approve button { flex:1; text-align:center; }
-  .empty { color:var(--ink2); font-size:13px; }
-  .dec { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:9px 11px; }
-  .dec.bad { border-color:var(--late); }
-  .dec .who { font:500 11px var(--mono); color:var(--ink2); display:flex; justify-content:space-between; gap:8px; align-items:center; }
-  .dec .who a { color:var(--clinic); text-decoration:none; } .dec .who a:hover { text-decoration:underline; }
-  .dec p { margin-top:3px; font-size:13px; }
-  .chip { display:inline-block; font:600 11px var(--body); border-radius:4px; padding:2px 6px; margin:5px 4px 0 0; }
-  .chip.no { background:#fde8e6; color:var(--late); } .chip.ok { background:#e5f4ea; color:var(--ok); } .chip.mgr { background:#fff4ec; color:var(--sign-ink); border:1px solid var(--sign); }
-  .ico { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; vertical-align:-2px; }
-  .thumb { padding:3px 7px; line-height:1; text-align:center; }
-  button.thumb svg { margin:0; width:15px; height:15px; vertical-align:-3px; }
-  .fb { margin-top:7px; display:grid; gap:6px; }
-  .fb textarea { font:13px var(--body); border:1px solid var(--ink); border-radius:6px; padding:6px 8px; resize:vertical; min-height:52px; }
-  .fb .row { display:flex; gap:6px; } .fb .row button { flex:1; text-align:center; padding:6px; }
-  .fb-done { margin-top:6px; font-size:12px; color:var(--ink2); }
-  .legend { background:var(--card); padding:8px 10px; border-radius:8px; border:1px solid var(--line); font-size:12px; line-height:1.7; }
-  .legend i { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:-1px; }
-  .van { font:700 12px/22px var(--disp); width:26px; height:26px; text-align:center; border-radius:6px; color:#fff; border:2px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,.35); }
-  .van.broken { background:#111 !important; }
-  .leaflet-container { font-family:var(--body); background:#e9ecea; }
-  @media (max-width: 900px) { body { grid-template-columns:1fr; grid-template-rows:50vh 50vh; } #map, aside { height:50vh; } }
+  .msg .did { margin-top:7px; padding-top:7px; border-top:1px dashed var(--line2); color:var(--ok); font-size:12px; }
+  .empty { color:var(--mute); }
+  .approve { background:#ff7a2e12; border:1px solid #ff7a2e66; border-radius:10px; padding:10px 12px; display:grid; gap:8px; margin-bottom:10px; }
+  .approve .row { display:flex; gap:8px; } .approve button { flex:1; border-radius:7px; padding:7px; border:1px solid var(--line2); background:var(--raise); }
+  .approve button[data-y="1"] { background:var(--sign); color:var(--sign-ink); border-color:var(--sign); font-weight:600; }
   @media (prefers-reduced-motion: reduce) { .think.on { animation:none; } }
 </style>
 </head>
 <body>
-<div id="map" role="img" aria-label="Live map of the delivery fleet"></div>
-<aside>
-  <header>
-    <div class="sign" aria-label="Detour">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11a5 5 0 0 1 5-5h9"/><path d="M14 2l4 4-4 4"/></svg>
-      DETOUR
-    </div>
-    <div class="clock"><b id="clock">--:--</b><small id="status">Ready</small></div>
-  </header>
-  <div class="score">
-    <div><b id="s-done">0</b><span>Delivered</span></div>
-    <div><b id="s-ok" style="color:var(--ok)">0</b><span>On time</span></div>
-    <div><b id="s-late" style="color:var(--late)">0</b><span>Late</span></div>
-    <div><b id="s-ref">$0</b><span>Refunded</span></div>
+<nav class="rail" aria-label="Detour">
+  <div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V11a5 5 0 0 1 5-5h9"/><path d="M14 2l4 4-4 4"/></svg></div>
+  <i class="on" title="Dispatch"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4"/></svg></i>
+  <i title="Fleet"><svg viewBox="0 0 24 24"><path d="M3 17h13V7H3z"/><path d="M16 10h4l2 3v4h-6"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></i>
+  <i title="Rules"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></i>
+  <i title="Refunds"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg></i>
+</nav>
+
+<header>
+  <div class="title">Dispatch <b>DETOUR</b></div>
+  <div class="clock" id="clock">--:--</div>
+  <div class="status" id="status">Ready</div>
+  <div class="think" id="think">● DETOUR IS THINKING</div>
+  <div class="scores">
+    <div class="score"><b id="s-done">0/108</b><span>Delivered</span></div>
+    <div class="score"><b id="s-ok" style="color:var(--ok)">0</b><span>On time</span></div>
+    <div class="score"><b id="s-late" style="color:var(--late)">0</b><span>Late</span></div>
+    <div class="score"><b id="s-ref">$0.00</b><span>Refunded</span></div>
   </div>
-  <section>
-    <h2>Chaos button <span class="think" id="think">● Detour is thinking</span></h2>
-    <div class="chaos">
-      <button class="go" id="start">Start the day</button>
-      <button data-k="breakdown"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-.5-.5-2.5z"/></svg>Break a van</button>
-      <button data-k="closure"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="6" rx="1"/><path d="M7 8l-2 6M12 8l-2 6M17 8l-2 6M6 14v6M18 14v6"/></svg>Close a road</button>
-      <button data-k="urgent"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="5"/><path d="M7 12h10"/></svg>Urgent medicine</button>
-      <button data-k="traffic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17h14v-5l-2-5H7l-2 5z"/><circle cx="8" cy="17" r="2"/><circle cx="16" cy="17" r="2"/></svg>Traffic jam</button>
-      <button data-k="not_home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg>Customer out</button>
-      <button data-k="locked"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Gate locked</button>
-    </div>
-  </section>
-  <section><h2>Decisions <span class="empty" style="text-transform:none;letter-spacing:0;font:400 12px var(--body)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/></svg> one to teach neatlogs a rule</span></h2>
-    <div id="mrules"></div>
-    <div id="decisions" class="feed"><p class="empty">Each batch of messages gets one decision, checked against the rules and traced in neatlogs.</p></div></section>
-  <section id="approvals-wrap" hidden><h2>Needs your OK</h2><div id="approvals" class="feed"></div></section>
-  <section><h2>Inbox</h2><div id="inbox" class="feed"><p class="empty">Quiet so far. Press Start.</p></div></section>
-  <section><h2>Told the drivers</h2><div id="drivers"><p class="empty">Nothing yet.</p></div></section>
-  <section><h2>Refunds</h2><div id="refunds"><p class="empty">None.</p></div></section>
-  <section style="border:0"><p class="empty">Real Amazon stops (DLA7, Chino CA) · real businesses and roads from OpenStreetMap · every decision traced in neatlogs.</p></section>
+</header>
+
+<aside class="fleet">
+  <div class="fhead"><h2>Fleet<span class="count" id="vcount">5 vans</span></h2><span class="status">DLA7 · Chino CA</span></div>
+  <div class="chaos">
+    <button class="go" id="start">Start the day</button>
+    <button data-k="breakdown"><svg class="ico" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-.5-.5-2.5z"/></svg>Break a van</button>
+    <button data-k="closure"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="6" rx="1"/><path d="M7 8l-2 6M12 8l-2 6M17 8l-2 6M6 14v6M18 14v6"/></svg>Close a road</button>
+    <button data-k="urgent"><svg class="ico" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="5"/><path d="M7 12h10"/></svg>Urgent medicine</button>
+    <button data-k="traffic"><svg class="ico" viewBox="0 0 24 24"><path d="M5 17h14v-5l-2-5H7l-2 5z"/><circle cx="8" cy="17" r="2"/><circle cx="16" cy="17" r="2"/></svg>Traffic jam</button>
+    <button data-k="not_home"><svg class="ico" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg>Customer out</button>
+    <button data-k="locked"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Gate locked</button>
+  </div>
+  <div class="label">Vans</div>
+  <div class="vans" id="vans"><p class="empty" style="padding:0 4px">Press Start to send the fleet out.</p></div>
 </aside>
+
+<main>
+  <div class="mapwrap">
+    <div id="map" role="img" aria-label="Live map of the delivery fleet"></div>
+    <div class="overlay ov-tl">
+      <span class="pill"><i style="background:#fff;opacity:.6"></i>To deliver</span>
+      <span class="pill"><i style="background:var(--ok)"></i>On time</span>
+      <span class="pill"><i style="background:var(--late)"></i>Late</span>
+      <span class="pill"><i style="background:var(--sign)"></i>Urgent / business</span>
+    </div>
+    <div class="overlay ov-tr"><span class="pill live"><i></i>Every decision traced in neatlogs</span></div>
+  </div>
+  <section class="bottom">
+    <div class="tabs" role="tablist">
+      <button class="on" data-tab="decisions">Decisions<span class="n" id="n-dec">0</span></button>
+      <button data-tab="inbox">Inbox<span class="n" id="n-in">0</span></button>
+      <button data-tab="drivers">Told drivers<span class="n" id="n-dr">0</span></button>
+      <button data-tab="refunds">Refunds<span class="n" id="n-rf">0</span></button>
+      <span class="hint"><svg class="ico" viewBox="0 0 24 24"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/></svg>a decision to teach neatlogs a rule</span>
+    </div>
+    <div class="pane on" id="p-decisions">
+      <div id="approvals"></div>
+      <div class="mrules" id="mrules"></div>
+      <div class="cards" id="decisions"><p class="empty">Each batch of messages gets one decision, checked against the rules and traced in neatlogs.</p></div>
+    </div>
+    <div class="pane" id="p-inbox"><div class="cards" id="inbox"><p class="empty">Quiet so far.</p></div></div>
+    <div class="pane" id="p-drivers"><div id="drivers"><p class="empty">Nothing yet.</p></div></div>
+    <div class="pane" id="p-refunds"><div id="refunds"><p class="empty">None.</p></div></div>
+  </section>
+</main>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
-const VAN_COLORS = ["#f26b1d","#2563c9","#16834a","#8b3fd1","#0f9aa8","#c2185b","#5d6b0f","#a0522d"];
-const KIND = { pharmacy:"var(--pharm)", clinic:"var(--clinic)", restaurant:"var(--rest)", home:"var(--home)" };
-const kindHex = { pharmacy:"#d0352b", clinic:"#2563c9", restaurant:"#c88a04", home:"#7b8590" };
+const VAN_COLORS = ["#ff7a2e","#6f9bff","#3ecf8e","#c792ff","#4dd7e0","#ff8fb1","#d4e157","#ffb86b"];
+const THUMB = `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/></svg>`;
+const EYE = `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>`;
 
-const map = L.map("map", { zoomControl:true }).setView([34.0, -117.7], 12);
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom:19, attribution:"© OpenStreetMap contributors" }).addTo(map);
-const legend = L.control({ position:"bottomleft" });
-legend.onAdd = () => { const d = L.DomUtil.create("div","legend"); d.innerHTML =
-  `<div><i style="background:${kindHex.pharmacy}"></i>Pharmacy</div><div><i style="background:${kindHex.clinic}"></i>Clinic</div><div><i style="background:${kindHex.restaurant}"></i>Restaurant</div><div><i style="background:${kindHex.home}"></i>Home</div><div><i style="background:#16834a"></i>Delivered on time</div><div><i style="background:#d0352b;box-shadow:0 0 0 2px #fff,0 0 0 4px #d0352b"></i>Late</div>`; return d; };
-legend.addTo(map);
+const map = L.map("map", { zoomControl:false, zoomSnap:0.25, zoomDelta:0.5 }).setView([33.97, -117.72], 11);
+L.control.zoom({ position:"bottomright" }).addTo(map);
+L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxZoom:16, attribution:"Esri, HERE, Garmin, © OpenStreetMap contributors" }).addTo(map);
 
 let stops = {}, vans = {}, lines = {}, closures = [], depot = null, fitted = false;
 
 function stopStyle(o) {
-  if (o.delivered) return { radius: o.kind === "home" ? 4 : 7, color: o.late ? "#d0352b" : "#fff", weight: o.late ? 3 : 1, fillColor: o.late ? "#d0352b" : "#16834a", fillOpacity: .95 };
-  return { radius: o.kind === "home" ? 4 : 7, color: o.urgent ? "#111" : "#fff", weight: o.urgent ? 3 : 1, fillColor: kindHex[o.kind], fillOpacity: .9 };
+  const big = o.kind !== "home";
+  if (o.delivered) return { radius: big ? 6.5 : 4.4, stroke: !!o.late, color: "#ff5d5d", weight: 2, fillColor: o.late ? "#ff5d5d" : "#3ecf8e", fillOpacity: .95 };
+  if (o.urgent) return { radius: 7, stroke: true, color: "#ff7a2e", weight: 2.5, fillColor: "#ff7a2e", fillOpacity: .9 };
+  return { radius: big ? 6.5 : 4.2, stroke: big, color: "#ff7a2e", weight: 1.5, fillColor: big ? "#ff7a2e" : "#ffffff", fillOpacity: big ? .9 : .7 };
 }
 
 function draw(s) {
   if (!depot && s.depot) {
-    depot = L.marker([s.depot.lat, s.depot.lng], { icon: L.divIcon({ className:"", html:'<div class="van" style="background:#11161c;width:34px">HQ</div>', iconSize:[34,26] }) }).addTo(map).bindTooltip(s.depot.name);
+    depot = L.marker([s.depot.lat, s.depot.lng], { icon: L.divIcon({ className:"", html:'<div class="hq">DLA7</div>', iconSize:[44,20], iconAnchor:[22,10] }) })
+      .addTo(map).bindTooltip(`<b>Depot</b><br><small>${esc(s.depot.name)}</small>`, { className:"tt", direction:"top" });
   }
   const byId = {};
   for (const o of s.orders) {
     byId[o.id] = o;
     if (!stops[o.id]) stops[o.id] = L.circleMarker([o.lat, o.lng], stopStyle(o)).addTo(map);
     stops[o.id].setStyle(stopStyle(o));
-    stops[o.id].bindTooltip(`${o.id} · ${o.name || "Home"}${o.street ? " · " + o.street : ""}<br>promised ${o.promise}${o.delivered ? " · delivered " + o.delivered : ""}`);
+    stops[o.id].bindTooltip(`<b>${esc(o.id)}</b> ${esc(o.name || "Home")}<br><small>${esc(o.street || "")} · due ${esc(o.promise)}${o.delivered ? " · delivered " + esc(o.delivered) : ""}</small>`, { className:"tt", direction:"top" });
   }
-  if (!fitted) { map.fitBounds(L.latLngBounds(s.orders.map((o) => [o.lat, o.lng])).pad(0.05)); fitted = true; }
+  // Measure the map after the grid has laid out, or the fit is done against a zero-size box.
+  if (!fitted) {
+    fitted = true;
+    const b = L.latLngBounds(s.orders.map((o) => [o.lat, o.lng]));
+    const fit = () => { map.invalidateSize(); map.fitBounds(b, { padding:[24, 24] }); };
+    fit(); setTimeout(fit, 400); setTimeout(fit, 1500);
+  }
   s.vans.forEach((v, i) => {
     const col = VAN_COLORS[i % VAN_COLORS.length];
-    const html = `<div class="van ${v.status === "broken" ? "broken" : ""}" style="background:${col}">${v.status === "broken" ? "✕" : v.id.replace("V","")}</div>`;
-    if (!vans[v.id]) vans[v.id] = L.marker(v.pos, { icon: L.divIcon({ className:"", html, iconSize:[26,26] }), zIndexOffset:1000 }).addTo(map);
-    vans[v.id].setLatLng(v.pos).setIcon(L.divIcon({ className:"", html, iconSize:[26,26] }));
-    vans[v.id].bindTooltip(`${v.name} · ${v.status} · ${v.done} delivered · ${v.plan.length} to go`);
+    const label = v.status === "broken" ? `${v.id} ✕` : v.id;
+    const html = `<div class="vpin ${v.status === "broken" ? "broken" : ""}" style="background:${col};box-shadow:0 0 14px ${col}88">${esc(label)}</div>`;
+    const icon = L.divIcon({ className:"", html, iconSize:[40,24], iconAnchor:[20,12] });
+    if (!vans[v.id]) vans[v.id] = L.marker(v.pos, { icon, zIndexOffset:1000 }).addTo(map);
+    vans[v.id].setLatLng(v.pos).setIcon(icon);
+    const nxt = v.plan[0] && byId[v.plan[0]];
+    vans[v.id].bindTooltip(`<b>${esc(v.name)}</b> · ${esc(v.status)}<br><small>${v.done} delivered · ${v.plan.length} to go${nxt ? " · next " + esc(nxt.id) + " " + esc(nxt.street || "") : ""}</small>`, { className:"tt", direction:"top" });
     const pts = [v.pos, ...v.plan.map((id) => [byId[id].lat, byId[id].lng])];
-    if (!lines[v.id]) lines[v.id] = L.polyline(pts, { color: col, weight: 2.5, opacity: .75, dashArray: "6 6" }).addTo(map);
+    if (!lines[v.id]) lines[v.id] = L.polyline(pts, { color: col, weight: 2, opacity: .85, dashArray: "2 6", lineCap: "round" }).addTo(map);
     lines[v.id].setLatLngs(v.status === "broken" ? [] : pts);
   });
   closures.forEach((c) => map.removeLayer(c));
-  closures = (s.closures || []).map((c) => L.circle([c.lat, c.lng], { radius: c.km * 1000, color: "#d0352b", weight: 2, dashArray: "4 4", fillColor: "#d0352b", fillOpacity: .08 }).addTo(map).bindTooltip("Road closed"));
+  closures = (s.closures || []).map((c) => L.circle([c.lat, c.lng], { radius: c.km * 1000, color: "#ff5d5d", weight: 1.5, dashArray: "4 5", fillColor: "#ff5d5d", fillOpacity: .07 })
+    .addTo(map).bindTooltip("ROAD CLOSED", { className:"tt closed", permanent:true, direction:"center" }));
+}
+
+function tagFor(v) {
+  if (v.status === "broken") return ["Broken down", "t-broken"];
+  if (v.status === "driving") return ["On route", "t-route"];
+  if (v.status === "serving") return ["Delivering", "t-serve"];
+  if (!v.plan.length && v.done) return ["Done", "t-done"];
+  return ["Idle", "t-idle"];
+}
+
+function fleet(s) {
+  const byId = Object.fromEntries(s.orders.map((o) => [o.id, o]));
+  $("vcount").textContent = `${s.vans.length} vans`;
+  $("vans").innerHTML = s.vans.map((v, i) => {
+    const col = VAN_COLORS[i % VAN_COLORS.length];
+    const [tag, cls] = tagFor(v);
+    const total = v.done + v.plan.length, pct = total ? Math.round(100 * v.done / total) : 0;
+    const nxt = v.plan[0] && byId[v.plan[0]];
+    const where = v.status === "broken" ? "Parcels handed to other vans" : nxt ? `Next: ${nxt.name || nxt.street || "Home"} · ${nxt.id}` : "Back to depot";
+    return `<div class="van ${v.status === "broken" ? "broken" : ""}"><div class="top"><span class="id"><i style="background:${col};box-shadow:0 0 8px ${col}"></i>${esc(v.name.toUpperCase())}</span><span class="tag ${cls}">${tag}</span></div>`
+      + `<div class="track"><span>DLA7</span><div class="bar"><i style="width:${pct}%;background:${v.status === "broken" ? "var(--late)" : col}"></i></div><span>${v.done}/${total}</span></div>`
+      + `<div class="nxt"><span>${esc(where)}</span><span>${v.plan.length} to go</span></div></div>`;
+  }).join("");
+}
+
+let openTurn = null;
+function decision(d) {
+  const fb = d.feedback;
+  const chips = d.broken.length ? d.broken.map((b) => `<span class="chip no" title="${esc(b.why)}">✕ ${esc(b.rule)}</span>`).join("") : '<span class="chip ok">✓ rules kept</span>';
+  const link = d.link ? `<a href="${esc(d.link)}" target="_blank" rel="noopener">neatlogs trace ↗</a>` : "";
+  const thumb = fb ? "" : `<button class="thumb" data-t="${d.turn}" aria-label="Thumbs down on the ${esc(d.t)} decision" title="Not how I'd do it">${THUMB}</button>`;
+  const fbLine = fb ? `<div class="fb-done">${THUMB}<span>“${esc(fb.note)}” · ${fb.status === "watching" ? "neatlogs now watches for this on every run" : fb.status === "adding" ? "adding the rule to neatlogs…" : "could not add: " + esc(fb.error || "")}</span></div>` : "";
+  return `<div class="card ${d.broken.length ? "bad" : ""}" data-turn="${d.turn}"><div class="who"><span>${esc(d.t)} · ${esc(d.messages.join(", "))}</span><span>${link} ${thumb}</span></div>`
+    + `<p>${esc(d.summary)}</p><div class="chips">${chips}</div>${fbLine}</div>`;
 }
 
 function panel(s) {
@@ -168,36 +302,28 @@ function panel(s) {
   $("s-ok").textContent = s.score.on_time;
   $("s-late").textContent = s.score.late;
   $("s-ref").textContent = "$" + s.score.refunds_usd.toFixed(2);
+  fleet(s);
+  $("n-dec").textContent = (s.decisions || []).length;
+  $("n-in").textContent = s.inbox.length;
+  $("n-dr").textContent = s.to_drivers.length;
+  $("n-rf").textContent = s.refunds.length;
   $("inbox").innerHTML = s.inbox.length ? s.inbox.slice().reverse().map((m) =>
-    `<div class="msg ${m.handled ? "" : "open"}"><div class="who"><span>${esc(m.from)}</span><span>${esc(m.t)}</span></div><p>${esc(m.text)}</p>${m.summary ? `<div class="did">✓ ${esc(m.summary)}</div>` : ""}</div>`).join("") : '<p class="empty">Quiet so far.</p>';
+    `<div class="card msg ${m.handled ? "" : "open"}"><div class="who"><span>${esc(m.from)}</span><span>${esc(m.t)}</span></div><p>${esc(m.text)}</p>${m.summary ? `<div class="did">✓ ${esc(m.summary)}</div>` : ""}</div>`).join("") : '<p class="empty">Quiet so far.</p>';
   $("drivers").innerHTML = s.to_drivers.length ? s.to_drivers.slice().reverse().map((m) => `<div class="line"><time>${esc(m.t)}</time><span><b>${esc(m.van)}</b> ${esc(m.text)}</span></div>`).join("") : '<p class="empty">Nothing yet.</p>';
-  $("refunds").innerHTML = s.refunds.length ? s.refunds.map((r) => `<div class="line"><time>${esc(r.order)}</time><span><b>$${(+r.amount).toFixed(2)}</b> ${esc(r.late_min)} min late · ${esc(r.status)} · ${esc(r.via || "")}</span></div>`).join("") : '<p class="empty">None.</p>';
-  $("mrules").innerHTML = (s.manager_rules || []).map((r) => `<span class="chip mgr" title="Manager rule, watched by neatlogs">${EYE} ${esc(r)}</span>`).join("");
+  $("refunds").innerHTML = s.refunds.length ? s.refunds.map((r) => `<div class="line"><time>${esc(r.order)}</time><span><b>$${(+r.amount).toFixed(2)}</b> · ${esc(r.late_min)} min late · ${esc(r.status)} · ${esc(r.via || "")}</span></div>`).join("") : '<p class="empty">None.</p>';
+  $("mrules").innerHTML = (s.manager_rules || []).map((r) => `<span class="chip mgr" title="Manager rule, watched by neatlogs">${EYE} Manager rule: ${esc(r)}</span>`).join("");
   if (openTurn === null) {   // don't redraw under someone typing a note
-    $("decisions").innerHTML = (s.decisions || []).length ? s.decisions.slice().reverse().map(decision).join("") : '<p class="empty">No decisions yet.</p>';
+    $("decisions").innerHTML = (s.decisions || []).length ? s.decisions.slice().reverse().map(decision).join("") : '<p class="empty">Each batch of messages gets one decision, checked against the rules and traced in neatlogs.</p>';
   }
-  $("approvals-wrap").hidden = !s.approvals.length;
   $("approvals").innerHTML = s.approvals.map((a) => `<div class="approve"><div><b>Refund $${a.req.amount.toFixed(2)}</b> to ${esc(a.req.order)} (${esc(a.req.kind)}), ${a.req.late_min} min late. Over the $10 automatic limit.</div><div class="row"><button data-a="${a.id}" data-y="1">Approve</button><button data-a="${a.id}" data-y="0">Decline</button></div></div>`).join("");
 }
 
-const THUMB = `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/></svg>`;
-const EYE = `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>`;
-let openTurn = null;
-function decision(d) {
-  const fb = d.feedback;
-  const chips = d.broken.length ? d.broken.map((b) => `<span class="chip no" title="${esc(b.why)}">✕ ${esc(b.rule)}</span>`).join("") : '<span class="chip ok">✓ rules kept</span>';
-  const link = d.link ? `<a href="${esc(d.link)}" target="_blank" rel="noopener">neatlogs trace ↗</a>` : "";
-  const thumb = fb ? "" : `<button class="thumb" data-t="${d.turn}" aria-label="Thumbs down on the ${esc(d.t)} decision" title="Not how I'd do it">${THUMB}</button>`;
-  const fbLine = fb ? `<div class="fb-done">${THUMB} “${esc(fb.note)}” · ${fb.status === "watching" ? "neatlogs is now watching for this on every run" : fb.status === "adding" ? "adding the rule to neatlogs…" : "could not add: " + esc(fb.error || "")}</div>` : "";
-  return `<div class="dec ${d.broken.length ? "bad" : ""}" data-turn="${d.turn}"><div class="who"><span>${esc(d.t)} · ${esc(d.messages.join(", "))}</span><span>${link} ${thumb}</span></div>`
-    + `<p>${esc(d.summary)}</p><div>${chips}</div>${fbLine}</div>`;
-}
 $("decisions").onclick = (e) => {
   const t = e.target.closest("[data-t]");
   if (t && openTurn === null) {
     openTurn = +t.dataset.t;
-    const card = t.closest(".dec");
-    card.insertAdjacentHTML("beforeend", `<div class="fb"><label class="empty" for="fbnote">What should Detour have done? This becomes a rule neatlogs checks on every run.</label><textarea id="fbnote" maxlength="200" placeholder="e.g. Don't message a driver just to say nothing changed"></textarea><div class="row"><button id="fbsend">Make it a rule</button><button id="fbcancel">Cancel</button></div></div>`);
+    const card = t.closest(".card");
+    card.insertAdjacentHTML("beforeend", `<div class="fb"><label for="fbnote">What should Detour have done? This becomes a rule neatlogs checks on every run.</label><textarea id="fbnote" maxlength="200" placeholder="e.g. Don't message a driver just to say nothing changed"></textarea><div class="row"><button id="fbsend">Make it a rule</button><button id="fbcancel">Cancel</button></div></div>`);
     $("fbnote").focus();
     return;
   }
@@ -209,6 +335,11 @@ $("decisions").onclick = (e) => {
   }
 };
 
+document.querySelectorAll(".tabs [data-tab]").forEach((b) => b.onclick = () => {
+  document.querySelectorAll(".tabs [data-tab]").forEach((x) => x.classList.toggle("on", x === b));
+  document.querySelectorAll(".pane").forEach((p) => p.classList.toggle("on", p.id === "p-" + b.dataset.tab));
+});
+
 async function tick() {
   try { const s = await (await fetch("/api/state")).json(); panel(s); if (!s.idle) draw(s); } catch (e) {}
   setTimeout(tick, 500);
@@ -217,6 +348,7 @@ const post = (u, b) => fetch(u, { method:"POST", headers:{ "content-type":"appli
 $("start").onclick = () => post("/api/start", { seed: 7, scripted: !new URLSearchParams(location.search).has("manual") });
 document.querySelectorAll("[data-k]").forEach((b) => b.onclick = () => post("/api/chaos", { kind: b.dataset.k }));
 $("approvals").onclick = (e) => { const b = e.target.closest("[data-a]"); if (b) post("/api/approve", { id: b.dataset.a, approve: b.dataset.y === "1" }); };
+window.addEventListener("resize", () => map.invalidateSize());
 tick();
 </script>
 </body>
