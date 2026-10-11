@@ -1,0 +1,75 @@
+<pasted_content id="9bcf">
+neatlogs is now plugged in through MCP (.mcp.json). Read CLAUDE.md and the README judges table first, then make neatlogs the hero of Detour:
+
+1. Use the neatlogs MCP (search_traces, get_trace_context, list_detections) to find the dispatcher’s own mistakes in the v1 and v2 runs (tag “final”).
+2. Turn Detour’s business rules into neatlogs detections in plain English (classifier type). For example: “dispatcher messaged a driver whose route did not change”, “customer’s requested time was not honoured”, “urgent medicine order was not prioritised”, “a replan reshuffled many stops between drivers”. Show they fire on v1 and not on v2.
+3. Use neatlogs Fixes (triage_list / triage_get) as the source of fix ideas where they exist. Apply them, then mark them accepted in neatlogs once verified.
+4. On the live screen, add a 👎 button with a short note on each dispatcher decision. The note becomes a new neatlogs classifier detection, so the manager’s rule watches every future run. Each decision should also link to its neatlogs trace.
+5. Add everything to the “For judges: 60 seconds” table, including the cfo.ai plan: docs/cfo/detour-cfo-plan.xlsx and https://cfo.ai/s/BG0Igr7QyRwQsLW5.
+6. Do one final showcase run on claude-sonnet-4.6 (LiteLLM) for the video.
+Rules: no keys in chat or commits, no AI attribution in commits, and ask me before installing anything.
+</pasted_content id="9bcf">
+
+---
+
+Done, NEATLOGS_TOKEN is in .env. Carry on.
+
+---
+
+<task-notification>
+<task-id>bl0rd7kso</task-id>
+<tool-use-id>toolu_01LmfBYCWnbk3fjK4Qfk5Mn8</tool-use-id>
+<output-file>/tmp/claude-1000/-home-imprint-detour/ec5e7437-9799-42d1-aff8-7cae6e9e619f/tasks/bl0rd7kso.output</output-file>
+<status>completed</status>
+<summary>Background command "Poll until first live decision appears" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bnlrgrfa3</task-id>
+<tool-use-id>toolu_01Njh3bz9aSDtSbpmDFyS5Bx</tool-use-id>
+<output-file>/tmp/claude-1000/-home-imprint-detour/ec5e7437-9799-42d1-aff8-7cae6e9e619f/tasks/bnlrgrfa3.output</output-file>
+<status>failed</status>
+<summary>Background command "Wait for live poll to finish" failed with exit code 144</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bw5djhqwg</task-id>
+<tool-use-id>toolu_017ch5u94b1cZXgZvWxhWxGF</tool-use-id>
+<output-file>/tmp/claude-1000/-home-imprint-detour/ec5e7437-9799-42d1-aff8-7cae6e9e619f/tasks/bw5djhqwg.output</output-file>
+<status>completed</status>
+<summary>Background command "Run final batch seeds 1-5, v1 and v2" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bifnvbxpe</task-id>
+<tool-use-id>toolu_012hDkRFhTvc6mSXucHpJh8Q</tool-use-id>
+<output-file>/tmp/claude-1000/-home-imprint-detour/ec5e7437-9799-42d1-aff8-7cae6e9e619f/tasks/bifnvbxpe.output</output-file>
+<status>completed</status>
+<summary>Background command "Rerun final batch with final code" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>btult93ax</task-id>
+<tool-use-id>toolu_01LrMoa7bNmRs33f1BHA7Zkw</tool-use-id>
+<output-file>/tmp/claude-1000/-home-imprint-detour/ec5e7437-9799-42d1-aff8-7cae6e9e619f/tasks/btult93ax.output</output-file>
+<status>completed</status>
+<summary>Background command "Showcase runs on Sonnet 4.6, seed 7 v1 and v2" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>bl6howc6o</task-id>
+<tool-use-id>toolu_01RKHX5zdYz9AWX7ec3Yop1f</tool-use-id>
+<output-file>/tmp/claude-1000/-home-imprint-detour/ec5e7437-9799-42d1-aff8-7cae6e9e619f/tasks/bl6howc6o.output</output-file>
+<status>completed</status>
+<summary>Background command "Final batch run with tightened judge" completed (exit code 0)</summary>
+</task-notification>
