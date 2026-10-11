@@ -226,11 +226,17 @@ class Dispatcher:
         fn = getattr(self, name, None)
         if not fn or name not in {t["name"] for t in TOOLS}:
             return {"error": f"unknown tool {name}"}
-        try:
-            self.faults.tool(name)
-            out = fn(**args)
-        except Exception as e:
-            out = {"error": str(e)}
+        for attempt in range(2):
+            try:
+                self.faults.tool(name)
+                out = fn(**args)
+                break
+            except (ConnectionError, TimeoutError) as e:   # a backend blip: try the same call once more
+                out = {"error": str(e)}
+                self.recoveries.append({"t": hhmm(self.w.clock), "what": f"tool:{name}", "error": str(e), "retried": attempt == 0})
+            except Exception as e:
+                out = {"error": str(e)}
+                break
         self.decisions.append({"turn": self._turn, "t": hhmm(self.w.clock), "tool": name, "args": args,
                                "result": json.dumps(out, default=str)[:400], "ok": not (isinstance(out, dict) and ("error" in out or out.get("ok") is False))})
         return out
