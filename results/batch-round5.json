@@ -1,0 +1,327 @@
+[
+ {
+  "seed": 1,
+  "version": "v3",
+  "file": "v3-s1-87dc25.json",
+  "card": {
+   "on_time": {
+    "value": "108/108",
+    "pass": true
+   },
+   "urgent_medicine_on_time": {
+    "value": "1/1",
+    "pass": true
+   },
+   "customer_requests_honoured": {
+    "value": "1/1",
+    "pass": true,
+    "detail": [
+     {
+      "order": "O027",
+      "asked": "14:00",
+      "came": "14:00",
+      "ok": true
+     }
+    ]
+   },
+   "driver_messages_needed": {
+    "value": "10 needed, 0 noise",
+    "pass": true
+   },
+   "stops_reshuffled_between_drivers": {
+    "value": "11 over 6 replans",
+    "pass": true
+   },
+   "messages_handled": {
+    "value": "6/6",
+    "pass": true
+   },
+   "refunds_usd": {
+    "value": "$0.00",
+    "pass": null
+   }
+  },
+  "mistakes": {
+   "wrong_id": 0,
+   "missed_replan": 0,
+   "driver_spam": 0,
+   "ignored_request": 0,
+   "tool_error": 0
+  },
+  "trace_id": "a07619a8acd798b6ff15d23f87419316",
+  "rules_broken": {
+   "Dispatcher messaged a driver whose route did not change": 0,
+   "Customer's requested time was not honoured": 0,
+   "Urgent medicine order was not prioritised": 0,
+   "A replan reshuffled many stops between drivers": 0,
+   "Dispatcher used an id that does not exist": 0,
+   "Dispatcher replanned more than once for one batch of messages": 0,
+   "A parcel was left with no van to deliver it": 0
+  },
+  "late": 0,
+  "recoveries": 1,
+  "usd": 0.05605,
+  "calls": 20,
+  "seconds": 137
+ },
+ {
+  "seed": 2,
+  "version": "v3",
+  "file": "v3-s2-0c2caa.json",
+  "card": {
+   "on_time": {
+    "value": "107/108",
+    "pass": false
+   },
+   "urgent_medicine_on_time": {
+    "value": "1/1",
+    "pass": true
+   },
+   "customer_requests_honoured": {
+    "value": "1/1",
+    "pass": true,
+    "detail": [
+     {
+      "order": "O010",
+      "asked": "14:00",
+      "came": "14:00",
+      "ok": true
+     }
+    ]
+   },
+   "driver_messages_needed": {
+    "value": "12 needed, 0 noise",
+    "pass": true
+   },
+   "stops_reshuffled_between_drivers": {
+    "value": "11 over 6 replans",
+    "pass": true
+   },
+   "messages_handled": {
+    "value": "6/6",
+    "pass": true
+   },
+   "refunds_usd": {
+    "value": "$5.99",
+    "pass": null
+   }
+  },
+  "mistakes": {
+   "wrong_id": 0,
+   "missed_replan": 0,
+   "driver_spam": 0,
+   "ignored_request": 0,
+   "tool_error": 0
+  },
+  "trace_id": "16da34fa964d211c1c584df7e5a092b4",
+  "rules_broken": {
+   "Dispatcher messaged a driver whose route did not change": 0,
+   "Customer's requested time was not honoured": 0,
+   "Urgent medicine order was not prioritised": 0,
+   "A replan reshuffled many stops between drivers": 0,
+   "Dispatcher used an id that does not exist": 0,
+   "Dispatcher replanned more than once for one batch of messages": 0,
+   "A parcel was left with no van to deliver it": 0
+  },
+  "late": 1,
+  "recoveries": 2,
+  "usd": 0.057573,
+  "calls": 20,
+  "seconds": 204
+ },
+ {
+  "seed": 3,
+  "version": "v3",
+  "file": "v3-s3-bfc121.json",
+  "card": {
+   "on_time": {
+    "value": "107/108",
+    "pass": false
+   },
+   "urgent_medicine_on_time": {
+    "value": "1/1",
+    "pass": true
+   },
+   "customer_requests_honoured": {
+    "value": "1/1",
+    "pass": true,
+    "detail": [
+     {
+      "order": "O048",
+      "asked": "14:00",
+      "came": "14:00",
+      "ok": true
+     }
+    ]
+   },
+   "driver_messages_needed": {
+    "value": "12 needed, 0 noise",
+    "pass": true
+   },
+   "stops_reshuffled_between_drivers": {
+    "value": "11 over 6 replans",
+    "pass": true
+   },
+   "messages_handled": {
+    "value": "6/6",
+    "pass": true
+   },
+   "refunds_usd": {
+    "value": "$5.99",
+    "pass": null
+   }
+  },
+  "mistakes": {
+   "wrong_id": 0,
+   "missed_replan": 0,
+   "driver_spam": 0,
+   "ignored_request": 0,
+   "tool_error": 0
+  },
+  "trace_id": "1962d9c9646402f380ba9a99b5c7142c",
+  "rules_broken": {
+   "Dispatcher messaged a driver whose route did not change": 0,
+   "Customer's requested time was not honoured": 0,
+   "Urgent medicine order was not prioritised": 0,
+   "A replan reshuffled many stops between drivers": 0,
+   "Dispatcher used an id that does not exist": 0,
+   "Dispatcher replanned more than once for one batch of messages": 0,
+   "A parcel was left with no van to deliver it": 0
+  },
+  "late": 1,
+  "recoveries": 2,
+  "usd": 0.062893,
+  "calls": 22,
+  "seconds": 207
+ },
+ {
+  "seed": 4,
+  "version": "v3",
+  "file": "v3-s4-283030.json",
+  "card": {
+   "on_time": {
+    "value": "107/108",
+    "pass": false
+   },
+   "urgent_medicine_on_time": {
+    "value": "1/1",
+    "pass": true
+   },
+   "customer_requests_honoured": {
+    "value": "1/1",
+    "pass": true,
+    "detail": [
+     {
+      "order": "O017",
+      "asked": "14:00",
+      "came": "14:00",
+      "ok": true
+     }
+    ]
+   },
+   "driver_messages_needed": {
+    "value": "12 needed, 0 noise",
+    "pass": true
+   },
+   "stops_reshuffled_between_drivers": {
+    "value": "11 over 6 replans",
+    "pass": true
+   },
+   "messages_handled": {
+    "value": "6/6",
+    "pass": true
+   },
+   "refunds_usd": {
+    "value": "$5.99",
+    "pass": null
+   }
+  },
+  "mistakes": {
+   "wrong_id": 0,
+   "missed_replan": 0,
+   "driver_spam": 0,
+   "ignored_request": 0,
+   "tool_error": 0
+  },
+  "trace_id": "507d065cef016735597647a54d3aba67",
+  "rules_broken": {
+   "Dispatcher messaged a driver whose route did not change": 0,
+   "Customer's requested time was not honoured": 0,
+   "Urgent medicine order was not prioritised": 0,
+   "A replan reshuffled many stops between drivers": 0,
+   "Dispatcher used an id that does not exist": 0,
+   "Dispatcher replanned more than once for one batch of messages": 0,
+   "A parcel was left with no van to deliver it": 0
+  },
+  "late": 1,
+  "recoveries": 2,
+  "usd": 0.064892,
+  "calls": 23,
+  "seconds": 207
+ },
+ {
+  "seed": 5,
+  "version": "v3",
+  "file": "v3-s5-c2400a.json",
+  "card": {
+   "on_time": {
+    "value": "108/108",
+    "pass": true
+   },
+   "urgent_medicine_on_time": {
+    "value": "1/1",
+    "pass": true
+   },
+   "customer_requests_honoured": {
+    "value": "1/1",
+    "pass": true,
+    "detail": [
+     {
+      "order": "O101",
+      "asked": "14:00",
+      "came": "14:00",
+      "ok": true
+     }
+    ]
+   },
+   "driver_messages_needed": {
+    "value": "6 needed, 0 noise",
+    "pass": true
+   },
+   "stops_reshuffled_between_drivers": {
+    "value": "3 over 6 replans",
+    "pass": true
+   },
+   "messages_handled": {
+    "value": "6/6",
+    "pass": true
+   },
+   "refunds_usd": {
+    "value": "$0.00",
+    "pass": null
+   }
+  },
+  "mistakes": {
+   "wrong_id": 0,
+   "missed_replan": 0,
+   "driver_spam": 0,
+   "ignored_request": 0,
+   "tool_error": 0
+  },
+  "trace_id": "747cd5834a81707d7f6eff8b1b671984",
+  "rules_broken": {
+   "Dispatcher messaged a driver whose route did not change": 0,
+   "Customer's requested time was not honoured": 0,
+   "Urgent medicine order was not prioritised": 0,
+   "A replan reshuffled many stops between drivers": 0,
+   "Dispatcher used an id that does not exist": 0,
+   "Dispatcher replanned more than once for one batch of messages": 0,
+   "A parcel was left with no van to deliver it": 0
+  },
+  "late": 0,
+  "recoveries": 1,
+  "usd": 0.056217,
+  "calls": 21,
+  "seconds": 137
+ }
+]

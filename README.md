@@ -11,42 +11,42 @@ Built for [neatHack 2026](https://neatlogs.com/hackathon) with **neatlogs**, **E
 | What | Where |
 |---|---|
 | **neatlogs: the rules** | 7 business rules, plus every rule the manager adds with 👎, live as neatlogs detections in the group **Dispatcher rules** (e.g. "Customer's requested time was not honoured", "A replan reshuffled many stops between drivers"). Every dispatcher decision is a `dispatcher_decision` span; neatlogs flags the ones that break a rule. [How it works](#neatlogs-is-the-dispatchers-manager) |
-| **neatlogs: v1 vs v2, counted by neatlogs** | The detections fire on v1 and not on v2 (table below, read back from neatlogs' own detection hits: [results/neatlogs-final.json](results/neatlogs-final.json)) |
+| **neatlogs: v1 → v2 → v3, counted by neatlogs** | The detections fire on v1; v2 fixed most of them; v3 (round 5) fixed the two neatlogs still flagged on v2. 0 alarms on v3 (table below, read back from neatlogs' own detection hits: [results/neatlogs-final.json](results/neatlogs-final.json), [results/neatlogs-round5.json](results/neatlogs-round5.json)) |
 | **neatlogs: the 👎 button** | On the live screen, 👎 a decision and write what it should have done. The note becomes a new neatlogs detection, and the model checks every future decision against it, live and headless |
 | **neatlogs: Fixes** | neatlogs raised 2 Fixes from our traces (van name used as id; replanning after every action). Both applied, verified on the `final` runs, and marked resolved in neatlogs with the evidence |
-| **neatlogs traces** | TODO: paste share links. Tags: `final` (seeds 1-5, v1 and v2, trace ids in [results/batch-final.json](results/batch-final.json)), `showcase` (Claude Sonnet 4.6, seed 7: v1 `e6de1d6bc4208df5ee3c797bde4a83bf`, v2 `1ac7216384de59cb7209ca8f699aaee4`), `fault-*` (broken on purpose) |
+| **neatlogs traces** | TODO: paste share links. Tags: `final` (seeds 1-5, v1 and v2, trace ids in [results/batch-final.json](results/batch-final.json)), `round5` (seeds 1-5, v3, trace ids in [results/batch-round5.json](results/batch-round5.json)), `showcase` (Claude Sonnet 4.6, seed 7: v1 `e6de1d6bc4208df5ee3c797bde4a83bf`, v2 `1ac7216384de59cb7209ca8f699aaee4`), `fault-*` (broken on purpose) |
 | **Entire checkpoint** | TODO: paste the checkpoint link for the v1 → v2 session |
 | **cfo.ai** | The business plan: [cfo.ai/s/BG0Igr7QyRwQsLW5](https://cfo.ai/s/BG0Igr7QyRwQsLW5) · spreadsheet [docs/cfo/detour-cfo-plan.xlsx](docs/cfo/detour-cfo-plan.xlsx) |
-| **How we improved it** | [ROUNDS.md](ROUNDS.md): four rounds, each kept or reverted, with numbers |
+| **How we improved it** | [ROUNDS.md](ROUNDS.md): five rounds, each kept or reverted, with numbers |
 | **Raw results** | [results/](results/) |
 
-**v1 vs v2, seeds 1-5** (same chaos for both; model `claude-haiku`; 10 runs, $0.61 in total for the dispatcher, plus one small model call per decision to check the manager's rule):
+**v1 vs v2 vs v3, seeds 1-5** (same chaos for all; model `claude-haiku`; 15 runs, $0.91 in total for the dispatcher, plus one small model call per decision to check the manager's rule):
 
-| Report card (average per day) | v1 | v2 |
-|---|---|---|
-| Deliveries on time (of 108) | **107.4** | 107.0 |
-| Parcels never delivered (all 5 days) | 2 | **0** |
-| Urgent medicine on time | 5/5 | 5/5 |
-| Customer's chosen hour honoured | 5/5 | 5/5 |
-| Stops reshuffled between drivers | 126.8 | **10.8** |
-| Refunds paid | $1.20 | $5.99 |
+| Report card (average per day) | v1 | v2 | v3 |
+|---|---|---|---|
+| Deliveries on time (of 108) | **107.4** | 107.0 | **107.4** |
+| Parcels never delivered (all 5 days) | 2 | **0** | **0** |
+| Urgent medicine on time | 5/5 | 5/5 | 5/5 |
+| Customer's chosen hour honoured | 5/5 | 5/5 | 5/5 |
+| Stops reshuffled between drivers | 126.8 | 10.8 | **9.4** |
+| Refunds paid | $1.20 | $5.99 | $3.59 |
 
-**The same days, judged by neatlogs** (detection hits on the `final` traces, from the neatlogs API):
+**The same days, judged by neatlogs** (detection hits on the `final` and `round5` traces, from the neatlogs API):
 
-| neatlogs detection | v1: runs flagged (hits) | v2: runs flagged (hits) |
-|---|---|---|
-| A replan reshuffled many stops between drivers | 5/5 (20) | **0/5** |
-| Customer's requested time was not honoured | 5/5 (5) | **0/5** |
-| A parcel was left with no van to deliver it | 3/5 (3) | **0/5** |
-| Dispatcher messaged a driver whose route did not change | 0/5 | 0/5 |
-| Dispatcher used an id that does not exist (neatlogs Fix 1) | 0/5 | 0/5 |
-| Dispatcher replanned more than once for one batch (neatlogs Fix 2) | 0/5 | 0/5 |
-| Urgent medicine order was not prioritised | 0/5 | 2/5 (2) ⚠️ |
-| Manager: When a van breaks down, tell that driver who is collecting their parcels and when (from 👎) | 5/5 (5) | 5/5 (5) |
+| neatlogs detection | v1: runs flagged (hits) | v2: runs flagged (hits) | v3: runs flagged |
+|---|---|---|---|
+| A replan reshuffled many stops between drivers | 5/5 (20) | **0/5** | **0/5** |
+| Customer's requested time was not honoured | 5/5 (5) | **0/5** | **0/5** |
+| A parcel was left with no van to deliver it | 3/5 (3) | **0/5** | **0/5** |
+| Dispatcher messaged a driver whose route did not change | 0/5 | 0/5 | 0/5 |
+| Dispatcher used an id that does not exist (neatlogs Fix 1) | 0/5 | 0/5 | 0/5 |
+| Dispatcher replanned more than once for one batch (neatlogs Fix 2) | 0/5 | 0/5 | 0/5 |
+| Urgent medicine order was not prioritised | 0/5 | 2/5 (2) | **0/5** |
+| Manager: When a van breaks down, tell that driver who is collecting their parcels and when (from 👎) | 5/5 (5) | 5/5 (5) | **0/5** |
 
-The ⚠️ is a real catch: on two v2 days the 09:50 plan left the insulin 47-54 minutes late, the dispatcher saw that in its own forecast and accepted it, and the parcel was only on time because the 10:15 breakdown forced a better replan. The manager's rule fires on both versions because neither does it yet. Both are the next things to fix.
+On v2, neatlogs caught two things. On two days the 09:50 plan left the insulin 47-54 minutes late and the dispatcher accepted it; it was only on time because the 10:15 breakdown forced a better replan. And the manager's 👎 rule (tell a stranded driver who is collecting their parcels, and when) failed every day on both versions. **v3 (round 5) fixes both:** after each replan, an urgent order forecast late is moved to wherever on the fleet it arrives on time at the least cost to everyone else, and `replan` hands the dispatcher the breakdown handoff ("V2 collects O020, O062…; V5 collects O017…, from about 10:40") to pass on. All 30 v3 decisions keep every rule ([ROUNDS.md](ROUNDS.md)).
 
-v2 is slightly behind on time: keeping stops with their driver costs a few late parcels on some days ([ROUNDS.md](ROUNDS.md#known-trade-off)). In exchange drivers see about 12x fewer reshuffled stops, and v2 delivered every parcel (v1 left one with no van on 2 of 5 days).
+v3 matches v1 on time and keeps v2's stability: about 13x fewer reshuffled stops than v1, and every parcel delivered (v1 left one with no van on 2 of 5 days).
 
 **Showcase day, Claude Sonnet 4.6, seed 7:** v1 108/108 on time, 146 stops reshuffled, 6 rule breaks flagged (5 reshuffles, 1 ignored customer time); v2 106/108 (2 late, $13.98 refunded), 20 reshuffled, the only flag the manager's breakdown rule. $0.51 for both.
 

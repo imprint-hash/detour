@@ -1,0 +1,42 @@
+[
+ {
+  "rule": "A parcel was left with no van to deliver it",
+  "v3": 0,
+  "v3_runs": 0
+ },
+ {
+  "rule": "Manager: When a van breaks down, tell that driver who is collecting their parcels and when",
+  "v3": 0,
+  "v3_runs": 0
+ },
+ {
+  "rule": "Dispatcher replanned more than once for one batch of messages",
+  "v3": 0,
+  "v3_runs": 0
+ },
+ {
+  "rule": "Dispatcher used an id that does not exist",
+  "v3": 0,
+  "v3_runs": 0
+ },
+ {
+  "rule": "A replan reshuffled many stops between drivers",
+  "v3": 0,
+  "v3_runs": 0
+ },
+ {
+  "rule": "Urgent medicine order was not prioritised",
+  "v3": 0,
+  "v3_runs": 0
+ },
+ {
+  "rule": "Customer's requested time was not honoured",
+  "v3": 0,
+  "v3_runs": 0
+ },
+ {
+  "rule": "Dispatcher messaged a driver whose route did not change",
+  "v3": 0,
+  "v3_runs": 0
+ }
+]

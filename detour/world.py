@@ -41,6 +41,7 @@ class World:
         self.refunds = {}          # node -> {"amount", "status", "id"}
         self.events = []           # human-readable timeline for the screen
         self.messages_out = []     # what the agent told drivers
+        self.stranded = {}         # broken van -> {"stops", "ready"}: its parcels, and when a rescue can have them
 
     # ---------- geography ----------
     def ll(self, n):
@@ -142,6 +143,7 @@ class World:
         v["status"], v["next"], v["plan"] = "broken", None, []
         for n in stranded:
             self.earliest[n] = max(self.earliest.get(n, 0), self.clock + HANDOFF_MIN)
+        self.stranded[vid] = {"stops": stranded, "ready": self.clock + HANDOFF_MIN}
         return stranded
 
     def delay_van(self, vid, minutes):

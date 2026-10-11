@@ -24,6 +24,8 @@ TELL_V2 = ("- Tell only the drivers listed in replan's changed_vans, one short p
 V2_RULES = ("\n- Record every change first (set_priority, set_customer_window, retry_later), then call replan once for the whole batch, "
             "then message drivers, then mark_handled. Do not replan after each action."
             "\n- Always use the short van id (V1, V2, ...) in tool calls, not the display name (Van 1).")
+# Round 5, from the neatlogs rules v2 still broke: urgent forecast late, and the manager's breakdown rule.
+V3_RULES = ("\n- When a van breaks down, message that driver with replan's handoff: which van is collecting their parcels and from what time.")
 
 SYSTEM = """You are Detour, the dispatcher for a same-morning delivery fleet out of the Amazon DLA7 depot in Chino, California.
 Messages arrive from drivers, customers, the warehouse and the city. For each one, work out what really changed and act with your tools.
@@ -41,6 +43,7 @@ Rules:
 FEATURES = {
     "v1": {"stable": False, "window": False, "gate": False, "dedupe": False, "orphans": False},
     "v2": {"stable": True, "window": True, "gate": True, "dedupe": True, "orphans": True},
+    "v3": {"stable": True, "window": True, "gate": True, "dedupe": True, "orphans": True, "rush": True, "handoff": True},
 }
 
 # provider -> (base url env, key env, model env, default model)
@@ -71,7 +74,7 @@ class Dispatcher:
         self.w = world
         self.version = version
         self.f = FEATURES.get(version, FEATURES["v2"])
-        self.system = SYSTEM.replace("{TELL}", TELL_V2 if self.f["gate"] else TELL_V1).replace("{V2_RULES}", V2_RULES if version == "v2" else "")
+        self.system = SYSTEM.replace("{TELL}", TELL_V2 if self.f["gate"] else TELL_V1).replace("{V2_RULES}", (V2_RULES if version in ("v2", "v3") else "") + (V3_RULES if self.f.get("handoff") else ""))
         self.faults = faults or Faults()
         url_env, key_env, model_env, default_model = PROVIDERS[provider]
         self.client = OpenAI(base_url=os.environ.get(url_env), api_key=os.environ.get(key_env), max_retries=0)
@@ -86,6 +89,7 @@ class Dispatcher:
         self.manager_rules = list(manager_rules or [])   # plain-English rules from the 👎 button
         self.log = []       # one decision record per batch of messages, each linked to its neatlogs span
         self._rec = None
+        self._handed_off = set()   # broken vans whose driver has been told who collects their parcels
 
     # ---------- tools ----------
     def _van_id(self, van_id):
@@ -168,10 +172,16 @@ class Dispatcher:
         current = {n: vid for vid, seq in before.items() for n in seq}
         routes, dropped, degraded = self._solve(current if self.f["stable"] else None)
         moved = w.assign(routes)
+        self.forecast = self._forecast()
+        rushed = self._rush_urgent() if self.f.get("rush") else []
+        if rushed and self._rec is not None:
+            self._rec["rushed"] = rushed
+        if rushed:
+            moved += sum(1 for r in rushed if r["from"] != r["van"])
+            routes = {vid: list(w.vans[vid]["plan"]) for vid in routes}
         if self._rec is not None:   # for the decision record: which drivers really got different stops
             self._rec["moved"] += moved
             self._rec["changed_vans"].update(vid for vid in routes if set(routes[vid]) != set(before.get(vid, [])))
-        self.forecast = self._forecast()
         same = (lambda a, b: set(a) == set(b)) if self.f["gate"] else (lambda a, b: a == b)
         changed = [vid for vid in routes if not same(routes[vid], before.get(vid, []))]
         self.changes = {vid: self._describe(before.get(vid, []), routes[vid]) for vid in changed}
@@ -180,9 +190,69 @@ class Dispatcher:
                   "dropped": [w.orders[n - 1]["id"] for n in dropped], "forecast": self.forecast}
         if degraded:
             result["degraded"] = degraded
+        if rushed:
+            result["rushed"] = [f"{r['order']}: stop {r['stop']} for {r['van']}, there about {r['eta']}" for r in rushed]
+        handoff = self._handoff(routes) if self.f.get("handoff") else {}
+        if handoff:
+            result["handoff"] = handoff
         self._last_key = key[:6] + (tuple(tuple(v["plan"]) for v in w.vans.values()),)
         self._last_result = {**result, "changed_vans": [], "what_changed": {}}
         return result
+
+    def _rush_urgent(self):
+        """An urgent order the plan would deliver late: put it where it is on time and the other stops suffer
+        least (the solver's late prices), on any van; if nowhere is on time, it goes next for the van that gets
+        there first. The solver gets 3 seconds and can miss this under load; this check does not."""
+        w, out = self.w, []
+        urgent = {w.orders[n - 1]["id"]: n for n in w.priority}
+        for late in list(self.forecast["late"]):
+            n = urgent.get(late["order"])
+            if n is None or n not in w.pending():
+                continue
+            holder = next((vid for vid, v in w.vans.items() if n in v["plan"]), None)
+            if holder:
+                w.vans[holder]["plan"].remove(n)
+            options = []
+            for v in w.available_vans():
+                seq = w.vans[v["id"]]["plan"]
+                base = self._walk(v, seq)[0]
+                for i in range(len(seq) + 1):
+                    cost, times = self._walk(v, seq[:i] + [n] + seq[i:])
+                    options.append((times[n] > w.promised(n), cost - base, times[n], v["id"], i))
+            missed, _, eta, vid, i = min(options)
+            w.vans[vid]["plan"].insert(i, n)
+            out.append({"order": late["order"], "van": vid, "from": holder, "eta": hhmm(eta), "stop": i + 1, "on_time": not missed})
+            self.forecast = self._forecast()
+        return out
+
+    def _walk(self, v, seq):
+        """Drive one van's list on current road times: (late cost at the solver's prices, arrival per stop)."""
+        from .solver import LATE_COST_PER_MIN
+        w, clock, at, cost, times = self.w, v["free_min"], v["at"], 0.0, {}
+        for n in seq:
+            clock = max(clock + w.travel(at, n) / 60, w.earliest.get(n, 0))
+            times[n] = clock
+            kind = "pharmacy" if n in w.priority else w.orders[n - 1]["kind"]
+            cost += max(0, clock - w.promised(n)) * LATE_COST_PER_MIN[kind]
+            clock += w.orders[n - 1]["service_min"]
+            at = n
+        return cost, times
+
+    def _handoff(self, routes):
+        """For a van that broke down: who now carries each of its parcels, and from when."""
+        w, out = self.w, {}
+        for vid, s in w.stranded.items():
+            if vid in self._handed_off:
+                continue
+            by = {}
+            for n in s["stops"]:
+                holder = next((h for h, seq in routes.items() if n in seq), None)
+                if holder:
+                    by.setdefault(holder, []).append(w.orders[n - 1]["id"])
+            if by:
+                out[vid] = "; ".join(f"{h} collects {', '.join(ids)}" for h, ids in by.items()) + f", from about {hhmm(s['ready'])}"
+                self._handed_off.add(vid)
+        return out
 
     def _solve(self, current):
         """Ask the solver; if it times out or breaks, step down to a simpler plan instead of giving up."""
@@ -346,6 +416,9 @@ class Dispatcher:
                  "Drivers messaged: " + (", ".join(c["van"] for c in rec["calls"] if c["tool"] == "message_driver" and c["ok"]) or "none"),
                  f"Forecast late after this: {(self.forecast or {}).get('late_count', '?')}",
                  f"Reply: {(reply or '').strip()[:300]}"]
+        for r in rec.get("rushed", []):
+            lines.append(f"Urgent check: {r['order']} was forecast late, so Detour made it stop {r['stop']} for {r['van']}, "
+                         f"there about {r['eta']}" + ("" if r["on_time"] else " (still late: no van can make it)"))
         if rec.get("safety_net"):
             lines.append(f"Safety net: {', '.join(rec['safety_net'])} had no van, so Detour replanned on its own")
         record = "\n".join(lines)
