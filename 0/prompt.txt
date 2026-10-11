@@ -1,0 +1,9 @@
+<pasted_content id="c7bf">
+Next round, to make Detour a contender:
+
+1. Find failures in the dispatcher’s own decisions using neatlogs traces (wrong ids, missed replans, driver spam, ignored requests), fix the agent’s prompt and tools, and record each change as a round: kept or reverted, with numbers.
+2. Run seeds 1–5, v1 vs v2, and report the average report card, so the improvement isn’t luck.
+3. Make tools fail on purpose (OSRM down, solver timeout) and show the dispatcher recovering.
+4. Add a “For judges: 60 seconds” table to the README with trace links, the Entire checkpoint link, the cfo.ai link and the report cards.
+Use the free Groq model for the many runs; we’ll do the final runs on claude-sonnet-4.6 via LiteLLM (LITELLM_* in .env).
+</pasted_content id="c7bf">
