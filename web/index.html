@@ -71,7 +71,8 @@
   .mapwrap { position:relative; min-height:0; border-bottom:1px solid var(--line); }
   #map { position:absolute; inset:0; background:#0e1013; }
   .leaflet-container { font-family:var(--sans); background:#0e1013; }
-  .leaflet-tile-pane { filter:brightness(.8) contrast(1.15) saturate(0); }
+  /* OpenStreetMap, turned to night: every street and name stays readable. */
+  .leaflet-tile-pane { filter:invert(1) hue-rotate(180deg) brightness(.82) contrast(.92) saturate(.35); }
   .leaflet-control-attribution { background:#0b0c0ecc !important; color:var(--mute) !important; font:10px var(--mono); }
   .leaflet-control-attribution a { color:var(--ink2) !important; }
   .leaflet-bar a { background:var(--panel2) !important; color:var(--ink2) !important; border-color:var(--line) !important; }
@@ -210,7 +211,7 @@ const EYE = `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2
 
 const map = L.map("map", { zoomControl:false, zoomSnap:0.25, zoomDelta:0.5 }).setView([33.97, -117.72], 11);
 L.control.zoom({ position:"bottomright" }).addTo(map);
-L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxZoom:16, attribution:"Esri, HERE, Garmin, © OpenStreetMap contributors" }).addTo(map);
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom:19, attribution:"© OpenStreetMap contributors" }).addTo(map);
 
 let stops = {}, vans = {}, lines = {}, closures = [], depot = null, fitted = false;
 
@@ -245,17 +246,31 @@ function draw(s) {
     const label = v.status === "broken" ? `${v.id} ✕` : v.id;
     const html = `<div class="vpin ${v.status === "broken" ? "broken" : ""}" style="background:${col};box-shadow:0 0 14px ${col}88">${esc(label)}</div>`;
     const icon = L.divIcon({ className:"", html, iconSize:[40,24], iconAnchor:[20,12] });
-    if (!vans[v.id]) vans[v.id] = L.marker(v.pos, { icon, zIndexOffset:1000 }).addTo(map);
-    vans[v.id].setLatLng(v.pos).setIcon(icon);
+    if (!vans[v.id]) { vans[v.id] = L.marker(v.pos, { icon, zIndexOffset:1000 }).addTo(map); vans[v.id]._to = v.pos; }
+    glide(vans[v.id], v.pos);
+    if (vans[v.id]._html !== html) { vans[v.id].setIcon(icon); vans[v.id]._html = html; }
     const nxt = v.plan[0] && byId[v.plan[0]];
     vans[v.id].bindTooltip(`<b>${esc(v.name)}</b> · ${esc(v.status)}<br><small>${v.done} delivered · ${v.plan.length} to go${nxt ? " · next " + esc(nxt.id) + " " + esc(nxt.street || "") : ""}</small>`, { className:"tt", direction:"top" });
-    const pts = [v.pos, ...v.plan.map((id) => [byId[id].lat, byId[id].lng])];
-    if (!lines[v.id]) lines[v.id] = L.polyline(pts, { color: col, weight: 2, opacity: .85, dashArray: "2 6", lineCap: "round" }).addTo(map);
+    const pts = v.route && v.route.length ? v.route : [v.pos, ...v.plan.map((id) => [byId[id].lat, byId[id].lng])];
+    if (!lines[v.id]) lines[v.id] = L.polyline(pts, { color: col, weight: 3, opacity: .9, lineCap: "round", lineJoin: "round" }).addTo(map);
     lines[v.id].setLatLngs(v.status === "broken" ? [] : pts);
   });
   closures.forEach((c) => map.removeLayer(c));
   closures = (s.closures || []).map((c) => L.circle([c.lat, c.lng], { radius: c.km * 1000, color: "#ff5d5d", weight: 1.5, dashArray: "4 5", fillColor: "#ff5d5d", fillOpacity: .07 })
     .addTo(map).bindTooltip("ROAD CLOSED", { className:"tt closed", permanent:true, direction:"center" }));
+}
+
+// Vans glide between server updates instead of jumping every half second.
+function glide(m, to) {
+  const from = m.getLatLng(), t0 = performance.now(), dur = 520;
+  m._to = to;
+  const step = (now) => {
+    if (m._to !== to) return;            // a newer position has arrived
+    const k = Math.min(1, (now - t0) / dur);
+    m.setLatLng([from.lat + (to[0] - from.lat) * k, from.lng + (to[1] - from.lng) * k]);
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
 }
 
 function tagFor(v) {

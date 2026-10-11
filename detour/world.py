@@ -5,6 +5,7 @@ called, so the agent can stop the world while it thinks, the way a dispatcher
 would put the phone down and look at the map.
 """
 import json, math
+from . import roads
 from pathlib import Path
 
 DATA = Path(__file__).resolve().parent.parent / "data"
@@ -57,12 +58,35 @@ class World:
                 s *= c["factor"]
         return s
 
+    def _leg_fraction(self, v):
+        return min(1, max(0, (self.clock - v["depart"]) / max(0.01, v["arrive"] - v["depart"])))
+
     def van_pos(self, v):
         if v["status"] == "driving" and v["next"] is not None:
+            f = self._leg_fraction(v)
+            streets = roads.path(v["at"], v["next"])
+            if streets:
+                return roads.along(streets, f)
             a, b = self.ll(v["at"]), self.ll(v["next"])
-            f = min(1, max(0, (self.clock - v["depart"]) / max(0.01, v["arrive"] - v["depart"])))
             return (a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f)
         return self.ll(v["at"])
+
+    def van_route(self, v):
+        """The road the van still has to drive: the rest of this leg, then every planned stop.
+        Straight segments stand in for streets not fetched yet (live screen only)."""
+        if v["status"] == "broken":
+            return []
+        pts, at = [list(self.van_pos(v))], v["at"]
+        if v["status"] == "driving" and v["next"] is not None:
+            streets = roads.path(v["at"], v["next"])
+            pts += roads.rest(streets, self._leg_fraction(v))[1:] if streets else [list(self.ll(v["next"]))]
+            at = v["next"]
+        for n in v["plan"]:
+            roads.want(at, n)
+            streets = roads.path(at, n)
+            pts += streets[1:] if streets else [list(self.ll(n))]
+            at = n
+        return pts
 
     def nearest_node(self, lat, lng):
         return min(range(len(self.M)), key=lambda n: km(self.ll(n), (lat, lng)))
@@ -102,6 +126,7 @@ class World:
             v["status"] = "idle"
         if v["status"] == "idle" and v["plan"] and v["free_min"] <= self.clock:
             n = v["plan"].pop(0)
+            roads.want(v["at"], n)
             v["next"], v["status"] = n, "driving"
             v["depart"] = max(self.clock, v["free_min"])
             v["arrive"] = v["depart"] + self.travel(v["at"], n) / 60
@@ -175,7 +200,8 @@ class World:
         return {
             "clock": hhmm(self.clock),
             "vans": [{"id": v["id"], "name": v["name"], "status": v["status"], "pos": self.van_pos(v),
-                      "plan": [self.orders[n - 1]["id"] for n in v["plan"]], "done": len(v["done"])}
+                      "plan": [self.orders[n - 1]["id"] for n in v["plan"]], "done": len(v["done"]),
+                      "route": self.van_route(v)}
                      for v in self.vans.values()],
             "score": self.score(),
             "closures": [c for c in self.closures if c["until"] > self.clock],

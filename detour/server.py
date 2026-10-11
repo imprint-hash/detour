@@ -10,6 +10,7 @@ import neatlogs
 from neatlogs.decorators import span
 
 from .world import World, hhmm
+from . import roads
 from .chaos import Chaos
 from .agent import Dispatcher
 from . import neat
@@ -34,6 +35,8 @@ class Live:
         if self.running:
             return False
         self.w = World()
+        # Vans drive real streets on the live screen (OSRM geometry, cached in data/legs.json).
+        roads.start(self.w.ll)
         self.chaos = Chaos(seed)
         if not scripted:
             self.chaos.script = []
@@ -78,7 +81,7 @@ class Live:
         neatlogs.flush()
 
     def state(self):
-        if not self.w:
+        if not self.w or not self.d:
             return {"idle": True}
         w = self.w
         with self.lock:
