@@ -240,11 +240,20 @@ class Dispatcher:
         for attempt in range(6):
             try:
                 self.faults.llm()
-                r = self.client.chat.completions.create(**kw)
+                raw = self.client.chat.completions.with_raw_response.create(**kw)
+                r = raw.parse()
                 self.usage["calls"] += 1
                 if r.usage:
                     self.usage["prompt"] += r.usage.prompt_tokens
                     self.usage["completion"] += r.usage.completion_tokens
+                # LiteLLM reports what each call cost; other providers are free or unpriced here.
+                try:
+                    self.usage["usd"] = round(self.usage.get("usd", 0) + float(raw.headers.get("x-litellm-response-cost", 0)), 6)
+                    spent = float(raw.headers.get("x-litellm-key-spend", 0))
+                except ValueError:
+                    spent = 0
+                if spent > float(os.environ.get("BUDGET_STOP_USD", 1e9)):
+                    raise RuntimeError(f"stopping: the shared key has spent ${spent:.2f}, over BUDGET_STOP_USD")
                 return r
             except (openai.RateLimitError, openai.APIConnectionError, openai.APITimeoutError, openai.InternalServerError, openai.BadRequestError) as e:
                 if isinstance(e, openai.BadRequestError) and "parse" not in str(e).lower():

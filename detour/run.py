@@ -58,6 +58,7 @@ def main():
            "report": card, "events": w.events}
     RUNS.mkdir(exist_ok=True)
     (RUNS / f"{run_id}.json").write_text(json.dumps(out, indent=1, default=str))
+    print("RUNFILE", RUNS / f"{run_id}.json")
     print(json.dumps({k: out[k] for k in ("run", "score", "seconds", "unhandled_messages")}, indent=1))
     print("late:", [(e["order"], e["late_min"]) for e in out["late"]][:15])
     print_report(card, f"Report card · {a.version} · seed {a.seed}")
