@@ -9,15 +9,18 @@ from ortools.constraint_solver import pywrapcp, routing_enums_pb2
 
 LATE_COST_PER_MIN = {"pharmacy": 60, "clinic": 50, "restaurant": 25, "home": 4}
 DROP_COST = 10_000_000  # only if a stop truly cannot fit
+MOVE_COST = 60          # handing a stop to a different driver; about 15 min late for a house
 
 
-def plan(day, vans, todo, *, travel, now_min, extra_priority=(), earliest=None, seconds=3, max_stops=24):
+def plan(day, vans, todo, *, travel, now_min, extra_priority=(), earliest=None, current=None, seconds=3, max_stops=24):
     """
     vans:  [{"id", "at": node, "free_min": minute it can leave}]   (node 0 = depot)
     todo:  [order index (1-based node)]                            stops left
     travel(a, b) -> seconds between nodes, with any closures applied
     extra_priority: nodes the agent marked urgent (treated like a pharmacy)
     earliest: {node: minute} it cannot be delivered before (parcels in transit, customer asked)
+    current: {node: van_id} who holds the stop now; moving it to another van costs MOVE_COST.
+             Stops whose van is not in `vans` (a broken one) have no such cost.
     Returns {van_id: [node, ...]} and a list of dropped nodes.
     """
     if not vans or not todo:
@@ -28,6 +31,7 @@ def plan(day, vans, todo, *, travel, now_min, extra_priority=(), earliest=None, 
     ends = [0] * len(vans)
     mgr = pywrapcp.RoutingIndexManager(len(nodes), len(vans), starts, ends)
     rt = pywrapcp.RoutingModel(mgr)
+    van_ids = {v["id"] for v in vans}
     orders = day["orders"]
 
     def svc(n):
@@ -38,7 +42,13 @@ def plan(day, vans, todo, *, travel, now_min, extra_priority=(), earliest=None, 
         return round(travel(a, b) / 60) + svc(a)
 
     t = rt.RegisterTransitCallback(cb)
-    rt.SetArcCostEvaluatorOfAllVehicles(t)
+    current = current or {}
+    for k, v in enumerate(vans):
+        def cost(i, j, vid=v["id"]):
+            b = nodes[mgr.IndexToNode(j)]
+            moved = current.get(b) not in (None, vid) and current.get(b) in van_ids
+            return cb(i, j) + (MOVE_COST if moved else 0)
+        rt.SetArcCostEvaluatorOfVehicle(rt.RegisterTransitCallback(cost), k)
     horizon = 24 * 60
     rt.AddDimension(t, 120, horizon, False, "time")
     # A driver can only carry so much: cap the stops per van.

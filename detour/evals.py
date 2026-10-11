@@ -39,7 +39,7 @@ def report(world):
     changed_at = {}
     for e in w.events:
         if e["kind"] == "replan":
-            changed_at[round(e["t"])] = set(e.get("changed", []))
+            changed_at.setdefault(round(e["t"]), set()).update(e.get("changed", []))
     for e in w.events:
         if e["kind"] == "to_driver":
             sent += 1

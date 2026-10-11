@@ -21,7 +21,7 @@ Messages arrive from drivers, customers, the warehouse and the city. For each on
 Rules:
 - Read the inbox, then fix things. A message only counts as handled once you have acted on it and called mark_handled.
 - If something changes what the vans should do (a van out of action, a closed road, an urgent order, a customer asking for a later time), call replan once you have recorded the change, and check the forecast it returns.
-- Tell every driver whose route changed, in one short plain message.
+- Tell only the drivers listed in replan's changed_vans, one short plain message each. Say what changed, using what_changed (e.g. "+3 stops: O012, O019, O044"). Never send "check your plan".
 - Urgent medical deliveries come first: use set_priority with the deadline you were given.
 - A customer who asks for a later time gets it: use set_customer_window. That is not a late delivery.
 - Never invent an order id, van id or time. Use get_fleet to look things up.
@@ -51,6 +51,8 @@ class Dispatcher:
         self.client = OpenAI(base_url=base_url or os.environ.get("LLM_BASE_URL"), api_key=api_key or os.environ.get("LLM_API_KEY"))
         self.model = model or os.environ.get("LLM_MODEL", "openai/gpt-oss-120b")
         self.forecast = None
+        self._last_key, self._last_result = None, None
+        self.changes = {}   # van -> what changed in the last replan
 
     # ---------- tools ----------
     def _order_node(self, oid):
@@ -93,7 +95,9 @@ class Dispatcher:
     def set_customer_window(self, order_id, not_before):
         n = self._order_node(order_id)
         self.w.earliest[n] = max(self.w.earliest.get(n, 0), _parse_hhmm(not_before))
-        self.w.orders[n - 1]["customer_window"] = True
+        o = self.w.orders[n - 1]
+        o["customer_window"] = True
+        o["promise_min"] = self.w.earliest[n] + 60  # the plan aims for the hour they asked for
         return {"ok": True, "order": order_id, "not_before": not_before, "note": "call replan to act on it"}
 
     @span(kind="TOOL", tool_name="retry_later")
@@ -111,19 +115,40 @@ class Dispatcher:
     @span(kind="TOOL", tool_name="replan")
     def replan(self):
         w = self.w
-        routes, dropped = plan(w.day, w.available_vans(), w.pending(), travel=w.travel, now_min=int(w.clock),
-                               extra_priority=w.priority, earliest=w.earliest, seconds=3)
+        # Same situation as the last replan (the model asked twice): hand back the same answer.
+        key = (round(w.clock), tuple(w.pending()), frozenset(w.priority), tuple(sorted(w.earliest.items())),
+               len(w.closures), tuple((v["id"], v["at"], v["free_min"]) for v in w.available_vans()),
+               tuple(tuple(v["plan"]) for v in w.vans.values()))
+        if self.version != "v1" and key == self._last_key:
+            return {**self._last_result, "note": "nothing has changed since the last replan"}
         before = {vid: list(v["plan"]) for vid, v in w.vans.items()}
+        current = {n: vid for vid, seq in before.items() for n in seq}
+        routes, dropped = plan(w.day, w.available_vans(), w.pending(), travel=w.travel, now_min=int(w.clock),
+                               extra_priority=w.priority, earliest=w.earliest, current=current, seconds=3)
         w.assign(routes)
         self.forecast = self._forecast()
-        changed = [vid for vid in routes if routes[vid] != before.get(vid)]
+        changed = [vid for vid in routes if set(routes[vid]) != set(before.get(vid, []))]
+        self.changes = {vid: self._describe(before.get(vid, []), routes[vid]) for vid in changed}
         w.events.append({"t": w.clock, "kind": "replan", "changed": changed, "forecast": self.forecast})
-        return {"changed_vans": changed, "dropped": [w.orders[n - 1]["id"] for n in dropped], "forecast": self.forecast}
+        result = {"changed_vans": changed, "what_changed": self.changes,
+                  "dropped": [w.orders[n - 1]["id"] for n in dropped], "forecast": self.forecast}
+        self._last_key = key[:6] + (tuple(tuple(v["plan"]) for v in w.vans.values()),)
+        self._last_result = {**result, "changed_vans": [], "what_changed": {}}
+        return result
+
+    def _describe(self, old, new):
+        ids = lambda ns: ", ".join(self.w.orders[n - 1]["id"] for n in ns)
+        added, removed = [n for n in new if n not in old], [n for n in old if n not in new]
+        parts = ([f"+{len(added)} stop{'s' * (len(added) != 1)}: {ids(added)}"] if added else []) \
+            + ([f"-{len(removed)} stop{'s' * (len(removed) != 1)}: {ids(removed)}"] if removed else [])
+        return "; ".join(parts)
 
     @span(kind="TOOL", tool_name="message_driver")
     def message_driver(self, van_id, text):
         if van_id not in self.w.vans:
             return {"ok": False, "error": f"no van {van_id}"}
+        if self.version != "v1" and van_id not in self.changes and self.w.vans[van_id]["status"] != "broken":
+            return {"ok": False, "error": f"{van_id}'s stops did not change in the last replan, so no message was sent"}
         self.w.messages_out.append({"t": hhmm(self.w.clock), "van": van_id, "text": text})
         self.w.events.append({"t": self.w.clock, "kind": "to_driver", "van": van_id, "text": text})
         return {"ok": True}
