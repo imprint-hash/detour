@@ -1,0 +1,12 @@
+<task-notification>
+<task-id>blrx5z6vh</task-id>
+<tool-use-id>toolu_01YEh7AjGGCXdmX9S1EJ9nZn</tool-use-id>
+<output-file>/tmp/claude-1000/-home-imprint-detour/4112e4cb-7521-4d0b-bccb-08533d0d12c5/tasks/blrx5z6vh.output</output-file>
+<status>completed</status>
+<summary>Background command "set -a; . ./.env; set +a; nohup .venv/bin/python -m detour.batch --seeds 1 2 --versions v2 --tag r0 &gt; runs/log-r0.txt 2&gt;&amp;1 &amp;
+echo ok" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+Stop the current batch: Groq’s free tier caps gpt-oss-120b at 8,000 tokens per minute, so runs keep waiting. Switch the provider to litellm (LITELLM_* in .env). Use LITELLM_MODEL=claude-haiku for the batch runs (seeds 1–5, v1 vs v2), and run the seeds in parallel to save time. Use claude-sonnet-4.6 only for the final showcase run. Keep an eye on spend with the usage tracking; the shared budget is $20.
