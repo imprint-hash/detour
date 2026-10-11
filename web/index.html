@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Detour</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+  :root { --ink:#11161c; --ink2:#4a535d; --line:#dfe3e6; --paper:#f5f6f3; --card:#fff; --sign:#f26b1d; --sign-ink:#1b1206;
+    --ok:#16834a; --late:#d0352b; --pharm:#d0352b; --clinic:#2563c9; --rest:#c88a04; --home:#7b8590; --disp:"Barlow Condensed",sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace; }
+  * { box-sizing:border-box; margin:0; }
+  html,body { height:100%; }
+  body { background:var(--paper); color:var(--ink); font:14px/1.45 var(--body); display:grid; grid-template-columns:minmax(0,1fr) 420px; height:100vh; overflow:hidden; }
+  #map { height:100vh; }
+  aside { height:100vh; overflow-y:auto; border-left:1px solid var(--line); background:var(--paper); display:flex; flex-direction:column; }
+  header { padding:16px 18px 14px; display:flex; align-items:center; gap:14px; border-bottom:1px solid var(--line); background:var(--card); position:sticky; top:0; z-index:5; }
+  .sign { font:800 26px/1 var(--disp); letter-spacing:.06em; background:var(--sign); color:var(--sign-ink); padding:6px 12px 5px; border-radius:4px; box-shadow:inset 0 0 0 2px var(--sign-ink); display:flex; align-items:center; gap:8px; }
+  .sign svg { width:20px; height:20px; }
+  .clock { margin-left:auto; text-align:right; }
+  .clock b { font:700 30px/1 var(--disp); letter-spacing:.02em; display:block; font-variant-numeric:tabular-nums; }
+  .clock small { color:var(--ink2); font-size:12px; }
+  .score { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border-bottom:1px solid var(--line); }
+  .score div { background:var(--card); padding:10px 12px; }
+  .score b { font:700 24px/1 var(--disp); display:block; font-variant-numeric:tabular-nums; }
+  .score span { font-size:11px; color:var(--ink2); text-transform:uppercase; letter-spacing:.06em; }
+  section { padding:14px 18px; border-bottom:1px solid var(--line); }
+  h2 { font:700 15px/1 var(--disp); letter-spacing:.08em; text-transform:uppercase; color:var(--ink2); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+  .chaos { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  button { font:600 13px var(--body); border:1px solid var(--ink); background:var(--card); color:var(--ink); border-radius:6px; padding:9px 10px; cursor:pointer; text-align:left; }
+  button:hover { background:#fff4ec; border-color:var(--sign); }
+  button:focus-visible { outline:3px solid var(--sign); outline-offset:2px; }
+  button svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; vertical-align:-3px; margin-right:7px; }
+  button.go { background:var(--sign); color:var(--sign-ink); border-color:var(--sign-ink); font-weight:700; grid-column:1/-1; text-align:center; font-size:14px; }
+  button:disabled { opacity:.45; cursor:default; }
+  .think { font:600 12px var(--mono); color:var(--sign); display:none; }
+  .think.on { display:inline; animation:blink 1s infinite; }
+  @keyframes blink { 50% { opacity:.35; } }
+  .feed { display:flex; flex-direction:column; gap:8px; }
+  .msg { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:9px 11px; }
+  .msg .who { font:500 11px var(--mono); color:var(--ink2); display:flex; justify-content:space-between; gap:8px; }
+  .msg p { margin-top:3px; }
+  .msg .did { margin-top:6px; padding-top:6px; border-top:1px dashed var(--line); color:var(--ok); font-size:13px; }
+  .msg.open { border-color:var(--sign); box-shadow:0 0 0 1px var(--sign); }
+  .line { font-size:13px; color:var(--ink2); padding:3px 0; display:grid; grid-template-columns:44px 1fr; gap:6px; }
+  .line b { color:var(--ink); font-weight:600; }
+  .line time { font:500 11px var(--mono); padding-top:2px; }
+  .approve { background:#fff4ec; border:1px solid var(--sign); border-radius:8px; padding:10px 12px; display:grid; gap:8px; }
+  .approve .row { display:flex; gap:8px; } .approve button { flex:1; text-align:center; }
+  .empty { color:var(--ink2); font-size:13px; }
+  .legend { background:var(--card); padding:8px 10px; border-radius:8px; border:1px solid var(--line); font-size:12px; line-height:1.7; }
+  .legend i { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:-1px; }
+  .van { font:700 12px/22px var(--disp); width:26px; height:26px; text-align:center; border-radius:6px; color:#fff; border:2px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,.35); }
+  .van.broken { background:#111 !important; }
+  .leaflet-container { font-family:var(--body); background:#e9ecea; }
+  @media (max-width: 900px) { body { grid-template-columns:1fr; grid-template-rows:50vh 50vh; } #map, aside { height:50vh; } }
+  @media (prefers-reduced-motion: reduce) { .think.on { animation:none; } }
+</style>
+</head>
+<body>
+<div id="map" role="img" aria-label="Live map of the delivery fleet"></div>
+<aside>
+  <header>
+    <div class="sign" aria-label="Detour">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11a5 5 0 0 1 5-5h9"/><path d="M14 2l4 4-4 4"/></svg>
+      DETOUR
+    </div>
+    <div class="clock"><b id="clock">--:--</b><small id="status">Ready</small></div>
+  </header>
+  <div class="score">
+    <div><b id="s-done">0</b><span>Delivered</span></div>
+    <div><b id="s-ok" style="color:var(--ok)">0</b><span>On time</span></div>
+    <div><b id="s-late" style="color:var(--late)">0</b><span>Late</span></div>
+    <div><b id="s-ref">$0</b><span>Refunded</span></div>
+  </div>
+  <section>
+    <h2>Chaos button <span class="think" id="think">● Detour is thinking</span></h2>
+    <div class="chaos">
+      <button class="go" id="start">Start the day</button>
+      <button data-k="breakdown"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-.5-.5-2.5z"/></svg>Break a van</button>
+      <button data-k="closure"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="6" rx="1"/><path d="M7 8l-2 6M12 8l-2 6M17 8l-2 6M6 14v6M18 14v6"/></svg>Close a road</button>
+      <button data-k="urgent"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="5"/><path d="M7 12h10"/></svg>Urgent medicine</button>
+      <button data-k="traffic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17h14v-5l-2-5H7l-2 5z"/><circle cx="8" cy="17" r="2"/><circle cx="16" cy="17" r="2"/></svg>Traffic jam</button>
+      <button data-k="not_home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg>Customer out</button>
+      <button data-k="locked"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Gate locked</button>
+    </div>
+  </section>
+  <section id="approvals-wrap" hidden><h2>Needs your OK</h2><div id="approvals" class="feed"></div></section>
+  <section><h2>Inbox</h2><div id="inbox" class="feed"><p class="empty">Quiet so far. Press Start.</p></div></section>
+  <section><h2>Told the drivers</h2><div id="drivers"><p class="empty">Nothing yet.</p></div></section>
+  <section><h2>Refunds</h2><div id="refunds"><p class="empty">None.</p></div></section>
+  <section style="border:0"><p class="empty">Real Amazon stops (DLA7, Chino CA) · real businesses and roads from OpenStreetMap · every decision traced in neatlogs.</p></section>
+</aside>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+const VAN_COLORS = ["#f26b1d","#2563c9","#16834a","#8b3fd1","#0f9aa8","#c2185b","#5d6b0f","#a0522d"];
+const KIND = { pharmacy:"var(--pharm)", clinic:"var(--clinic)", restaurant:"var(--rest)", home:"var(--home)" };
+const kindHex = { pharmacy:"#d0352b", clinic:"#2563c9", restaurant:"#c88a04", home:"#7b8590" };
+
+const map = L.map("map", { zoomControl:true }).setView([34.0, -117.7], 12);
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom:19, attribution:"© OpenStreetMap contributors" }).addTo(map);
+const legend = L.control({ position:"bottomleft" });
+legend.onAdd = () => { const d = L.DomUtil.create("div","legend"); d.innerHTML =
+  `<div><i style="background:${kindHex.pharmacy}"></i>Pharmacy</div><div><i style="background:${kindHex.clinic}"></i>Clinic</div><div><i style="background:${kindHex.restaurant}"></i>Restaurant</div><div><i style="background:${kindHex.home}"></i>Home</div><div><i style="background:#16834a"></i>Delivered on time</div><div><i style="background:#d0352b;box-shadow:0 0 0 2px #fff,0 0 0 4px #d0352b"></i>Late</div>`; return d; };
+legend.addTo(map);
+
+let stops = {}, vans = {}, lines = {}, closures = [], depot = null, fitted = false;
+
+function stopStyle(o) {
+  if (o.delivered) return { radius: o.kind === "home" ? 4 : 7, color: o.late ? "#d0352b" : "#fff", weight: o.late ? 3 : 1, fillColor: o.late ? "#d0352b" : "#16834a", fillOpacity: .95 };
+  return { radius: o.kind === "home" ? 4 : 7, color: o.urgent ? "#111" : "#fff", weight: o.urgent ? 3 : 1, fillColor: kindHex[o.kind], fillOpacity: .9 };
+}
+
+function draw(s) {
+  if (!depot && s.depot) {
+    depot = L.marker([s.depot.lat, s.depot.lng], { icon: L.divIcon({ className:"", html:'<div class="van" style="background:#11161c;width:34px">HQ</div>', iconSize:[34,26] }) }).addTo(map).bindTooltip(s.depot.name);
+  }
+  const byId = {};
+  for (const o of s.orders) {
+    byId[o.id] = o;
+    if (!stops[o.id]) stops[o.id] = L.circleMarker([o.lat, o.lng], stopStyle(o)).addTo(map);
+    stops[o.id].setStyle(stopStyle(o));
+    stops[o.id].bindTooltip(`${o.id} · ${o.name || "Home"}${o.street ? " · " + o.street : ""}<br>promised ${o.promise}${o.delivered ? " · delivered " + o.delivered : ""}`);
+  }
+  if (!fitted) { map.fitBounds(L.latLngBounds(s.orders.map((o) => [o.lat, o.lng])).pad(0.05)); fitted = true; }
+  s.vans.forEach((v, i) => {
+    const col = VAN_COLORS[i % VAN_COLORS.length];
+    const html = `<div class="van ${v.status === "broken" ? "broken" : ""}" style="background:${col}">${v.status === "broken" ? "✕" : v.id.replace("V","")}</div>`;
+    if (!vans[v.id]) vans[v.id] = L.marker(v.pos, { icon: L.divIcon({ className:"", html, iconSize:[26,26] }), zIndexOffset:1000 }).addTo(map);
+    vans[v.id].setLatLng(v.pos).setIcon(L.divIcon({ className:"", html, iconSize:[26,26] }));
+    vans[v.id].bindTooltip(`${v.name} · ${v.status} · ${v.done} delivered · ${v.plan.length} to go`);
+    const pts = [v.pos, ...v.plan.map((id) => [byId[id].lat, byId[id].lng])];
+    if (!lines[v.id]) lines[v.id] = L.polyline(pts, { color: col, weight: 2.5, opacity: .75, dashArray: "6 6" }).addTo(map);
+    lines[v.id].setLatLngs(v.status === "broken" ? [] : pts);
+  });
+  closures.forEach((c) => map.removeLayer(c));
+  closures = (s.closures || []).map((c) => L.circle([c.lat, c.lng], { radius: c.km * 1000, color: "#d0352b", weight: 2, dashArray: "4 4", fillColor: "#d0352b", fillOpacity: .08 }).addTo(map).bindTooltip("Road closed"));
+}
+
+function panel(s) {
+  $("clock").textContent = s.clock || "--:--";
+  $("status").textContent = s.idle ? "Ready" : s.running ? "Fleet on the road" : "Day finished";
+  $("think").classList.toggle("on", !!s.thinking);
+  $("start").disabled = !!s.running;
+  if (s.idle) return;
+  $("s-done").textContent = `${s.score.delivered}/${s.score.total}`;
+  $("s-ok").textContent = s.score.on_time;
+  $("s-late").textContent = s.score.late;
+  $("s-ref").textContent = "$" + s.score.refunds_usd.toFixed(2);
+  $("inbox").innerHTML = s.inbox.length ? s.inbox.slice().reverse().map((m) =>
+    `<div class="msg ${m.handled ? "" : "open"}"><div class="who"><span>${esc(m.from)}</span><span>${esc(m.t)}</span></div><p>${esc(m.text)}</p>${m.summary ? `<div class="did">✓ ${esc(m.summary)}</div>` : ""}</div>`).join("") : '<p class="empty">Quiet so far.</p>';
+  $("drivers").innerHTML = s.to_drivers.length ? s.to_drivers.slice().reverse().map((m) => `<div class="line"><time>${esc(m.t)}</time><span><b>${esc(m.van)}</b> ${esc(m.text)}</span></div>`).join("") : '<p class="empty">Nothing yet.</p>';
+  $("refunds").innerHTML = s.refunds.length ? s.refunds.map((r) => `<div class="line"><time>${esc(r.order)}</time><span><b>$${(+r.amount).toFixed(2)}</b> ${esc(r.late_min)} min late · ${esc(r.status)} · ${esc(r.via || "")}</span></div>`).join("") : '<p class="empty">None.</p>';
+  $("approvals-wrap").hidden = !s.approvals.length;
+  $("approvals").innerHTML = s.approvals.map((a) => `<div class="approve"><div><b>Refund $${a.req.amount.toFixed(2)}</b> to ${esc(a.req.order)} (${esc(a.req.kind)}), ${a.req.late_min} min late. Over the $10 automatic limit.</div><div class="row"><button data-a="${a.id}" data-y="1">Approve</button><button data-a="${a.id}" data-y="0">Decline</button></div></div>`).join("");
+}
+
+async function tick() {
+  try { const s = await (await fetch("/api/state")).json(); panel(s); if (!s.idle) draw(s); } catch (e) {}
+  setTimeout(tick, 500);
+}
+const post = (u, b) => fetch(u, { method:"POST", headers:{ "content-type":"application/json" }, body: JSON.stringify(b || {}) });
+$("start").onclick = () => post("/api/start", { seed: 7, scripted: !new URLSearchParams(location.search).has("manual") });
+document.querySelectorAll("[data-k]").forEach((b) => b.onclick = () => post("/api/chaos", { kind: b.dataset.k }));
+$("approvals").onclick = (e) => { const b = e.target.closest("[data-a]"); if (b) post("/api/approve", { id: b.dataset.a, approve: b.dataset.y === "1" }); };
+tick();
+</script>
+</body>
+</html>

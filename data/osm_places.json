@@ -1,0 +1,5528 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-07-28T02:16:18Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 358859093,
+  "lat": 34.0779862,
+  "lon": -117.5939807,
+  "tags": {
+    "addr:city": "Rancho Cucamonga",
+    "addr:housenumber": "9674",
+    "addr:postcode": "91730",
+    "addr:street": "Archibald Avenue",
+    "addr:unit": "Suite 125",
+    "amenity": "clinic",
+    "gnis:feature_id": "2455520",
+    "healthcare": "clinic",
+    "healthcare:speciality": "surgery",
+    "name": "Archibald Surgery Center",
+    "old_name": "Benefit Surgery Center",
+    "phone": "+1 909 296 8930",
+    "website": "https://www.archibaldsurgerycenter.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 358859666,
+  "lat": 34.0845763,
+  "lon": -117.6718496,
+  "tags": {
+    "addr:city": "Ontario",
+    "addr:housenumber": "1211",
+    "addr:postcode": "91762",
+    "addr:street": "West 6th Street",
+    "amenity": "clinic",
+    "gnis:feature_id": "2455818",
+    "healthcare": "clinic",
+    "healthcare:speciality": "surgery",
+    "name": "Four Seasons Surgery Centers",
+    "old_name": "Nations Surgery Center"
+  }
+},
+{
+  "type": "node",
+  "id": 358859677,
+  "lat": 34.1027701,
+  "lon": -117.6323509,
+  "tags": {
+    "addr:city": "Upland",
+    "addr:housenumber": "1330",
+    "addr:postcode": "91786",
+    "addr:street": "San Bernardino Road",
+    "addr:unit": "Suite F",
+    "amenity": "clinic",
+    "gnis:feature_id": "2455826",
+    "healthcare": "clinic",
+    "healthcare:speciality": "surgery",
+    "name": "Upland Outpatient Surgical Center",
+    "phone": "+1 909 981 8755",
+    "website": "https://uplandoutpatient.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 443608020,
+  "lat": 34.0638833,
+  "lon": -117.6106545,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "american",
+    "name": "Spire's",
+    "source": "usgs_imagery;local_knowledge"
+  }
+},
+{
+  "type": "node",
+  "id": 475589666,
+  "lat": 34.0960834,
+  "lon": -117.6173586,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "steak_house;seafood",
+    "name": "Cask and Cleaver"
+  }
+},
+{
+  "type": "node",
+  "id": 513269848,
+  "lat": 34.1524397,
+  "lon": -117.6528147,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "italian;mediterranean",
+    "name": "Giuseppe Pizza"
+  }
+},
+{
+  "type": "node",
+  "id": 587616127,
+  "lat": 34.1321804,
+  "lon": -117.6156005,
+  "tags": {
+    "amenity": "pharmacy",
+    "brand": "Walgreens",
+    "brand:wikidata": "Q1591889",
+    "dispensing": "yes",
+    "healthcare": "pharmacy",
+    "name": "Walgreens",
+    "source": "survey;image;usgs_imagery",
+    "source_ref": "AM909_DSCQ4176"
+  }
+},
+{
+  "type": "node",
+  "id": 588149657,
+  "lat": 34.1218566,
+  "lon": -117.5959830,
+  "tags": {
+    "addr:city": "Alta Loma",
+    "addr:housenumber": "9588",
+    "addr:postcode": "91701",
+    "addr:state": "CA",
+    "addr:street": "Base Line Rd",
+    "amenity": "restaurant",
+    "brand": "Sizzler",
+    "brand:wikidata": "Q1848822",
+    "cuisine": "steak_house",
+    "name": "Sizzler",
+    "phone": "+1 909 987 8413"
+  }
+},
+{
+  "type": "node",
+  "id": 588149663,
+  "lat": 34.1229857,
+  "lon": -117.5939480,
+  "tags": {
+    "addr:city": "Rancho Cucamonga",
+    "addr:housenumber": "7228",
+    "addr:postcode": "91701",
+    "addr:state": "CA",
+    "addr:street": "Archibald Avenue",
+    "amenity": "restaurant",
+    "brand": "IHOP",
+    "brand:wikidata": "Q1185675",
+    "check_date": "2024-09-01",
+    "cuisine": "breakfast;pancake",
+    "name": "IHOP",
+    "opening_hours": "Mo-Su 07:00-22:00; Fr,Sa 07:00-24:00",
+    "phone": "+1 909-941-1814",
+    "source": "official website",
+    "website": "https://restaurants.ihop.com/en-us/ca/rancho-cucamonga/breakfast-7228-archibald-ave-759"
+  }
+},
+{
+  "type": "node",
+  "id": 652669884,
+  "lat": 34.1257130,
+  "lon": -117.8115050,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "steak_house",
+    "motorcar": "no",
+    "name": "Pinnacle Peak",
+    "source": "survey;image;usgs_imagery",
+    "source_ref": "AM909_DSCS5497"
+  }
+},
+{
+  "type": "node",
+  "id": 1127231587,
+  "lat": 34.0662098,
+  "lon": -117.6097301,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Porter's Prime"
+  }
+},
+{
+  "type": "node",
+  "id": 1165054370,
+  "lat": 34.0296367,
+  "lon": -117.6121641,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Zendejas Mexican Grill",
+    "source": "survey;image",
+    "source_ref": "AM909_DSCX0697"
+  }
+},
+{
+  "type": "node",
+  "id": 1588726486,
+  "lat": 34.0947908,
+  "lon": -117.7162545,
+  "tags": {
+    "addr:city": "Claremont",
+    "addr:housenumber": "102",
+    "addr:postcode": "91711",
+    "addr:state": "CA",
+    "addr:street": "Harvard Ave",
+    "addr:street_direction_prefix": "N",
+    "amenity": "restaurant",
+    "cuisine": "italian",
+    "name": "Tutti Mangia Italian Grill",
+    "opening_hours": "Tu-Th 17:00-21:00; Fr 17:00-22:00; Sa 16:00-22:00; Su 16:00-21:00",
+    "source": "bing_imagery_0.06m_200801;survey;image",
+    "source_ref": "AM909_DSCY3184"
+  }
+},
+{
+  "type": "node",
+  "id": 1588726487,
+  "lat": 34.0969321,
+  "lon": -117.7177039,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "afghan",
+    "name": "Walter's",
+    "source": "bing_imagery_0.06m_200801;survey;image",
+    "source_ref": "AM909_DSCY3196"
+  }
+},
+{
+  "type": "node",
+  "id": 1634480770,
+  "lat": 34.0944334,
+  "lon": -117.7195113,
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Blaze Pizza",
+    "brand:wikidata": "Q23016666",
+    "cuisine": "pizza",
+    "name": "Blaze Pizza",
+    "note": "previously American Apparel",
+    "opening_hours": "Su-Th 10:30-22:00; Fr,Sa 10:30-24:00"
+  }
+},
+{
+  "type": "node",
+  "id": 1772279899,
+  "lat": 34.1058028,
+  "lon": -117.8063560,
+  "tags": {
+    "amenity": "pharmacy",
+    "brand": "CVS Pharmacy",
+    "brand:website": "https://www.cvs.com/",
+    "brand:wikidata": "Q2078880",
+    "healthcare": "pharmacy",
+    "name": "CVS Pharmacy",
+    "short_name": "CVS"
+  }
+},
+{
+  "type": "node",
+  "id": 2543220574,
+  "lat": 34.0333999,
+  "lon": -117.6678235,
+  "tags": {
+    "addr:city": "Ontario",
+    "addr:housename": "Pizza Pirates",
+    "addr:housenumber": "2207",
+    "addr:postcode": "91762",
+    "addr:street": "South Mountain Avenue",
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "name": "Pizza Pirates"
+  }
+},
+{
+  "type": "node",
+  "id": 2627701136,
+  "lat": 34.0957649,
+  "lon": -117.7177301,
+  "tags": {
+    "addr:city": "Claremont",
+    "addr:housename": "Verbal Building",
+    "addr:housenumber": "200",
+    "addr:postcode": "91711",
+    "addr:street": "Yale Avenue",
+    "amenity": "restaurant",
+    "capacity": "100",
+    "cuisine": "pizza",
+    "name": "Pizza 'N' Such",
+    "opening_hours": "Su,Mo 11:00-20:00; We-Sa 11:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 2643156202,
+  "lat": 34.0185502,
+  "lon": -117.5938730,
+  "tags": {
+    "amenity": "pharmacy",
+    "brand": "Rite Aid",
+    "brand:wikidata": "Q3433273",
+    "healthcare": "pharmacy",
+    "name": "Rite Aid"
+  }
+},
+{
+  "type": "node",
+  "id": 2738810249,
+  "lat": 34.0417904,
+  "lon": -117.7985373,
+  "tags": {
+    "addr:city": "Pomona",
+    "addr:housenumber": "3052",
+    "addr:postcode": "91766",
+    "addr:street": "Temple Avenue",
+    "amenity": "restaurant",
+    "cuisine": "donut",
+    "name": "Pixie Donuts"
+  }
+},
+{
+  "type": "node",
+  "id": 3052530598,
+  "lat": 33.9715664,
+  "lon": -117.6903906,
+  "tags": {
+    "addr:city": "Chino Hills",
+    "addr:housenumber": "15421",
+    "addr:postcode": "91709",
+    "addr:street": "Fairfield Ranch Road",
+    "amenity": "restaurant",
+    "name": "Archibalds"
+  }
+},
+{
+  "type": "node",
+  "id": 3052530599,
+  "lat": 33.9714507,
+  "lon": -117.6898050,
+  "tags": {
+    "addr:city": "Chino Hills",
+    "addr:housenumber": "15459",
+    "addr:postcode": "91709",
+    "addr:street": "Fairfield Ranch Road",
+    "amenity": "restaurant",
+    "brand": "Denny's",
+    "brand:wikidata": "Q1189695",
+    "cuisine": "american",
+    "name": "Denny's",
+    "opening_hours": "24/7"
+  }
+},
+{
+  "type": "node",
+  "id": 3052536549,
+  "lat": 33.9630867,
+  "lon": -117.6941053,
+  "tags": {
+    "addr:city": "Chino Hills",
+    "addr:housenumber": "15890",
+    "addr:postcode": "91709",
+    "addr:street": "Soquel Canyon Parkway",
+    "amenity": "pharmacy",
+    "brand": "Rite Aid",
+    "brand:wikidata": "Q3433273",
+    "check_date": "2024-06-19",
+    "healthcare": "pharmacy",
+    "name": "Rite Aid",
+    "website": "https://www.riteaid.com/locations/ca/chino-hills/15890-soquel-canyon-parkway.html"
+  }
+},
+{
+  "type": "node",
+  "id": 3052729554,
+  "lat": 34.0011930,
+  "lon": -117.7293400,
+  "tags": {
+    "addr:city": "Chino Hills",
+    "addr:postcode": "91709",
+    "addr:state": "CA",
+    "addr:street": "Shoppes Drive",
+    "amenity": "restaurant",
+    "cuisine": "ramen",
+    "name": "Silverlake Ramen",
+    "opening_hours": "Mo-Su 09:00-21:00",
+    "phone": "+1-909-696-6052",
+    "website": "https://silverlakeramen.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 3052742170,
+  "lat": 33.9822546,
+  "lon": -117.7028822,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Soup N Fresh"
+  }
+},
+{
+  "type": "node",
+  "id": 3088548295,
+  "lat": 33.8684854,
+  "lon": -117.7446340,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "japanese",
+    "name": "Yamashiro Teriyaki"
+  }
+},
+{
+  "type": "node",
+  "id": 3088548296,
+  "lat": 33.8684093,
+  "lon": -117.7445930,
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Pizza Hut",
+    "brand:wikidata": "Q191615",
+    "cuisine": "pizza",
+    "name": "Pizza Hut",
+    "operator": "Yum! Brands"
+  }
+},
+{
+  "type": "node",
+  "id": 3137552474,
+  "lat": 34.0983289,
+  "lon": -117.7000748,
+  "tags": {
+    "amenity": "restaurant",
+    "capacity": "100",
+    "cuisine": "asian",
+    "name": "Noodle World Jr.",
+    "smoking": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 3144344798,
+  "lat": 33.8540325,
+  "lon": -117.8667466,
+  "tags": {
+    "addr:city": "Anaheim",
+    "addr:housenumber": "1211",
+    "addr:postcode": "92886",
+    "addr:street": "North Las Brisas Street",
+    "amenity": "restaurant",
+    "capacity": "50",
+    "cuisine": "brewery;pub;american",
+    "name": "Phantom Ales",
+    "opening_hours": "Su-We 11:00-19:0; Th-Sa 11:00-23:00"
+  }
+},
+{
+  "type": "node",
+  "id": 3625542644,
+  "lat": 34.0026351,
+  "lon": -117.8093844,
+  "tags": {
+    "addr:city": "Diamond Bar",
+    "addr:state": "CA",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Y. Wang MD"
+  }
+},
+{
+  "type": "node",
+  "id": 3625670015,
+  "lat": 34.0024739,
+  "lon": -117.8099164,
+  "tags": {
+    "addr:city": "Diamond Bar",
+    "addr:housenumber": "1136",
+    "addr:postcode": "91765",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "asian",
+    "name": "Saigon Noodle House"
+  }
+},
+{
+  "type": "node",
+  "id": 3625939864,
+  "lat": 33.9744385,
+  "lon": -117.8379265,
+  "tags": {
+    "addr:city": "Diamond Bar",
+    "addr:housenumber": "2841",
+    "addr:state": "CA",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "restaurant",
+    "check_date": "2024-03-15",
+    "cuisine": "korean",
+    "name": "Tong Tong Tang"
+  }
+},
+{
+  "type": "node",
+  "id": 3625945987,
+  "lat": 33.9746626,
+  "lon": -117.8378106,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2024-03-15",
+    "name": "Young Dong Tofu"
+  }
+},
+{
+  "type": "node",
+  "id": 3765581013,
+  "lat": 34.0943979,
+  "lon": -117.7216736,
+  "tags": {
+    "addr:city": "Claremont",
+    "addr:housenumber": "580",
+    "addr:postcode": "91711",
+    "addr:street": "West 1st Street",
+    "amenity": "restaurant",
+    "cuisine": "burger",
+    "name": "Eureka!"
+  }
+},
+{
+  "type": "node",
+  "id": 4091101534,
+  "lat": 34.0940800,
+  "lon": -117.7217216,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "The Host"
+  }
+},
+{
+  "type": "node",
+  "id": 4311466231,
+  "lat": 34.0646915,
+  "lon": -117.7073985,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican"
+  }
+},
+{
+  "type": "node",
+  "id": 4311466472,
+  "lat": 34.0635264,
+  "lon": -117.7100978,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "burger"
+  }
+},
+{
+  "type": "node",
+  "id": 4342033525,
+  "lat": 34.1279990,
+  "lon": -117.8652715,
+  "tags": {
+    "amenity": "clinic",
+    "brand": "Planned Parenthood",
+    "brand:wikidata": "Q2553262",
+    "healthcare": "counselling",
+    "healthcare:counselling": "antenatal;sexual",
+    "name": "Planned Parenthood"
+  }
+},
+{
+  "type": "node",
+  "id": 4433244889,
+  "lat": 34.0568477,
+  "lon": -117.6703798,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Mandarin House",
+    "name:en": "Mandarin House"
+  }
+},
+{
+  "type": "node",
+  "id": 4566281896,
+  "lat": 33.9999141,
+  "lon": -117.8094384,
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Pizza Hut",
+    "brand:wikidata": "Q191615",
+    "cuisine": "pizza",
+    "name": "Pizza Hut"
+  }
+},
+{
+  "type": "node",
+  "id": 4567738217,
+  "lat": 34.0130133,
+  "lon": -117.7434897,
+  "tags": {
+    "amenity": "pharmacy",
+    "brand": "CVS Pharmacy",
+    "brand:website": "https://www.cvs.com/",
+    "brand:wikidata": "Q2078880",
+    "dispensing": "yes",
+    "healthcare": "pharmacy",
+    "name": "CVS Pharmacy",
+    "short_name": "CVS"
+  }
+},
+{
+  "type": "node",
+  "id": 4567738218,
+  "lat": 34.0091397,
+  "lon": -117.7413499,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Home Cooking"
+  }
+},
+{
+  "type": "node",
+  "id": 4570863145,
+  "lat": 34.0006890,
+  "lon": -117.8125473,
+  "tags": {
+    "addr:city": "Diamond Bar",
+    "addr:housenumber": "1139",
+    "addr:postcode": "91765",
+    "addr:street": "Grand Avenue",
+    "amenity": "restaurant",
+    "brand": "Round Table Pizza",
+    "brand:wikidata": "Q7371139",
+    "cuisine": "pizza",
+    "name": "Round Table Pizza"
+  }
+},
+{
+  "type": "node",
+  "id": 4570869953,
+  "lat": 34.0021634,
+  "lon": -117.8115926,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "Jimmy's poke and sushi burrito 2",
+    "opening_hours": "Mo-Sa 11:00-21:00; Su 11:30-21:00",
+    "phone": "+1-909-610-0758",
+    "website": "https://jimmyspokedb.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 4570869956,
+  "lat": 34.0025953,
+  "lon": -117.8113126,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "Cho Dang Tofu"
+  }
+},
+{
+  "type": "node",
+  "id": 4570869959,
+  "lat": 34.0022740,
+  "lon": -117.8115298,
+  "tags": {
+    "addr:city": "Diamond Bar",
+    "addr:housenumber": "1155",
+    "addr:postcode": "91765",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "Bull Daemon King Cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 4572131791,
+  "lat": 34.0015508,
+  "lon": -117.8093338,
+  "tags": {
+    "addr:city": "Diamond Bar",
+    "addr:housenumber": "1178",
+    "addr:postcode": "91765",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "sushi",
+    "name": "Kyala Sushi and Japanese Cuisine"
+  }
+},
+{
+  "type": "node",
+  "id": 4572131792,
+  "lat": 34.0017171,
+  "lon": -117.8092461,
+  "tags": {
+    "addr:city": "Diamond Bar",
+    "addr:state": "CA",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "clinic",
+    "healthcare": "clinic",
+    "name": "Foot Doctor"
+  }
+},
+{
+  "type": "node",
+  "id": 4572131794,
+  "lat": 34.0023518,
+  "lon": -117.8091309,
+  "tags": {
+    "addr:city": "Diamond Bar",
+    "addr:housenumber": "1124",
+    "addr:postcode": "91765",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "restaurant",
+    "name": "Jade House Chinese Cuisine & BBQ",
+    "website": "https://www.jadehouseseafoodbbq.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 4630214493,
+  "lat": 34.1322562,
+  "lon": -117.6147960,
+  "tags": {
+    "addr:city": "Alta Loma",
+    "addr:housenumber": "6709",
+    "addr:postcode": "91701",
+    "addr:state": "CA",
+    "addr:street": "Carnelian Street",
+    "amenity": "restaurant",
+    "cuisine": "american",
+    "delivery": "no",
+    "name": "Terry's Burgers",
+    "opening_hours": "06:30-21:30",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 4727022689,
+  "lat": 33.8954132,
+  "lon": -117.5978226,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Corona Airport Cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 4755242378,
+  "lat": 34.0341307,
+  "lon": -117.7584131,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "breakfast",
+    "name": "Corky's Kitchen"
+  }
+},
+{
+  "type": "node",
+  "id": 4755242379,
+  "lat": 34.0342752,
+  "lon": -117.7586089,
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Pieology Pizzeria",
+    "brand:wikidata": "Q60746053",
+    "cuisine": "pizza",
+    "name": "Pieology Pizzeria"
+  }
+},
+{
+  "type": "node",
+  "id": 4762210979,
+  "lat": 33.9597895,
+  "lon": -117.5958289,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Si Como No!"
+  }
+},
+{
+  "type": "node",
+  "id": 4762211000,
+  "lat": 33.9594695,
+  "lon": -117.5925115,
+  "tags": {
+    "addr:city": "Corona",
+    "addr:housenumber": "7056",
+    "addr:postcode": "92880",
+    "addr:state": "CA",
+    "addr:street": "Archibald Avenue",
+    "amenity": "restaurant",
+    "brand": "Pizza Hut",
+    "brand:wikidata": "Q191615",
+    "cuisine": "pizza",
+    "name": "Pizza Hut",
+    "phone": "+1 951-547-8894",
+    "website": "https://locations.pizzahut.com/ca/corona/7056-archibald-ave"
+  }
+},
+{
+  "type": "node",
+  "id": 4790760621,
+  "lat": 33.8857108,
+  "lon": -117.8632639,
+  "tags": {
+    "addr:postcode": "92870",
+    "addr:street": "North Kraemer Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "american",
+    "name": "Philly's Best"
+  }
+},
+{
+  "type": "node",
+  "id": 4975093921,
+  "lat": 33.9984203,
+  "lon": -117.8452674,
+  "tags": {
+    "addr:housenumber": "21050",
+    "addr:postcode": "91789",
+    "addr:street": "Golden Springs Drive",
+    "amenity": "restaurant",
+    "cuisine": "korean",
+    "name": "IL Poom",
+    "phone": "+1-909-869-0011"
+  }
+},
+{
+  "type": "node",
+  "id": 5125750323,
+  "lat": 33.8870683,
+  "lon": -117.8621648,
+  "tags": {
+    "addr:housenumber": "1448",
+    "addr:postcode": "92870",
+    "addr:street": "North Kraemer Boulevard",
+    "amenity": "restaurant",
+    "name": "Shanghai Garden Chinese Restaurant",
+    "phone": "+1-714-993-3788"
+  }
+},
+{
+  "type": "node",
+  "id": 5278673422,
+  "lat": 34.0325923,
+  "lon": -117.6087110,
+  "tags": {
+    "addr:housenumber": "2295",
+    "addr:postcode": "91761",
+    "addr:street": "South Vineyard Avenue",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Family Medicine",
+    "phone": "+1-888-750-0036"
+  }
+},
+{
+  "type": "node",
+  "id": 5703284025,
+  "lat": 34.0965088,
+  "lon": -117.7166563,
+  "tags": {
+    "amenity": "restaurant"
+  }
+},
+{
+  "type": "node",
+  "id": 5709193229,
+  "lat": 33.9594419,
+  "lon": -117.5946120,
+  "tags": {
+    "amenity": "clinic",
+    "healthcare": "dialysis",
+    "healthcare:speciality": "dialysis",
+    "name": "DaVita Dialysis",
+    "operator": "DaVita Dialysis",
+    "operator:wikidata": "Q5207184",
+    "operator:wikipedia": "de:DaVita"
+  }
+},
+{
+  "type": "node",
+  "id": 5786096034,
+  "lat": 34.0194621,
+  "lon": -117.8102321,
+  "tags": {
+    "addr:city": "Diamond Bar",
+    "addr:housenumber": "303",
+    "addr:postcode": "91765",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "indian",
+    "name": "Dilliwala Kitchen",
+    "opening_hours": "Tu-Sa 11:00-14:30,17:00-21:30; Su 11:00-14:30,17:00-20:30",
+    "website": "https://dilliwala.online/"
+  }
+},
+{
+  "type": "node",
+  "id": 5909332235,
+  "lat": 34.0339025,
+  "lon": -117.7152060,
+  "tags": {
+    "addr:city": "Chino",
+    "addr:housenumber": "4122",
+    "addr:postcode": "91710",
+    "addr:state": "CA",
+    "addr:street": "Philadelphia Street",
+    "amenity": "restaurant",
+    "cuisine": "mexican;tacos",
+    "name": "Mi Pueblo Santa Rita 2"
+  }
+},
+{
+  "type": "node",
+  "id": 5947148152,
+  "lat": 34.1059966,
+  "lon": -117.7483716,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Happy Wok"
+  }
+},
+{
+  "type": "node",
+  "id": 6193256511,
+  "lat": 34.1149625,
+  "lon": -117.7748698,
+  "tags": {
+    "addr:city": "La Verne",
+    "addr:housenumber": "1532",
+    "addr:postcode": "91750",
+    "addr:state": "CA",
+    "addr:street": "Foothill Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "italian;pizza",
+    "name": "Pizza 'N Stuff",
+    "opening_hours": "Su-Th 11:00-21:00; Fr-Sa 11:00-21:30",
+    "outdoor_seating": "no",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6193461305,
+  "lat": 34.1186787,
+  "lon": -117.7753298,
+  "tags": {
+    "addr:city": "La Verne",
+    "addr:housenumber": "1453",
+    "addr:postcode": "91750",
+    "addr:state": "CA",
+    "addr:street": "Foothill Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "asian",
+    "name": "Flying Rice",
+    "opening_hours": "Su off; Mo-Sa 11:00-19:30",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6193759370,
+  "lat": 34.1173352,
+  "lon": -117.7753722,
+  "tags": {
+    "addr:city": "La Verne",
+    "addr:housenumber": "1483",
+    "addr:postcode": "91750",
+    "addr:state": "CA",
+    "addr:street": "Foothill Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "Tasty Goody",
+    "opening_hours": "Su-Th 11:00-21:00; Fr-Sa 11:00-21:30",
+    "outdoor_seating": "no",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6193759373,
+  "lat": 34.1183682,
+  "lon": -117.7753660,
+  "tags": {
+    "addr:city": "La Verne",
+    "addr:housenumber": "1465",
+    "addr:postcode": "91750",
+    "addr:state": "CA",
+    "addr:street": "Foothill Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "delivery": "yes",
+    "name": "Red Devil Pizza",
+    "opening_hours": "Mo-Su 11:00-23:00",
+    "outdoor_seating": "yes",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6193776789,
+  "lat": 34.1125885,
+  "lon": -117.7664770,
+  "tags": {
+    "addr:city": "La Verne",
+    "addr:housenumber": "2086",
+    "addr:postcode": "91750",
+    "addr:state": "CA",
+    "addr:street": "Foothill Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "italian",
+    "name": "Pasta Cucina Rustica",
+    "opening_hours": "Su-Th 11:00-21:00; Fr-Sa 11:00-22:00",
+    "outdoor_seating": "no",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6196092621,
+  "lat": 34.1149981,
+  "lon": -117.7750153,
+  "tags": {
+    "addr:city": "La Verne",
+    "addr:housenumber": "1524",
+    "addr:postcode": "91750",
+    "addr:state": "CA",
+    "addr:street": "Foothill Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "El Patron II Authentic Mexican Food",
+    "opening_hours": "Su-Mo off; Tu-Sa 11:00-20:30",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6196309906,
+  "lat": 34.0985219,
+  "lon": -117.7750815,
+  "tags": {
+    "addr:city": "La Verne",
+    "addr:housenumber": "1904",
+    "addr:postcode": "91750",
+    "addr:state": "CA",
+    "addr:street": "Arrow Highway",
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "delivery": "no",
+    "name": "Tavos Tacos",
+    "opening_hours": "Mo off; Tu-Th 16:00-23:00; Fr-Sa 16:00-24:00; Su 16:00-21:00",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6198811599,
+  "lat": 34.1142080,
+  "lon": -117.7664791,
+  "tags": {
+    "addr:city": "La Verne",
+    "addr:housenumber": "2007",
+    "addr:postcode": "91750",
+    "addr:state": "CA",
+    "addr:street": "Foothill Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "asian",
+    "name": "Taste of Asia",
+    "opening_hours": "Mo off; Tu-Th 11:00-21:00; Fr-Sa 11:00-22:00; Su 12:00-21:00",
+    "outdoor_seating": "no",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6198811600,
+  "lat": 34.1142109,
+  "lon": -117.7660507,
+  "tags": {
+    "addr:city": "La Verne",
+    "addr:housenumber": "2021",
+    "addr:postcode": "91750",
+    "addr:state": "CA",
+    "addr:street": "Foothill Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "delivery": "yes",
+    "name": "Pizza Barn",
+    "opening_hours": "Mo-Th 11:00-22:00; Fr-Sa 11:00-23:00; Su 12:00-21:00",
+    "outdoor_seating": "no",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6199322621,
+  "lat": 34.1148981,
+  "lon": -117.7747461,
+  "tags": {
+    "addr:city": "La Verne",
+    "addr:housenumber": "1570",
+    "addr:postcode": "91750",
+    "addr:state": "CA",
+    "addr:street": "Foothill Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "thai",
+    "name": "Siamese Thai Cuisine"
+  }
+},
+{
+  "type": "node",
+  "id": 6199348855,
+  "lat": 34.1142054,
+  "lon": -117.7644255,
+  "tags": {
+    "addr:city": "La Verne",
+    "addr:housenumber": "2123",
+    "addr:postcode": "91750",
+    "addr:state": "CA",
+    "addr:street": "Foothill Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "japanese",
+    "delivery": "no",
+    "name": "Shogun",
+    "opening_hours": "Mo-Th 11:30-22:00; Fr 11:30-22:30; Sa 12:00-22:30; Su 12:00-21:30",
+    "outdoor_seating": "no",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6199397637,
+  "lat": 34.0958788,
+  "lon": -117.7194739,
+  "tags": {
+    "addr:city": "Claremont",
+    "addr:housenumber": "201",
+    "addr:postcode": "91711",
+    "addr:state": "CA",
+    "addr:street": "Indian Hill Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "indian",
+    "name": "Daddy Ji Finest Indian Cuisine",
+    "outdoor_seating": "no",
+    "phone": "+1-909-626-0020",
+    "website": "https://orderdaddyji.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 6199414166,
+  "lat": 34.1108578,
+  "lon": -117.7589193,
+  "tags": {
+    "addr:city": "La Verne",
+    "addr:housenumber": "2488",
+    "addr:postcode": "91750",
+    "addr:state": "CA",
+    "addr:street": "Foothill Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "breakfast;american",
+    "name": "Broken Yolk",
+    "opening_hours": "Mo-Su 09:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 6199573673,
+  "lat": 34.1134955,
+  "lon": -117.7641572,
+  "tags": {
+    "addr:city": "La Verne",
+    "addr:housenumber": "2143",
+    "addr:postcode": "91750",
+    "addr:state": "CA",
+    "addr:street": "Foothill Boulevard",
+    "amenity": "pharmacy",
+    "dispensing": "yes",
+    "drive_through": "no",
+    "healthcare": "pharmacy",
+    "name": "986 Pharmacy",
+    "opening_hours": "Su off; Mo-Fr 09:00-18:00; Sa 09:00-16:00"
+  }
+},
+{
+  "type": "node",
+  "id": 6464342095,
+  "lat": 33.8521797,
+  "lon": -117.7930635,
+  "tags": {
+    "addr:housenumber": "5555 E",
+    "addr:postcode": "92807",
+    "addr:state": "CA",
+    "addr:street": "Santa Ana Canyon Road",
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "Sino Fusion Chinese Restaurant",
+    "name:zh": "八號公館"
+  }
+},
+{
+  "type": "node",
+  "id": 6522079699,
+  "lat": 34.0718116,
+  "lon": -117.5928069,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "name": "Joey's Pizza"
+  }
+},
+{
+  "type": "node",
+  "id": 6522079702,
+  "lat": 34.0715932,
+  "lon": -117.5924083,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "thai",
+    "name": "Ontar Thai"
+  }
+},
+{
+  "type": "node",
+  "id": 6524138491,
+  "lat": 33.9842176,
+  "lon": -117.7143924,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "name": "Woodstone Pizzeria"
+  }
+},
+{
+  "type": "node",
+  "id": 6524138495,
+  "lat": 33.9812801,
+  "lon": -117.7146443,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "The Noodle"
+  }
+},
+{
+  "type": "node",
+  "id": 6524138508,
+  "lat": 33.9636096,
+  "lon": -117.6943695,
+  "tags": {
+    "addr:city": "Chino Hills",
+    "addr:housenumber": "15870",
+    "addr:postcode": "91709",
+    "addr:street": "Soquel Canyon Parkway",
+    "amenity": "restaurant",
+    "cuisine": "japanese",
+    "name": "Vanilla Fish"
+  }
+},
+{
+  "type": "node",
+  "id": 6524138529,
+  "lat": 33.9650026,
+  "lon": -117.6912189,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "ice_cream;churro",
+    "name": "The Loop"
+  }
+},
+{
+  "type": "node",
+  "id": 6536405685,
+  "lat": 34.0345095,
+  "lon": -117.7600800,
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Golden Corral",
+    "brand:wikidata": "Q4039560",
+    "cuisine": "american;buffet",
+    "name": "Golden Corral"
+  }
+},
+{
+  "type": "node",
+  "id": 6546804596,
+  "lat": 34.0809368,
+  "lon": -117.7185914,
+  "tags": {
+    "addr:street": "Indian Hill Boulevard",
+    "amenity": "restaurant",
+    "brand": "Denny's",
+    "brand:wikidata": "Q1189695",
+    "cuisine": "american",
+    "name": "Denny's"
+  }
+},
+{
+  "type": "node",
+  "id": 6562143453,
+  "lat": 34.1149812,
+  "lon": -117.8293381,
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Blaze Pizza",
+    "brand:wikidata": "Q23016666",
+    "cuisine": "pizza",
+    "name": "Blaze Pizza"
+  }
+},
+{
+  "type": "node",
+  "id": 6597387163,
+  "lat": 34.0014740,
+  "lon": -117.7350203,
+  "tags": {
+    "addr:housenumber": "3233",
+    "addr:street": "Grand Ave",
+    "amenity": "restaurant",
+    "name": "YoungDong Korean BBQ",
+    "phone": "+1 909-613-1888"
+  }
+},
+{
+  "type": "node",
+  "id": 6699344456,
+  "lat": 34.0782378,
+  "lon": -117.6268726,
+  "tags": {
+    "alt_name": "Pho King",
+    "amenity": "restaurant",
+    "cuisine": "pho;vietnamese",
+    "name": "Phở King"
+  }
+},
+{
+  "type": "node",
+  "id": 6699713211,
+  "lat": 34.0602936,
+  "lon": -117.5985278,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Tap & Pour Gastropub",
+    "opening_hours": "Mo-Su,PH 04:00-12:30",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6699713228,
+  "lat": 34.0602863,
+  "lon": -117.5983521,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "name": "Pizza Vino Fine Gourmet Pizza",
+    "opening_hours": "Mo-Su,PH 08:00-18:00",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6717301326,
+  "lat": 33.9642827,
+  "lon": -117.6928392,
+  "tags": {
+    "addr:city": "Chino Hills",
+    "addr:housenumber": "15850",
+    "addr:postcode": "91709",
+    "addr:street": "Soquel Canyon Parkway",
+    "amenity": "restaurant",
+    "cuisine": "poke",
+    "name": "Poke Cat",
+    "opening_hours": "Mo-Sa 11:00-19:00"
+  }
+},
+{
+  "type": "node",
+  "id": 6848267301,
+  "lat": 34.0206682,
+  "lon": -117.8087103,
+  "tags": {
+    "amenity": "pharmacy",
+    "brand": "CVS Pharmacy",
+    "brand:website": "https://www.cvs.com/",
+    "brand:wikidata": "Q2078880",
+    "dispensing": "yes",
+    "healthcare": "pharmacy",
+    "name": "CVS Pharmacy",
+    "short_name": "CVS",
+    "website": "https://www.cvs.com/store-locator/diamond-bar-ca-pharmacies/300-south-diamond-bar-boulevard-diamond-bar-ca-91765/storeid=9667"
+  }
+},
+{
+  "type": "node",
+  "id": 6849017572,
+  "lat": 34.1077463,
+  "lon": -117.6100058,
+  "tags": {
+    "amenity": "pharmacy",
+    "brand": "CVS Pharmacy",
+    "brand:website": "https://www.cvs.com/",
+    "brand:wikidata": "Q2078880",
+    "dispensing": "yes",
+    "healthcare": "pharmacy",
+    "name": "CVS Pharmacy",
+    "short_name": "CVS",
+    "website": "https://www.cvs.com/store-locator/rancho-cucamonga-ca-pharmacies/8956-foothill-blvd-rancho-cucamonga-ca-91730/storeid=10914"
+  }
+},
+{
+  "type": "node",
+  "id": 6852974345,
+  "lat": 34.0006995,
+  "lon": -117.7334834,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Casa Juanchos"
+  }
+},
+{
+  "type": "node",
+  "id": 6901027324,
+  "lat": 34.0034814,
+  "lon": -117.6533881,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "China Bowl"
+  }
+},
+{
+  "type": "node",
+  "id": 6901027326,
+  "lat": 34.0035103,
+  "lon": -117.6536120,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "The Meat Cellar"
+  }
+},
+{
+  "type": "node",
+  "id": 6901149946,
+  "lat": 34.0333672,
+  "lon": -117.6502765,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Casa Cortez"
+  }
+},
+{
+  "type": "node",
+  "id": 6901149952,
+  "lat": 34.0335268,
+  "lon": -117.6518168,
+  "tags": {
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Foot Doctor"
+  }
+},
+{
+  "type": "node",
+  "id": 6901149960,
+  "lat": 34.0322341,
+  "lon": -117.6522008,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "China Chilli Express"
+  }
+},
+{
+  "type": "node",
+  "id": 6901149961,
+  "lat": 34.0323550,
+  "lon": -117.6524313,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican;seafood",
+    "name": "Mariscos Sinalao Style"
+  }
+},
+{
+  "type": "node",
+  "id": 6901149964,
+  "lat": 34.0322349,
+  "lon": -117.6520678,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "salvadoran",
+    "name": "Salpicón Salvadoran Restaurant"
+  }
+},
+{
+  "type": "node",
+  "id": 6901149967,
+  "lat": 34.0322400,
+  "lon": -117.6518363,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Tortas Sinalao"
+  }
+},
+{
+  "type": "node",
+  "id": 6901252577,
+  "lat": 34.0336101,
+  "lon": -117.6289357,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "japanese",
+    "name": "Wabi Sabi"
+  }
+},
+{
+  "type": "node",
+  "id": 6904057548,
+  "lat": 34.0951506,
+  "lon": -117.7195865,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "sushi",
+    "name": "Kazama Sushi"
+  }
+},
+{
+  "type": "node",
+  "id": 6904057555,
+  "lat": 34.0953858,
+  "lon": -117.7195020,
+  "tags": {
+    "amenity": "restaurant"
+  }
+},
+{
+  "type": "node",
+  "id": 6904057557,
+  "lat": 34.0957967,
+  "lon": -117.7195160,
+  "tags": {
+    "addr:city": "Claremont",
+    "addr:housenumber": "201",
+    "addr:postcode": "91711",
+    "addr:state": "CA",
+    "addr:street": "Indian Hill Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "creole",
+    "name": "The Quarter Creole Cusine",
+    "phone": "+1-909-482-2200",
+    "website": "https://www.thequartercreole.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 6904057560,
+  "lat": 34.0950378,
+  "lon": -117.7198685,
+  "tags": {
+    "addr:city": "Claremont",
+    "addr:housenumber": "101",
+    "addr:postcode": "91711",
+    "addr:state": "CA",
+    "addr:street": "N Indian Hill Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Casa Maguey"
+  }
+},
+{
+  "type": "node",
+  "id": 6904057562,
+  "lat": 34.0944497,
+  "lon": -117.7200858,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2026-03-14",
+    "cuisine": "thai",
+    "diet:vegan": "yes",
+    "diet:vegetarian": "yes",
+    "name": "Bua Thai Cuisine"
+  }
+},
+{
+  "type": "node",
+  "id": 6904057563,
+  "lat": 34.0944281,
+  "lon": -117.7210242,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "barbecue",
+    "name": "Gus's BBQ",
+    "opening_hours": "Mo-Th 11:00-23:00; Fr 11:00-24:00, Sa 08:30-24:00, Su 08:30-22:00",
+    "phone": "+1-909-445-0931",
+    "website": "https://www.gussbbq.com/claremont"
+  }
+},
+{
+  "type": "node",
+  "id": 6940047994,
+  "lat": 34.0347068,
+  "lon": -117.6846252,
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Shakey's",
+    "brand:wikidata": "Q6134929",
+    "cuisine": "pizza",
+    "name": "Shakey's",
+    "outdoor_seating": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6940048105,
+  "lat": 34.0339479,
+  "lon": -117.6879900,
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Ono Hawaiian BBQ",
+    "brand:wikidata": "Q99526964",
+    "cuisine": "barbecue;hawaiian",
+    "name": "Ono Hawaiian BBQ"
+  }
+},
+{
+  "type": "node",
+  "id": 6940048145,
+  "lat": 34.0358906,
+  "lon": -117.6880874,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "steak_house",
+    "name": "Tony's Spunky Steer"
+  }
+},
+{
+  "type": "node",
+  "id": 6940301352,
+  "lat": 34.0345150,
+  "lon": -117.6907730,
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Chuck E. Cheese",
+    "brand:wikidata": "Q2438391",
+    "cuisine": "pizza",
+    "leisure": "amusement_arcade",
+    "name": "Chuck E. Cheese",
+    "website": "https://locations.chuckecheese.com/us/ca/chino/5250-philadelphia"
+  }
+},
+{
+  "type": "node",
+  "id": 6940301519,
+  "lat": 34.0273707,
+  "lon": -117.6888983,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "thai",
+    "name": "Thai Thani Cuisine"
+  }
+},
+{
+  "type": "node",
+  "id": 6940301531,
+  "lat": 34.0272696,
+  "lon": -117.6874695,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "sushi",
+    "name": "Miso Sushi & Grill"
+  }
+},
+{
+  "type": "node",
+  "id": 6949923856,
+  "lat": 34.0267051,
+  "lon": -117.5937366,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Wa Ba Grill"
+  }
+},
+{
+  "type": "node",
+  "id": 6949923857,
+  "lat": 34.0267789,
+  "lon": -117.5937024,
+  "tags": {
+    "addr:city": "Ontario",
+    "addr:housenumber": "2598",
+    "addr:postcode": "91761",
+    "addr:state": "CA",
+    "addr:street": "South Archibald Avenue",
+    "amenity": "restaurant",
+    "brand": "Pizza Hut",
+    "brand:wikidata": "Q191615",
+    "cuisine": "pizza",
+    "name": "Pizza Hut",
+    "phone": "+1 909-923-5566",
+    "website": "https://locations.pizzahut.com/ca/ontario/2598-s-archibald-ave"
+  }
+},
+{
+  "type": "node",
+  "id": 6949924330,
+  "lat": 34.0270833,
+  "lon": -117.6115705,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "poke",
+    "name": "Poke Bistro"
+  }
+},
+{
+  "type": "node",
+  "id": 6959294572,
+  "lat": 33.9757676,
+  "lon": -117.8380055,
+  "tags": {
+    "addr:housenumber": "2767",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "restaurant",
+    "check_date": "2024-03-15",
+    "cuisine": "chinese",
+    "name": "QinJiaMo",
+    "outdoor_seating": "yes",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6988820258,
+  "lat": 33.9994663,
+  "lon": -117.8125480,
+  "tags": {
+    "addr:city": "Diamond Bar",
+    "addr:housenumber": "1261",
+    "addr:postcode": "91765",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "sushi",
+    "name": "Fusion 2 Any 1",
+    "opening_hours": "Mo-Th 11:30-15:00,16:00-21:00; Fr 11:30-21:00; Sa,Su 12:00-21:00",
+    "website": "https://www.fusion2any1.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 6988820259,
+  "lat": 33.9998590,
+  "lon": -117.8128821,
+  "tags": {
+    "addr:city": "Diamond Bar",
+    "addr:housenumber": "1247",
+    "addr:postcode": "91765",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "Wok"
+  }
+},
+{
+  "type": "node",
+  "id": 6990592658,
+  "lat": 34.0000025,
+  "lon": -117.8108365,
+  "tags": {
+    "addr:city": "Diamond Bar",
+    "addr:housenumber": "1220",
+    "addr:postcode": "91765",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "Little Skewer",
+    "name:zh": "老成都",
+    "name:zh-Latn-pinyin": "Lǎo chéngdū",
+    "opening_hours": "Mo-Su 12:00-15:00, 17:00-23:00",
+    "phone": "+1-909-612-0404"
+  }
+},
+{
+  "type": "node",
+  "id": 6990592659,
+  "lat": 33.9999789,
+  "lon": -117.8106627,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "name": "Mr. G's Pizza"
+  }
+},
+{
+  "type": "node",
+  "id": 6990592660,
+  "lat": 33.9996883,
+  "lon": -117.8100701,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "indian",
+    "name": "Diamond Palace"
+  }
+},
+{
+  "type": "node",
+  "id": 6990610374,
+  "lat": 33.9975755,
+  "lon": -117.8136067,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "noodle;chinese",
+    "name": "NoodleMii"
+  }
+},
+{
+  "type": "node",
+  "id": 6991278246,
+  "lat": 34.0781284,
+  "lon": -117.7554651,
+  "tags": {
+    "addr:city": "Pomona",
+    "addr:housenumber": "297",
+    "addr:postcode": "91768",
+    "addr:state": "CA",
+    "addr:street": "West Artesia Street",
+    "addr:unit": "A",
+    "alt_name": "Dr. Chris Harper",
+    "amenity": "clinic",
+    "healthcare": "clinic",
+    "healthcare:speciality": "dermatology",
+    "name": "Chaparral Medical Group",
+    "operator": "Chaparral Medical Group",
+    "operator:type": "private"
+  }
+},
+{
+  "type": "node",
+  "id": 6993561601,
+  "lat": 34.0194775,
+  "lon": -117.8092927,
+  "tags": {
+    "addr:city": "Diamond Bar",
+    "addr:housenumber": "329",
+    "addr:postcode": "91765",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "noodle",
+    "name": "Super Bowl Pho"
+  }
+},
+{
+  "type": "node",
+  "id": 6993561603,
+  "lat": 34.0194264,
+  "lon": -117.8094254,
+  "tags": {
+    "addr:city": "Diamond Bar",
+    "addr:housenumber": "333",
+    "addr:postcode": "91765",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "asian",
+    "name": "Mimi's 5 Bobee"
+  }
+},
+{
+  "type": "node",
+  "id": 6993561605,
+  "lat": 34.0185508,
+  "lon": -117.8107045,
+  "tags": {
+    "addr:city": "Diamond Bar",
+    "addr:housenumber": "23415",
+    "addr:postcode": "91765",
+    "addr:street": "Golden Springs Drive",
+    "alt_name": "Seasons Cafe",
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "Four Seasons Cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 6993561606,
+  "lat": 34.0175416,
+  "lon": -117.8111878,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "indian",
+    "name": "Peacock Gardens Cuisine"
+  }
+},
+{
+  "type": "node",
+  "id": 6993561608,
+  "lat": 34.0232298,
+  "lon": -117.8097452,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "thai;vietnamese;fusion",
+    "name": "Basil and Co."
+  }
+},
+{
+  "type": "node",
+  "id": 7004822461,
+  "lat": 34.1060431,
+  "lon": -117.8184284,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Zendejas"
+  }
+},
+{
+  "type": "node",
+  "id": 7231448678,
+  "lat": 34.1080334,
+  "lon": -117.6646726,
+  "tags": {
+    "addr:city": "Upland",
+    "addr:housenumber": "955",
+    "addr:postcode": "91786",
+    "addr:state": "CA",
+    "addr:street": "W Foothill Blvd",
+    "amenity": "clinic",
+    "fax": "+1-909-256-4223",
+    "healthcare": "clinic",
+    "healthcare:speciality": "psychiatry",
+    "name": "Conscious Behavioral Health",
+    "opening_hours": "Mo-Fr 09:00-17:00",
+    "phone": "+1-909-256-4436"
+  }
+},
+{
+  "type": "node",
+  "id": 7241268948,
+  "lat": 34.1006793,
+  "lon": -117.7702996,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "sushi",
+    "name": "Aoki",
+    "outdoor_seating": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 7281554842,
+  "lat": 34.1002779,
+  "lon": -117.7697969,
+  "tags": {
+    "addr:city": "La Verne",
+    "addr:housenumber": "2124",
+    "addr:postcode": "91750",
+    "addr:state": "CA",
+    "addr:street": "3rd Street",
+    "amenity": "restaurant",
+    "cuisine": "italian",
+    "name": "Cafe Allegro Ristorante Italiano",
+    "outdoor_seating": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 7523379799,
+  "lat": 33.8906085,
+  "lon": -117.8146898,
+  "tags": {
+    "addr:city": "Yorba Linda",
+    "addr:housenumber": "4862",
+    "addr:postcode": "92886",
+    "addr:state": "CA",
+    "addr:street": "Olinda Street",
+    "amenity": "pharmacy",
+    "dispensing": "yes",
+    "healthcare": "pharmacy",
+    "name": "Med Specialties Compounding Pharmacy",
+    "phone": "+1-877-373-2272",
+    "website": "https://www.medspecialtiesrx.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 7523379800,
+  "lat": 33.8901845,
+  "lon": -117.8137760,
+  "tags": {
+    "addr:city": "Yorba Linda",
+    "addr:housenumber": "4884",
+    "addr:postcode": "92886",
+    "addr:state": "CA",
+    "addr:street": "Main Street",
+    "amenity": "restaurant",
+    "name": "Terra Wood-Fired Kitchen",
+    "opening_hours": "Th-Su 03:00-21:00",
+    "phone": "+1-714-463-4424",
+    "website": "https://www.terrawoodfiredkitchen.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 7523379801,
+  "lat": 33.8897539,
+  "lon": -117.8137656,
+  "tags": {
+    "addr:city": "Yorba Linda",
+    "addr:housenumber": "4902",
+    "addr:postcode": "92886",
+    "addr:state": "CA",
+    "addr:street": "Main Street",
+    "amenity": "restaurant",
+    "cuisine": "mexican;italian;american",
+    "name": "Main Street Restaurant",
+    "phone": "+1-714-777-9427",
+    "website": "https://mainstreetyl.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 7523512349,
+  "lat": 33.8897584,
+  "lon": -117.8110268,
+  "tags": {
+    "addr:city": "Yorba Linda",
+    "addr:housenumber": "18507",
+    "addr:postcode": "92886",
+    "addr:state": "CA",
+    "addr:street": "Yorba Linda Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "sushi",
+    "name": "Sushi Noguchi",
+    "phone": "+1-714-777-6789",
+    "website": "https://sushinoguchi.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 7523512351,
+  "lat": 33.8898411,
+  "lon": -117.8103934,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "pizza;pasta",
+    "name": "Sister Sicily Pizza & Pasta",
+    "phone": "+1-714-777-8989"
+  }
+},
+{
+  "type": "node",
+  "id": 7523512353,
+  "lat": 33.8894242,
+  "lon": -117.8094135,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "japanese",
+    "name": "Pokeology",
+    "phone": "+1-714-777-7776"
+  }
+},
+{
+  "type": "node",
+  "id": 7523512354,
+  "lat": 33.8892817,
+  "lon": -117.8093652,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "Tan's House",
+    "phone": "+1-714-777-2453",
+    "website": "tanshouseyorbalinda.com"
+  }
+},
+{
+  "type": "node",
+  "id": 7523512356,
+  "lat": 33.8888909,
+  "lon": -117.8090170,
+  "tags": {
+    "addr:city": "Yorba Linda",
+    "addr:housenumber": "18601",
+    "addr:postcode": "92886",
+    "addr:state": "CA",
+    "addr:street": "Yorba Linda Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Blue Agave",
+    "phone": "+1-714-970-5095",
+    "website": "https://www.blueagaveswgrill.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 7523617718,
+  "lat": 33.8877696,
+  "lon": -117.8105105,
+  "tags": {
+    "addr:city": "Yorba Linda",
+    "addr:housenumber": "18518",
+    "addr:postcode": "92886",
+    "addr:state": "CA",
+    "addr:street": "Yorba Linda Boulevard",
+    "amenity": "restaurant",
+    "brand": "Round Table Pizza",
+    "brand:wikidata": "Q7371139",
+    "cuisine": "pizza",
+    "name": "Round Table Pizza",
+    "phone": "+1-714-970-9295"
+  }
+},
+{
+  "type": "node",
+  "id": 7523617723,
+  "lat": 33.8881967,
+  "lon": -117.8120499,
+  "tags": {
+    "addr:city": "Yorba Linda",
+    "addr:postcode": "92886",
+    "addr:state": "CA",
+    "addr:street": "Yorba Linda Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Tio Chava's",
+    "phone": "+1-714-777-9694"
+  }
+},
+{
+  "type": "node",
+  "id": 7567705218,
+  "lat": 34.1372987,
+  "lon": -117.8657916,
+  "tags": {
+    "addr:city": "Glendora",
+    "addr:housenumber": "141",
+    "addr:postcode": "91741",
+    "addr:state": "CA",
+    "addr:street": "North Glendora Avenue",
+    "amenity": "restaurant",
+    "cuisine": "american;burger;sandwich;coffee_shop",
+    "name": "Ed's Place",
+    "opening_hours": "Mo-Su 07:00-13:30",
+    "outdoor_seating": "yes",
+    "phone": "+1-626-335-6630",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 7732023566,
+  "lat": 34.1074574,
+  "lon": -117.7372908,
+  "tags": {
+    "amenity": "pharmacy",
+    "brand": "Walgreens",
+    "brand:wikidata": "Q1591889",
+    "dispensing": "yes",
+    "ele": "372.1",
+    "healthcare": "pharmacy",
+    "lacounty:ain": "8304001037",
+    "lacounty:bld_id": "641199861599",
+    "motorcar": "yes",
+    "name": "Walgreens",
+    "source": "bing_imagery_0.06m_200801;survey;image",
+    "source_ref": "AM909_DSCY3077",
+    "start_date": "1998"
+  }
+},
+{
+  "type": "node",
+  "id": 7732023568,
+  "lat": 34.1166887,
+  "lon": -117.8263139,
+  "tags": {
+    "amenity": "pharmacy",
+    "brand": "Walmart",
+    "brand:wikidata": "Q483551",
+    "dispensing": "yes",
+    "healthcare": "pharmacy",
+    "name": "Walmart Pharmacy",
+    "website": "https://www.walmart.com/store/1941-glendora-ca/pharmacy"
+  }
+},
+{
+  "type": "node",
+  "id": 7763533201,
+  "lat": 33.9083465,
+  "lon": -117.8499890,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "asian",
+    "name": "Capital Noodle Bar"
+  }
+},
+{
+  "type": "node",
+  "id": 7763533801,
+  "lat": 33.9090210,
+  "lon": -117.8500504,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Urban Plates"
+  }
+},
+{
+  "type": "node",
+  "id": 7887680592,
+  "lat": 34.1203240,
+  "lon": -117.6171840,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "pizza"
+  }
+},
+{
+  "type": "node",
+  "id": 7972404072,
+  "lat": 34.0028276,
+  "lon": -117.7320145,
+  "tags": {
+    "amenity": "restaurant",
+    "bar": "yes",
+    "cuisine": "hot_dog;burger;sausage",
+    "name": "Dog Haus",
+    "outdoor_seating": "yes",
+    "phone": "+1 909-548-4287",
+    "website": "https://chinohills.doghaus.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 7972404074,
+  "lat": 34.0029521,
+  "lon": -117.7311905,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "korean;barbecue",
+    "diet:meat": "yes",
+    "name": "Gen Korean BBQ"
+  }
+},
+{
+  "type": "node",
+  "id": 7972404083,
+  "lat": 34.0028471,
+  "lon": -117.7303655,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "asian",
+    "name": "Pick Up Stix"
+  }
+},
+{
+  "type": "node",
+  "id": 7975173462,
+  "lat": 34.0017830,
+  "lon": -117.7270552,
+  "tags": {
+    "addr:city": "Chino Hills",
+    "addr:housenumber": "3660",
+    "addr:postcode": "91709",
+    "addr:state": "CA",
+    "addr:street": "Grand Avenue",
+    "amenity": "restaurant",
+    "brand": "Pizza Hut",
+    "brand:wikidata": "Q191615",
+    "cuisine": "pizza",
+    "name": "Pizza Hut",
+    "phone": "+1 909-591-1100",
+    "website": "https://locations.pizzahut.com/ca/chino-hills/3660-grand-ave"
+  }
+},
+{
+  "type": "node",
+  "id": 7975173464,
+  "lat": 34.0018852,
+  "lon": -117.7272140,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mediterranean",
+    "name": "Luna Grill",
+    "phone": "+1 909-703-5862"
+  }
+},
+{
+  "type": "node",
+  "id": 7975264831,
+  "lat": 34.0028737,
+  "lon": -117.7276794,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "japanese",
+    "name": "Shoboo Kitchen",
+    "phone": "+1 909-590-4425",
+    "takeaway": "yes",
+    "website": "https://www.shobookitchen.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 7977629035,
+  "lat": 33.9999254,
+  "lon": -117.7299511,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "seafood;southern",
+    "name": "The Kickin' Crab",
+    "phone": "+1 909-627-8188",
+    "website": "https://thekickincrab.com"
+  }
+},
+{
+  "type": "node",
+  "id": 7977629037,
+  "lat": 34.0005809,
+  "lon": -117.7290910,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "japanese;tea",
+    "diet:meat": "yes",
+    "diet:pescetarian": "yes",
+    "diet:vegetarian": "yes",
+    "name": "Ra Sushi Bar & Restaurant",
+    "phone": "+1 909-902-0044",
+    "website": "https://rasushi.com"
+  }
+},
+{
+  "type": "node",
+  "id": 7977629044,
+  "lat": 34.0009864,
+  "lon": -117.7291989,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chicken;southern",
+    "diet:meat": "yes",
+    "name": "Hotties- Nashville Hot Chicken",
+    "phone": "+1 909-497-7160",
+    "website": "https://www.hottieschicken.com"
+  }
+},
+{
+  "type": "node",
+  "id": 8040931229,
+  "lat": 33.8621586,
+  "lon": -117.7394550,
+  "tags": {
+    "access": "yes",
+    "addr:housenumber": "107",
+    "amenity": "restaurant",
+    "entrance": "main",
+    "level": "1",
+    "name": "Senor Baja"
+  }
+},
+{
+  "type": "node",
+  "id": 8109811518,
+  "lat": 34.1074615,
+  "lon": -117.7418498,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "barbecue",
+    "name": "Smoke & Fire Social Eatery",
+    "old_name": "Pomona's Best Burgers",
+    "opening_hours": "11:00-22:00"
+  }
+},
+{
+  "type": "node",
+  "id": 8109811519,
+  "lat": 34.1086262,
+  "lon": -117.7378140,
+  "tags": {
+    "amenity": "pharmacy",
+    "brand": "CVS Pharmacy",
+    "brand:website": "https://www.cvs.com/",
+    "brand:wikidata": "Q2078880",
+    "healthcare": "pharmacy",
+    "name": "CVS Pharmacy",
+    "short_name": "CVS",
+    "website": "https://www.cvs.com/store-locator/pomona-ca-pharmacies/775-e-foothill-boulevard-pomona-ca-91767/storeid=8895"
+  }
+},
+{
+  "type": "node",
+  "id": 8252652764,
+  "lat": 34.1056400,
+  "lon": -117.6722447,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Tacos Los Carnales"
+  }
+},
+{
+  "type": "node",
+  "id": 8252652768,
+  "lat": 34.1053987,
+  "lon": -117.6716340,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "vietnamese",
+    "name": "Pho Century"
+  }
+},
+{
+  "type": "node",
+  "id": 8436892627,
+  "lat": 33.8521216,
+  "lon": -117.7884348,
+  "tags": {
+    "addr:city": "Anaheim",
+    "addr:housenumber": "5745",
+    "addr:postcode": "92807",
+    "addr:state": "CA",
+    "addr:street": "Santa Ana Canyon Road",
+    "amenity": "restaurant",
+    "cuisine": "mediterranean",
+    "name": "Hummus Bean",
+    "opening_hours:covid19": "Mo-Sun 10:00-21:00",
+    "phone": "+1-714-363-3707",
+    "website": "https://hummusbean.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 8473970528,
+  "lat": 33.9190626,
+  "lon": -117.8647059,
+  "tags": {
+    "addr:city": "Brea",
+    "addr:housenumber": "131",
+    "addr:postcode": "92121",
+    "addr:state": "CA",
+    "addr:street": "South Kraemer Boulevard",
+    "addr:unit": "Suite B5",
+    "amenity": "restaurant",
+    "bar": "yes",
+    "cuisine": "italian;pizza",
+    "name": "Alza Osteria",
+    "outdoor_seating": "yes",
+    "phone": "+1-714-990-1044",
+    "website": "http://www.alzaosteria.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 8508191697,
+  "lat": 34.1072962,
+  "lon": -117.6501912,
+  "tags": {
+    "alt_name": "Mountain Mike's Pizza",
+    "amenity": "restaurant",
+    "brand": "Mountain Mike's",
+    "brand:wikidata": "Q6925120",
+    "cuisine": "pizza",
+    "name": "Mountain Mike's",
+    "shop": "vacant",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 8508191698,
+  "lat": 34.1081607,
+  "lon": -117.6536912,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "sushi",
+    "name": "Arigato Sushi"
+  }
+},
+{
+  "type": "node",
+  "id": 8508191700,
+  "lat": 34.1081109,
+  "lon": -117.6540439,
+  "tags": {
+    "amenity": "clinic",
+    "healthcare": "clinic",
+    "name": "CareMore Health"
+  }
+},
+{
+  "type": "node",
+  "id": 8508199426,
+  "lat": 34.1081634,
+  "lon": -117.6535686,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "french",
+    "name": "Le Gourmet"
+  }
+},
+{
+  "type": "node",
+  "id": 8508245317,
+  "lat": 34.1066047,
+  "lon": -117.6551532,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Bearylicious"
+  }
+},
+{
+  "type": "node",
+  "id": 8508245319,
+  "lat": 34.1066016,
+  "lon": -117.6552639,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "japanese",
+    "name": "Kishi"
+  }
+},
+{
+  "type": "node",
+  "id": 8576368847,
+  "lat": 34.1337355,
+  "lon": -117.6379126,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "vietnamese",
+    "name": "Pho King"
+  }
+},
+{
+  "type": "node",
+  "id": 8576368850,
+  "lat": 34.1337332,
+  "lon": -117.6379930,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Juancho's Mexican Grill"
+  }
+},
+{
+  "type": "node",
+  "id": 8576368852,
+  "lat": 34.1337344,
+  "lon": -117.6377710,
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Ono Hawaiian BBQ",
+    "brand:wikidata": "Q99526964",
+    "cuisine": "barbecue;hawaiian",
+    "name": "Ono Hawaiian BBQ"
+  }
+},
+{
+  "type": "node",
+  "id": 9002043417,
+  "lat": 34.0113507,
+  "lon": -117.7381100,
+  "tags": {
+    "addr:housenumber": "Unit 120",
+    "addr:postcode": "91709",
+    "addr:street": "Chino Avenue",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "internet_access": "wlan",
+    "name": "Sand dermatology",
+    "opening_hours": "Mo-Fr 08:00-17:00",
+    "phone": "+1-909-313-5111",
+    "website": "https://sanddermatology.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 9002058318,
+  "lat": 34.0112840,
+  "lon": -117.7381700,
+  "tags": {
+    "addr:housenumber": "Unit 270",
+    "addr:postcode": "91709",
+    "addr:street": "3110 Chino Ave Unit 270 Chino Hills, CA 91709 United States",
+    "amenity": "clinic",
+    "healthcare": "clinic",
+    "name": "Lindora Medical Clinic",
+    "opening_hours": "Mo-Fr 07:00-17:00",
+    "phone": "+1-909-267-7986",
+    "website": "https://lindora.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 9108580938,
+  "lat": 34.1321450,
+  "lon": -117.6361161,
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Pieology Pizzeria",
+    "brand:wikidata": "Q60746053",
+    "cuisine": "pizza",
+    "name": "Pieology Pizzeria"
+  }
+},
+{
+  "type": "node",
+  "id": 9146898583,
+  "lat": 34.1222457,
+  "lon": -117.6936470,
+  "tags": {
+    "addr:housenumber": "2213",
+    "amenity": "restaurant",
+    "name": "Corky's Kitchen & Bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 9146898584,
+  "lat": 34.1227273,
+  "lon": -117.6934760,
+  "tags": {
+    "addr:housenumber": "2209",
+    "addr:unit": "700",
+    "amenity": "restaurant",
+    "name": "Dog Haus"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398326,
+  "lat": 34.1000394,
+  "lon": -117.6336589,
+  "tags": {
+    "addr:housenumber": "525",
+    "addr:street": "North 13th Avenue",
+    "addr:unit": "B",
+    "amenity": "doctors",
+    "name": "Preferred Sleep Solutions",
+    "phone": "+1 909-305-6926"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398327,
+  "lat": 34.1003050,
+  "lon": -117.6332092,
+  "tags": {
+    "addr:housenumber": "510",
+    "addr:street": "North 13th Avenue",
+    "amenity": "doctors",
+    "name": "Bamboo Leaf",
+    "phone": "+1 909-931-3396",
+    "website": "bambooleaf.com"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398328,
+  "lat": 34.1004430,
+  "lon": -117.6332413,
+  "tags": {
+    "addr:housenumber": "510",
+    "addr:street": "North 13th Avenue",
+    "amenity": "doctors",
+    "name": "Klarity Clinic",
+    "phone": "+1-844-552-7489",
+    "website": "https://www.klarityclinic.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398332,
+  "lat": 34.1011081,
+  "lon": -117.6332200,
+  "tags": {
+    "addr:housenumber": "600",
+    "addr:street": "North 13th Avenue",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Gerald S. Friedman, M.D."
+  }
+},
+{
+  "type": "node",
+  "id": 9153398333,
+  "lat": 34.1010969,
+  "lon": -117.6333760,
+  "tags": {
+    "addr:housenumber": "600",
+    "addr:street": "North 13th Avenue",
+    "amenity": "clinic",
+    "healthcare": "dialysis",
+    "healthcare:speciality": "dialysis",
+    "name": "DaVita Dialysis",
+    "operator": "DaVita Dialysis",
+    "operator:wikidata": "Q5207184"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398334,
+  "lat": 34.1012662,
+  "lon": -117.6342880,
+  "tags": {
+    "addr:housenumber": "631",
+    "addr:street": "North 13th Avenue",
+    "addr:unit": "B",
+    "amenity": "doctors",
+    "fixme": "I am not exactly sure which building is which address. I did not enter the plaza.",
+    "healthcare": "doctor",
+    "name": "Internal Medicine David Engelhardt, M.D."
+  }
+},
+{
+  "type": "node",
+  "id": 9153398335,
+  "lat": 34.1013634,
+  "lon": -117.6343500,
+  "tags": {
+    "addr:housenumber": "631",
+    "addr:street": "North 13th Avenue",
+    "addr:unit": "A",
+    "amenity": "doctors",
+    "fixme": "I am not exactly sure which building is which address. I did not enter the plaza.",
+    "healthcare": "doctor",
+    "name": "Gabrillo Family Clinic Warren C. Gabrillo III, M.D."
+  }
+},
+{
+  "type": "node",
+  "id": 9153398336,
+  "lat": 34.1013914,
+  "lon": -117.6341810,
+  "tags": {
+    "addr:housenumber": "639",
+    "addr:street": "North 13th Avenue",
+    "amenity": "pharmacy",
+    "fixme": "I am not exactly sure which building is which address. I did not enter the plaza.",
+    "healthcare": "pharmacy",
+    "name": "Doctor's Choice Pharmacy"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398337,
+  "lat": 34.1014814,
+  "lon": -117.6340485,
+  "tags": {
+    "addr:housenumber": "637",
+    "addr:street": "North 13th Avenue",
+    "amenity": "doctors",
+    "fixme": "I am not exactly sure which building is which address. I did not enter the plaza.",
+    "name": "Inland Pulmonary"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398338,
+  "lat": 34.1013949,
+  "lon": -117.6335310,
+  "tags": {
+    "addr:housenumber": "630",
+    "addr:street": "North 13th Avenue",
+    "addr:unit": "D",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Bipin Patadia, M.D., F.A.C.C"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398339,
+  "lat": 34.1014760,
+  "lon": -117.6335500,
+  "tags": {
+    "addr:housenumber": "630",
+    "addr:street": "North 13th Avenue",
+    "addr:unit": "C",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "F. Balguma, M.D."
+  }
+},
+{
+  "type": "node",
+  "id": 9153398340,
+  "lat": 34.1015621,
+  "lon": -117.6335660,
+  "tags": {
+    "addr:housenumber": "630",
+    "addr:street": "North 13th Avenue",
+    "addr:unit": "B",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Bhupath H. Desai & Surjit K. Kahlon & Faisal Qazi & Sadiq Altamimi"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398341,
+  "lat": 34.1016307,
+  "lon": -117.6335770,
+  "tags": {
+    "addr:housenumber": "630",
+    "addr:street": "North 13th Avenue",
+    "addr:unit": "A",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Glenn M. Perez & Myrna M. Perez"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398342,
+  "lat": 34.1022924,
+  "lon": -117.6335910,
+  "tags": {
+    "addr:housenumber": "1310",
+    "addr:street": "San Bernardino Road",
+    "amenity": "doctors",
+    "brand": "LabCorp",
+    "brand:wikidata": "Q6466630",
+    "healthcare": "laboratory",
+    "name": "LabCorp"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398343,
+  "lat": 34.1022474,
+  "lon": -117.6335610,
+  "tags": {
+    "addr:housenumber": "1310",
+    "addr:street": "San Bernardino Road",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Basim Z. Abdelkarim, M.D. Gastroenterology & Liver Diseases"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398344,
+  "lat": 34.1021839,
+  "lon": -117.6335348,
+  "tags": {
+    "addr:housenumber": "1310",
+    "addr:street": "San Bernardino Road",
+    "amenity": "doctors",
+    "name": "The Neurology Group"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398345,
+  "lat": 34.1021256,
+  "lon": -117.6334892,
+  "tags": {
+    "addr:housenumber": "1310",
+    "addr:street": "San Bernardino Road",
+    "amenity": "doctors",
+    "name": "Cucamonga Valley Medical Group"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398346,
+  "lat": 34.1020625,
+  "lon": -117.6336310,
+  "tags": {
+    "addr:housenumber": "1310",
+    "addr:street": "San Bernardino Road",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Mark Alwan, M.D. Obstetrics & Gynecology"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398347,
+  "lat": 34.1021347,
+  "lon": -117.6336818,
+  "tags": {
+    "addr:housenumber": "1310",
+    "addr:street": "San Bernardino Road",
+    "amenity": "doctors",
+    "name": "Parkside Medical Group"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398348,
+  "lat": 34.1021959,
+  "lon": -117.6337287,
+  "tags": {
+    "addr:housenumber": "1310",
+    "addr:street": "San Bernardino Road",
+    "amenity": "doctors",
+    "name": "Advanced Skin Clinic & Surgery"
+  }
+},
+{
+  "type": "node",
+  "id": 9153398349,
+  "lat": 34.1022435,
+  "lon": -117.6337600,
+  "tags": {
+    "addr:housenumber": "1310",
+    "addr:street": "San Bernardino Road",
+    "amenity": "doctors",
+    "name": "Care for Womens Obstetrics & Gynecology"
+  }
+},
+{
+  "type": "node",
+  "id": 9153400050,
+  "lat": 34.1000843,
+  "lon": -117.6358697,
+  "tags": {
+    "addr:housenumber": "1175",
+    "addr:street": "East Arrow Highway",
+    "amenity": "doctors",
+    "fixme": "Exact location within building unknown.",
+    "name": "American Bio-Clinical Laboratories"
+  }
+},
+{
+  "type": "node",
+  "id": 9153400051,
+  "lat": 34.1001813,
+  "lon": -117.6358740,
+  "tags": {
+    "addr:housenumber": "1175",
+    "addr:street": "East Arrow Highway",
+    "amenity": "doctors",
+    "fixme": "Exact location within building unknown.",
+    "healthcare": "doctor",
+    "name": "Daksha Jain, M.D. Pediatrics"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462024,
+  "lat": 34.1067258,
+  "lon": -117.6443853,
+  "tags": {
+    "addr:housenumber": "484",
+    "amenity": "doctors",
+    "name": "Good Hope Home Health Care, Inc."
+  }
+},
+{
+  "type": "node",
+  "id": 9153462025,
+  "lat": 34.1067269,
+  "lon": -117.6442269,
+  "tags": {
+    "addr:housenumber": "484",
+    "amenity": "doctors",
+    "name": "Trinity Hospice Inc."
+  }
+},
+{
+  "type": "node",
+  "id": 9153462058,
+  "lat": 34.1061580,
+  "lon": -117.6400481,
+  "tags": {
+    "addr:city": "Upland",
+    "addr:housenumber": "830",
+    "addr:postcode": "91786",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "6",
+    "amenity": "restaurant",
+    "brand": "Round Table Pizza",
+    "brand:wikidata": "Q7371139",
+    "cuisine": "pizza",
+    "name": "Round Table Pizza",
+    "opening_hours": "Su-Th 11:00-22:00; Fr-Sa 11:00-23:00",
+    "phone": "+1-909-946-0741",
+    "website": "https://www.roundtablepizza.com"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462063,
+  "lat": 34.1066102,
+  "lon": -117.6396397,
+  "tags": {
+    "addr:city": "Upland",
+    "addr:housenumber": "870",
+    "addr:postcode": "91786",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "5",
+    "amenity": "restaurant",
+    "name": "Brandon's Diner",
+    "opening_hours": "Mo-Su 06:00-21:00",
+    "outdoor_seating": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462066,
+  "lat": 34.1066113,
+  "lon": -117.6393934,
+  "tags": {
+    "addr:city": "Upland",
+    "addr:housenumber": "870",
+    "addr:postcode": "91786",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "2",
+    "amenity": "restaurant",
+    "cuisine": "peruvian",
+    "name": "Inca's Peruvian Grill",
+    "phone": "+1-909-608-0184",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462068,
+  "lat": 34.1065882,
+  "lon": -117.6386890,
+  "tags": {
+    "addr:housenumber": "930",
+    "addr:street": "East Foothill Boulevard",
+    "amenity": "doctors",
+    "name": "Pacific Dermatology Institute"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462069,
+  "lat": 34.1067199,
+  "lon": -117.6387450,
+  "tags": {
+    "addr:housenumber": "930",
+    "addr:street": "East Foothill Boulevard",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Patricia Lee, M.D. & Thomas W. Lee, M.D Obstetrics & Gynecology"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462070,
+  "lat": 34.1065579,
+  "lon": -117.6379590,
+  "tags": {
+    "addr:housenumber": "980",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "103",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Ghassan Hadi, M.D. Internal Medicine",
+    "note": "Dr. Hadi's name is on both bldg 1060 and 980."
+  }
+},
+{
+  "type": "node",
+  "id": 9153462071,
+  "lat": 34.1065502,
+  "lon": -117.6378290,
+  "tags": {
+    "addr:housenumber": "980",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "104",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Bryan & Nina Chan, M.D. Family Practice"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462072,
+  "lat": 34.1066429,
+  "lon": -117.6378291,
+  "tags": {
+    "addr:housenumber": "980",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "102",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Rainbow Pediatrics"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462073,
+  "lat": 34.1066436,
+  "lon": -117.6379595,
+  "tags": {
+    "addr:housenumber": "980",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "101",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Foothill Pediatrics"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462074,
+  "lat": 34.1066263,
+  "lon": -117.6376760,
+  "tags": {
+    "addr:housenumber": "1030",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "102",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "John H. Choie M.D. FACC Cardiology, Internal Medicine"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462075,
+  "lat": 34.1065864,
+  "lon": -117.6375800,
+  "tags": {
+    "addr:housenumber": "1030",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "101",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Clara Olcott M.D. E.N.T. Facial Plastic Surgery"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462076,
+  "lat": 34.1066906,
+  "lon": -117.6375760,
+  "tags": {
+    "addr:housenumber": "1030",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "101",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Natee Poopat M.D. E.N.T. Head & Neck Surgery"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462077,
+  "lat": 34.1065770,
+  "lon": -117.6372668,
+  "tags": {
+    "addr:housenumber": "1060",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "203",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Indus Healthcare"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462078,
+  "lat": 34.1067279,
+  "lon": -117.6373695,
+  "tags": {
+    "addr:city": "Upland",
+    "addr:country": "US",
+    "addr:housenumber": "1060",
+    "addr:postcode": "91786",
+    "addr:state": "CA",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "101",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "King's Pharmacy",
+    "phone": "+1 909-982-1778"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462079,
+  "lat": 34.1066777,
+  "lon": -117.6373669,
+  "tags": {
+    "addr:housenumber": "1060",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "102",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "The Oncology Institue of Hope & Innovation"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462080,
+  "lat": 34.1066192,
+  "lon": -117.6373669,
+  "tags": {
+    "addr:housenumber": "1060",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "103",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Upland Clinical Research"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462081,
+  "lat": 34.1065467,
+  "lon": -117.6373610,
+  "tags": {
+    "addr:housenumber": "1060",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "103",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Ghassan Hadi, M.D. Internal Medicine",
+    "note": "Dr. Hadi's name is on both bldg 1060 and 980."
+  }
+},
+{
+  "type": "node",
+  "id": 9153462082,
+  "lat": 34.1065194,
+  "lon": -117.6372651,
+  "tags": {
+    "addr:housenumber": "1060",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "204",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "WLW Healing House"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462083,
+  "lat": 34.1066227,
+  "lon": -117.6372650,
+  "tags": {
+    "addr:housenumber": "1060",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "202",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Irene K. Enzensperger, M.D. Family Practice"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462084,
+  "lat": 34.1066784,
+  "lon": -117.6372676,
+  "tags": {
+    "addr:housenumber": "1060",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "201",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Pacific Pain & Regenerative Medicine"
+  }
+},
+{
+  "type": "node",
+  "id": 9153462085,
+  "lat": 34.1067244,
+  "lon": -117.6372685,
+  "tags": {
+    "addr:housenumber": "1060",
+    "addr:street": "East Foothill Boulevard",
+    "addr:unit": "201",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "The Vein & Skin Center For Laser Surgery"
+  }
+},
+{
+  "type": "node",
+  "id": 9153486117,
+  "lat": 34.1074986,
+  "lon": -117.6428111,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "indian",
+    "name": "Ashirwad The Blessings"
+  }
+},
+{
+  "type": "node",
+  "id": 9153486118,
+  "lat": 34.1074982,
+  "lon": -117.6428960,
+  "tags": {
+    "addr:city": "Upland",
+    "addr:country": "US",
+    "addr:postcode": "91786",
+    "addr:state": "CA",
+    "addr:street": "East Foothill Boulevard",
+    "amenity": "pharmacy",
+    "healthcare": "pharmacy",
+    "name": "Ken Pharmacy",
+    "phone": "+1 909-579-0719",
+    "website": "https://kenpharmacy.wordpress.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 9153486121,
+  "lat": 34.1075040,
+  "lon": -117.6432241,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Miche Linda's Mexican Grill"
+  }
+},
+{
+  "type": "node",
+  "id": 9153486130,
+  "lat": 34.1075000,
+  "lon": -117.6437265,
+  "tags": {
+    "addr:unit": "3",
+    "amenity": "doctors",
+    "name": "Upland Health Center"
+  }
+},
+{
+  "type": "node",
+  "id": 9153486133,
+  "lat": 34.1075039,
+  "lon": -117.6454974,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Elvira's Mexican Grill"
+  }
+},
+{
+  "type": "node",
+  "id": 9153499745,
+  "lat": 34.1084638,
+  "lon": -117.6325420,
+  "tags": {
+    "addr:housenumber": "1113",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Allure Image"
+  }
+},
+{
+  "type": "node",
+  "id": 9153499746,
+  "lat": 34.1083722,
+  "lon": -117.6325400,
+  "tags": {
+    "addr:housenumber": "1113",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Dr. Susan Biegel"
+  }
+},
+{
+  "type": "node",
+  "id": 9153499747,
+  "lat": 34.1082807,
+  "lon": -117.6325390,
+  "tags": {
+    "addr:housenumber": "1113",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Louis Brenner, M.D."
+  }
+},
+{
+  "type": "node",
+  "id": 9153499748,
+  "lat": 34.1081891,
+  "lon": -117.6325370,
+  "tags": {
+    "addr:housenumber": "1113",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Keith Gross, M.D."
+  }
+},
+{
+  "type": "node",
+  "id": 9153499749,
+  "lat": 34.1080976,
+  "lon": -117.6325350,
+  "tags": {
+    "addr:housenumber": "1113",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "name": "Beverly Hills Plastic Surgery"
+  }
+},
+{
+  "type": "node",
+  "id": 9153499750,
+  "lat": 34.1080060,
+  "lon": -117.6325340,
+  "tags": {
+    "addr:housenumber": "1113",
+    "amenity": "pharmacy",
+    "healthcare": "pharmacy",
+    "name": "Alta Care Pharmacy"
+  }
+},
+{
+  "type": "node",
+  "id": 9153537201,
+  "lat": 34.1058740,
+  "lon": -117.6290145,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Ester Burrito"
+  }
+},
+{
+  "type": "node",
+  "id": 9153537204,
+  "lat": 34.1063690,
+  "lon": -117.6287717,
+  "tags": {
+    "addr:city": "Upland",
+    "addr:housenumber": "1490",
+    "addr:postcode": "91786",
+    "addr:state": "CA",
+    "addr:street": "East Foothill Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "crab",
+    "name": "Star Crab",
+    "phone": "+1-909-982-7788",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 9166228434,
+  "lat": 34.1073893,
+  "lon": -117.6635394,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "lebanese;mediterranean",
+    "name": "Tanya's Lebanese Kebab",
+    "phone": "+1 909-949-2200"
+  }
+},
+{
+  "type": "node",
+  "id": 9166250278,
+  "lat": 34.1083135,
+  "lon": -117.6694676,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "D Grill Boy"
+  }
+},
+{
+  "type": "node",
+  "id": 9166250300,
+  "lat": 34.1072935,
+  "lon": -117.6657959,
+  "tags": {
+    "addr:housenumber": "1013",
+    "addr:unit": "B",
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Mariscos Mar Azul"
+  }
+},
+{
+  "type": "node",
+  "id": 9166250302,
+  "lat": 34.1072947,
+  "lon": -117.6659828,
+  "tags": {
+    "addr:housenumber": "1013",
+    "addr:unit": "E",
+    "amenity": "restaurant",
+    "cuisine": "mediterranean",
+    "name": "Zaky"
+  }
+},
+{
+  "type": "node",
+  "id": 9166250304,
+  "lat": 34.1075590,
+  "lon": -117.6663778,
+  "tags": {
+    "amenity": "clinic",
+    "name": "Sun Coast West Medical Clinic"
+  }
+},
+{
+  "type": "node",
+  "id": 9166250311,
+  "lat": 34.1079706,
+  "lon": -117.6663485,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "name": "Rizza Pizza"
+  }
+},
+{
+  "type": "node",
+  "id": 9166423762,
+  "lat": 34.1012632,
+  "lon": -117.6710026,
+  "tags": {
+    "amenity": "clinic",
+    "healthcare": "dialysis",
+    "healthcare:speciality": "nephrology",
+    "name": "DaVita Dialysis",
+    "operator": "DaVita Dialysis",
+    "operator:type": "private",
+    "operator:wikidata": "Q5207184",
+    "operator:wikipedia": "de:DaVita"
+  }
+},
+{
+  "type": "node",
+  "id": 9166423781,
+  "lat": 34.1004254,
+  "lon": -117.6813693,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Pueblita Mexican"
+  }
+},
+{
+  "type": "node",
+  "id": 9166423870,
+  "lat": 34.1061064,
+  "lon": -117.6813749,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "fish",
+    "name": "Señor Baja"
+  }
+},
+{
+  "type": "node",
+  "id": 9166423904,
+  "lat": 34.1076834,
+  "lon": -117.6827368,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "sushi",
+    "name": "Sushi Takumi"
+  }
+},
+{
+  "type": "node",
+  "id": 9166423908,
+  "lat": 34.1076925,
+  "lon": -117.6823547,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "italian",
+    "name": "Spaggi's"
+  }
+},
+{
+  "type": "node",
+  "id": 9191852473,
+  "lat": 34.1240211,
+  "lon": -117.6711479,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Rancho Los Magueyes"
+  }
+},
+{
+  "type": "node",
+  "id": 9191852475,
+  "lat": 34.1240127,
+  "lon": -117.6714328,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "italian",
+    "name": "Fratello's Pizza & Pasta",
+    "outdoor_seating": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 9191852481,
+  "lat": 34.1237417,
+  "lon": -117.6719140,
+  "tags": {
+    "addr:housenumber": "1655",
+    "addr:unit": "113",
+    "amenity": "clinic",
+    "healthcare": "clinic",
+    "healthcare:speciality": "plastic_surgery"
+  }
+},
+{
+  "type": "node",
+  "id": 9191852488,
+  "lat": 34.1218131,
+  "lon": -117.6710940,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "italian;mexican",
+    "name": "Panzarello's"
+  }
+},
+{
+  "type": "node",
+  "id": 9191852489,
+  "lat": 34.1218161,
+  "lon": -117.6709660,
+  "tags": {
+    "amenity": "pharmacy",
+    "healthcare": "pharmacy"
+  }
+},
+{
+  "type": "node",
+  "id": 9251480258,
+  "lat": 33.9832198,
+  "lon": -117.7333357,
+  "tags": {
+    "amenity": "pharmacy",
+    "brand": "CVS Pharmacy",
+    "brand:website": "https://www.cvs.com/",
+    "brand:wikidata": "Q2078880",
+    "healthcare": "pharmacy",
+    "name": "CVS Pharmacy",
+    "short_name": "CVS",
+    "website": "https://www.cvs.com/store-locator/chino-hills-ca-pharmacies/3290-chino-hills-parkway-chino-hills-ca-91709/storeid=9816"
+  }
+},
+{
+  "type": "node",
+  "id": 9251480259,
+  "lat": 33.9831520,
+  "lon": -117.7317971,
+  "tags": {
+    "amenity": "pharmacy",
+    "brand": "Walgreens",
+    "brand:wikidata": "Q1591889",
+    "healthcare": "pharmacy",
+    "name": "Walgreens"
+  }
+},
+{
+  "type": "node",
+  "id": 9270581076,
+  "lat": 34.0202170,
+  "lon": -117.8643428,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "name": "New York Pizzeria",
+    "takeaway": "yes",
+    "toilets": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 9347822069,
+  "lat": 33.9599569,
+  "lon": -117.5940525,
+  "tags": {
+    "amenity": "pharmacy",
+    "brand": "CVS Pharmacy",
+    "brand:website": "https://www.cvs.com/",
+    "brand:wikidata": "Q2078880",
+    "drive_through": "yes",
+    "healthcare": "pharmacy",
+    "name": "CVS Pharmacy",
+    "short_name": "CVS",
+    "website": "https://www.cvs.com/store-locator/eastvale-ca-pharmacies/14220-schleisman-rd-eastvale-ca-92880/storeid=5958"
+  }
+},
+{
+  "type": "node",
+  "id": 9562035231,
+  "lat": 34.1096943,
+  "lon": -117.7595872,
+  "tags": {
+    "amenity": "pharmacy",
+    "brand": "CVS Pharmacy",
+    "brand:website": "https://www.cvs.com/",
+    "brand:wikidata": "Q2078880",
+    "dispensing": "yes",
+    "healthcare": "pharmacy",
+    "name": "CVS Pharmacy",
+    "short_name": "CVS",
+    "website": "https://www.cvs.com/store-locator/la-verne-ca-pharmacies/2462-foothill-blvd-la-verne-ca-91750/storeid=16060"
+  }
+},
+{
+  "type": "node",
+  "id": 9622610838,
+  "lat": 34.0854870,
+  "lon": -117.6684970,
+  "tags": {
+    "amenity": "pharmacy",
+    "healthcare": "pharmacy",
+    "name": "The Medicine Shoppe"
+  }
+},
+{
+  "type": "node",
+  "id": 9622610840,
+  "lat": 34.0854864,
+  "lon": -117.6686700,
+  "tags": {
+    "amenity": "clinic",
+    "healthcare": "clinic",
+    "name": "Upland/Ontario Health Clinic"
+  }
+},
+{
+  "type": "node",
+  "id": 9622610841,
+  "lat": 34.0854904,
+  "lon": -117.6687458,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Casa Jimenez"
+  }
+},
+{
+  "type": "node",
+  "id": 9622610844,
+  "lat": 34.0854401,
+  "lon": -117.6692517,
+  "tags": {
+    "addr:unit": "102",
+    "amenity": "restaurant",
+    "cuisine": "chicken",
+    "name": "Maple House Chicken & Waffles"
+  }
+},
+{
+  "type": "node",
+  "id": 9622610848,
+  "lat": 34.0859106,
+  "lon": -117.6694626,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "Chopsticks Wok"
+  }
+},
+{
+  "type": "node",
+  "id": 9622610850,
+  "lat": 34.0865143,
+  "lon": -117.6695998,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "wings",
+    "name": "Legends Wings & Brews"
+  }
+},
+{
+  "type": "node",
+  "id": 9622610859,
+  "lat": 34.0865256,
+  "lon": -117.6690533,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "name": "Woodstone Pizzeria",
+    "phone": "+1 909-906-2266"
+  }
+},
+{
+  "type": "node",
+  "id": 9677034440,
+  "lat": 34.0951587,
+  "lon": -117.7476684,
+  "tags": {
+    "addr:city": "Pomona",
+    "addr:housenumber": "2740",
+    "addr:postcode": "91767",
+    "addr:state": "CA",
+    "addr:street": "North Garey Avenue",
+    "addr:unit": "203",
+    "amenity": "clinic",
+    "fax": "+1-909-981-5457",
+    "healthcare": "clinic",
+    "name": "Empire Clinical Research",
+    "opening_hours": "Mo-Fr 09:00-17:00",
+    "phone": "+1-909-981-5321",
+    "website": "https://empireclinicalresearch.com"
+  }
+},
+{
+  "type": "node",
+  "id": 9681558361,
+  "lat": 33.9049769,
+  "lon": -117.8417078,
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Chuck E. Cheese",
+    "brand:wikidata": "Q2438391",
+    "cuisine": "pizza",
+    "leisure": "amusement_arcade",
+    "name": "Chuck E. Cheese",
+    "website": "https://locations.chuckecheese.com/us/ca/placentia/2300-n.-rose-dr."
+  }
+},
+{
+  "type": "node",
+  "id": 9681558386,
+  "lat": 33.9062151,
+  "lon": -117.8445765,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "sushi",
+    "name": "Wasabi Sushi & Roll"
+  }
+},
+{
+  "type": "node",
+  "id": 9681558424,
+  "lat": 33.9053672,
+  "lon": -117.8425825,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "The Power Club"
+  }
+},
+{
+  "type": "node",
+  "id": 9708264401,
+  "lat": 34.1212763,
+  "lon": -117.7051690,
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Round Table Pizza",
+    "brand:wikidata": "Q7371139",
+    "cuisine": "pizza",
+    "name": "Round Table Pizza",
+    "phone": "+1 909-621-6913"
+  }
+},
+{
+  "type": "node",
+  "id": 9740549785,
+  "lat": 34.0891531,
+  "lon": -117.6719669,
+  "tags": {
+    "addr:housenumber": "1263",
+    "addr:state": "CA",
+    "addr:street": "West 7th Street",
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "name": "San Biagio's Pizza",
+    "phone": "+1 909-946-9277"
+  }
+},
+{
+  "type": "node",
+  "id": 9836402431,
+  "lat": 34.1158796,
+  "lon": -117.8344708,
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Ono Hawaiian BBQ",
+    "brand:wikidata": "Q99526964",
+    "cuisine": "barbecue;hawaiian",
+    "name": "Ono Hawaiian BBQ"
+  }
+},
+{
+  "type": "node",
+  "id": 9836402435,
+  "lat": 34.1135620,
+  "lon": -117.8271878,
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Cafe Rio",
+    "brand:wikidata": "Q5017108",
+    "cuisine": "mexican",
+    "name": "Cafe Rio",
+    "opening_hours": "Mo-Sa 10:30-22:00; Su 11:00-22:00"
+  }
+},
+{
+  "type": "node",
+  "id": 9887600300,
+  "lat": 34.1037372,
+  "lon": -117.6695528,
+  "tags": {
+    "addr:city": "Upland",
+    "addr:housenumber": "818",
+    "addr:postcode": "91786",
+    "addr:state": "CA",
+    "addr:street": "North Mountain Avenue",
+    "addr:unit": "Ste 225",
+    "amenity": "clinic",
+    "healthcare": "clinic",
+    "healthcare:speciality": "travel_clinic;vaccination",
+    "name": "Passport Health Upland Travel Clinic",
+    "operator": "Passport Health",
+    "operator:type": "private",
+    "operator:wikidata": "Q30270336"
+  }
+},
+{
+  "type": "node",
+  "id": 9915401904,
+  "lat": 34.1079965,
+  "lon": -117.7430984,
+  "tags": {
+    "addr:city": "Pomona",
+    "addr:housenumber": "315",
+    "addr:state": "CA",
+    "addr:street": "East Foothill Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "thai",
+    "name": "Thai Orchid Garden"
+  }
+},
+{
+  "type": "node",
+  "id": 10130627508,
+  "lat": 34.1061045,
+  "lon": -117.6288394,
+  "tags": {
+    "addr:city": "Upland",
+    "addr:housenumber": "1490",
+    "addr:postcode": "91786",
+    "addr:state": "CA",
+    "addr:street": "E. Foothill Blvd",
+    "addr:unit": "D",
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "diet:vegan": "yes",
+    "name": "Viva Vegan Diner",
+    "website": "https://www.vivavegandiner.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 10212827236,
+  "lat": 33.8926141,
+  "lon": -117.8196500,
+  "tags": {
+    "amenity": "pharmacy",
+    "brand": "CVS Pharmacy",
+    "brand:website": "https://www.cvs.com/",
+    "brand:wikidata": "Q2078880",
+    "healthcare": "pharmacy",
+    "name": "CVS Pharmacy",
+    "short_name": "CVS",
+    "website": "https://www.cvs.com/store-locator/yorba-linda-ca-pharmacies/18080-imperial-hwy-yorba-linda-ca-92886/storeid=9492"
+  }
+},
+{
+  "type": "node",
+  "id": 10238240508,
+  "lat": 34.0900993,
+  "lon": -117.6911352,
+  "tags": {
+    "amenity": "pharmacy",
+    "brand": "CVS Pharmacy",
+    "brand:website": "https://www.cvs.com/",
+    "brand:wikidata": "Q2078880",
+    "dispensing": "yes",
+    "healthcare": "pharmacy",
+    "name": "CVS Pharmacy",
+    "short_name": "CVS",
+    "website": "https://www.cvs.com/store-locator/montclair-ca-pharmacies/9052-central-ave-montclair-ca-91763/storeid=16760"
+  }
+},
+{
+  "type": "node",
+  "id": 10652839625,
+  "lat": 34.1073729,
+  "lon": -117.6325204,
+  "tags": {
+    "addr:city": "Upland",
+    "addr:housenumber": "1333",
+    "addr:postcode": "91786",
+    "addr:state": "CA",
+    "addr:street": "East Foothill Boulevard",
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "healthcare:speciality": "plastic_surgery",
+    "name": "Inland Institue",
+    "phone": "+1 909-982-8888",
+    "website": "https://www.omfsurgery.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 10698500099,
+  "lat": 34.0892477,
+  "lon": -117.6698440,
+  "tags": {
+    "addr:city": "Upland",
+    "addr:housenumber": "358",
+    "addr:postcode": "91786",
+    "addr:state": "CA",
+    "addr:street": "South Mountain Avenue",
+    "amenity": "restaurant",
+    "brand": "Ono Hawaiian BBQ",
+    "brand:wikidata": "Q99526964",
+    "cuisine": "barbecue;hawaiian",
+    "name": "Ono Hawaiian BBQ"
+  }
+},
+{
+  "type": "node",
+  "id": 10733184050,
+  "lat": 34.0444810,
+  "lon": -117.8495313,
+  "tags": {
+    "addr:city": "Walnut",
+    "addr:housenumber": "1253",
+    "addr:postcode": "91789",
+    "addr:state": "CA",
+    "addr:street": "North Grand Avenue",
+    "amenity": "restaurant",
+    "cuisine": "fried_chicken",
+    "name": "Hey Chicken",
+    "phone": "+1-909-529-1119",
+    "website": "https://www.heychicken.us/"
+  }
+},
+{
+  "type": "node",
+  "id": 10780523063,
+  "lat": 33.8676287,
+  "lon": -117.7493368,
+  "tags": {
+    "addr:city": "Anaheim",
+    "addr:housenumber": "8162",
+    "addr:postcode": "92808",
+    "addr:state": "CA",
+    "addr:street": "Santa Ana Canyon Road",
+    "addr:unit": "100",
+    "amenity": "restaurant",
+    "brand": "CAVA",
+    "brand:wikidata": "Q85751038",
+    "cuisine": "mediterranean",
+    "name": "CAVA",
+    "opening_hours": "Mo-Su 10:45-22:00",
+    "website": "https://cava.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 10783342633,
+  "lat": 33.8679064,
+  "lon": -117.7527062,
+  "tags": {
+    "addr:city": "Anaheim Hills",
+    "addr:housenumber": "105",
+    "addr:postcode": "92808",
+    "addr:state": "CA",
+    "addr:street": "Festival Drive",
+    "amenity": "restaurant",
+    "cuisine": "burger",
+    "name": "Islands Restaurant Anaheim Hills",
+    "opening_hours": "Su-Th 11:00-21:00; Fr-Sa 11:00-22:00",
+    "phone": "+1-714-974-5709",
+    "website": "https://www.islandsrestaurants.com/locations/anaheim-hills"
+  }
+},
+{
+  "type": "node",
+  "id": 10783385357,
+  "lat": 33.8576525,
+  "lon": -117.7697429,
+  "tags": {
+    "addr:city": "Anaheim",
+    "addr:housenumber": "108",
+    "addr:postcode": "92808",
+    "addr:state": "CA",
+    "addr:street": "South Fairmont Boulevard",
+    "amenity": "restaurant",
+    "cuisine": "japanese",
+    "name": "Hibachi Steak House",
+    "opening_hours": "Mo-Su 04:00-21:00; Closed Tu",
+    "phone": "+1-714-998-4110",
+    "website": "http://thehibachisteakhouse.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 10820203378,
+  "lat": 34.1135650,
+  "lon": -117.8273026,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "asian",
+    "name": "The Poke Co. And Wings",
+    "opening_hours": "Mo-Su 10:30-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 10906007305,
+  "lat": 34.0000333,
+  "lon": -117.8430592,
+  "tags": {
+    "addr:housenumber": "21130",
+    "addr:postcode": "91789",
+    "addr:street": "Golden Springs Drive",
+    "amenity": "restaurant",
+    "name": "Jasmine Mediterranean & Persian",
+    "opening_hours": "We-Mo 11:00-22:00; Tu 00:00-00:00",
+    "phone": "+1-909-594-3330",
+    "website": "http://eatjasmine.com"
+  }
+},
+{
+  "type": "node",
+  "id": 11132877926,
+  "lat": 34.1064853,
+  "lon": -117.8090114,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Roady's Restaurant"
+  }
+},
+{
+  "type": "node",
+  "id": 11250131437,
+  "lat": 34.0297196,
+  "lon": -117.6091226,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2023-10-08",
+    "cuisine": "peruvian",
+    "name": "Picante Perú",
+    "opening_hours": "Mo-Th,Su 11:00-20:00; Fr-Sa 11:00-21:00",
+    "phone": "+1 909-930-9433"
+  }
+},
+{
+  "type": "node",
+  "id": 11384939063,
+  "lat": 34.0440554,
+  "lon": -117.8027175,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "italian",
+    "name": "VITA Italian Bar & Grill",
+    "website": "https://www.vitalosangeles.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 11395048770,
+  "lat": 34.0809258,
+  "lon": -117.7196466,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Norm's"
+  }
+},
+{
+  "type": "node",
+  "id": 11492268541,
+  "lat": 34.1153723,
+  "lon": -117.7686493,
+  "tags": {
+    "amenity": "doctors",
+    "brand": "Optum",
+    "brand:wikidata": "Q30284383",
+    "healthcare": "doctor",
+    "name": "Optum"
+  }
+},
+{
+  "type": "node",
+  "id": 11492296205,
+  "lat": 34.1073400,
+  "lon": -117.7322745,
+  "tags": {
+    "amenity": "clinic",
+    "healthcare": "clinic",
+    "healthcare:speciality": "infectious_diseases",
+    "name": "Foothills Infectious Disease Medical Group"
+  }
+},
+{
+  "type": "node",
+  "id": 11492296210,
+  "lat": 34.1073589,
+  "lon": -117.7342551,
+  "tags": {
+    "amenity": "clinic",
+    "healthcare": "clinic",
+    "name": "Claremont Medical Center"
+  }
+},
+{
+  "type": "node",
+  "id": 11492296214,
+  "lat": 34.1076529,
+  "lon": -117.7319073,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican"
+  }
+},
+{
+  "type": "node",
+  "id": 11520465511,
+  "lat": 34.1001518,
+  "lon": -117.7695459,
+  "tags": {
+    "addr:housenumber": "2136",
+    "amenity": "restaurant",
+    "name": "Taberna La Verne"
+  }
+},
+{
+  "type": "node",
+  "id": 11647797600,
+  "lat": 33.8869975,
+  "lon": -117.8270889,
+  "tags": {
+    "addr:city": "Yorba Linda",
+    "addr:housenumber": "5091",
+    "addr:postcode": "92886",
+    "addr:state": "CA",
+    "addr:street": "Richfield Road",
+    "addr:unit": "STE B",
+    "amenity": "restaurant",
+    "cuisine": "breakfast",
+    "name": "Nikki's Kitchen",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 11735306229,
+  "lat": 33.9747961,
+  "lon": -117.8388750,
+  "tags": {
+    "addr:housenumber": "2803",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "restaurant",
+    "check_date": "2024-03-15",
+    "cuisine": "chinese",
+    "name": "Chuan Pot"
+  }
+},
+{
+  "type": "node",
+  "id": 11735306233,
+  "lat": 33.9758067,
+  "lon": -117.8379664,
+  "tags": {
+    "addr:housenumber": "2763",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "restaurant",
+    "check_date": "2024-03-15",
+    "cuisine": "asian",
+    "name": "Cafe 101"
+  }
+},
+{
+  "type": "node",
+  "id": 11735306239,
+  "lat": 33.9755199,
+  "lon": -117.8382028,
+  "tags": {
+    "addr:housenumber": "2777",
+    "addr:street": "Diamond Bar Boulevard",
+    "amenity": "restaurant",
+    "check_date": "2024-03-15",
+    "cuisine": "vietnamese"
+  }
+},
+{
+  "type": "node",
+  "id": 11806060199,
+  "lat": 34.0824662,
+  "lon": -117.7184980,
+  "tags": {
+    "addr:state": "CA",
+    "addr:street": "San Bernardino Freeway",
+    "addr:unit": "B",
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "name": "Round Table Pizza"
+  }
+},
+{
+  "type": "node",
+  "id": 11806510817,
+  "lat": 34.0942108,
+  "lon": -117.7195221,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mediterranean",
+    "name": "Cafe X2O"
+  }
+},
+{
+  "type": "node",
+  "id": 11806510818,
+  "lat": 34.0941509,
+  "lon": -117.7195200,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chicken",
+    "name": "Wings and Bowls"
+  }
+},
+{
+  "type": "node",
+  "id": 11806510820,
+  "lat": 34.0894451,
+  "lon": -117.7184262,
+  "tags": {
+    "addr:housenumber": "358",
+    "amenity": "pharmacy",
+    "fax": "+1-909-929-7229",
+    "name": "Claremont Pharmacy",
+    "phone": "+1-909-929-7228"
+  }
+},
+{
+  "type": "node",
+  "id": 11806510822,
+  "lat": 34.0895326,
+  "lon": -117.7183156,
+  "tags": {
+    "addr:housenumber": "352",
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "The Upper House",
+    "opening_hours": "Mo 11:00-21:00; Tu closed; We-Th 11:00-21:00; Fr-Sa 11:00-21:30; Su 11:00-21:00",
+    "phone": "+1-909-621-1855"
+  }
+},
+{
+  "type": "node",
+  "id": 11808524212,
+  "lat": 34.0841397,
+  "lon": -117.6979440,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "1st Dumpling"
+  }
+},
+{
+  "type": "node",
+  "id": 11810608571,
+  "lat": 34.0892462,
+  "lon": -117.6697134,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "seafood;hawaiian",
+    "name": "Ahipoki"
+  }
+},
+{
+  "type": "node",
+  "id": 11812730909,
+  "lat": 33.8921354,
+  "lon": -117.8175233,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2024-04-12",
+    "cuisine": "pizza",
+    "name": "Eureka Pizza Co."
+  }
+},
+{
+  "type": "node",
+  "id": 11812735367,
+  "lat": 33.9042123,
+  "lon": -117.8414753,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2024-04-12",
+    "cuisine": "seafood",
+    "name": "Fish in a Bottle"
+  }
+},
+{
+  "type": "node",
+  "id": 11812753064,
+  "lat": 34.0935347,
+  "lon": -117.6891713,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Pola's Mariscos"
+  }
+},
+{
+  "type": "node",
+  "id": 11812803173,
+  "lat": 33.9043899,
+  "lon": -117.8410073,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2024-04-12",
+    "cuisine": "mexican",
+    "name": "El Pueblito"
+  }
+},
+{
+  "type": "node",
+  "id": 11812888944,
+  "lat": 34.0844601,
+  "lon": -117.6891276,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Dos Amigos Birrieria"
+  }
+},
+{
+  "type": "node",
+  "id": 11813013973,
+  "lat": 34.0931901,
+  "lon": -117.6883613,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "Szechuwan Garden"
+  }
+},
+{
+  "type": "node",
+  "id": 11813013979,
+  "lat": 34.0926722,
+  "lon": -117.6883464,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "japanese",
+    "name": "Tokyo Kitchen",
+    "website": "https://www.tokyokitchentk.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 11813013981,
+  "lat": 34.0926553,
+  "lon": -117.6892242,
+  "tags": {
+    "amenity": "clinic",
+    "fixme": "This is an urgent care facility but I cannot see any obvious name from outside. The sign just says urgent medical care.",
+    "healthcare": "clinic",
+    "phone": "+1 909-297-3361"
+  }
+},
+{
+  "type": "node",
+  "id": 11813013982,
+  "lat": 34.0928366,
+  "lon": -117.6891614,
+  "tags": {
+    "addr:housenumber": "8891",
+    "addr:unit": "C",
+    "amenity": "doctors",
+    "name": "Open MRI",
+    "phone": "+1 909-624-8910"
+  }
+},
+{
+  "type": "node",
+  "id": 11813014002,
+  "lat": 34.0893749,
+  "lon": -117.6855741,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "SeD Cocina"
+  }
+},
+{
+  "type": "node",
+  "id": 11813014004,
+  "lat": 34.0894877,
+  "lon": -117.6856023,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "sushi",
+    "name": "Rumble Fish Sushi & Grill"
+  }
+},
+{
+  "type": "node",
+  "id": 11813014012,
+  "lat": 34.0896239,
+  "lon": -117.6872117,
+  "tags": {
+    "amenity": "clinic",
+    "healthcare": "clinic",
+    "name": "Vida Health Clinic"
+  }
+},
+{
+  "type": "node",
+  "id": 11813014017,
+  "lat": 34.0894917,
+  "lon": -117.6885168,
+  "tags": {
+    "amenity": "clinic",
+    "name": "LifePoint Medial Group and Urgent Care"
+  }
+},
+{
+  "type": "node",
+  "id": 11813014018,
+  "lat": 34.0892279,
+  "lon": -117.6885121,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Paradise Buffet"
+  }
+},
+{
+  "type": "node",
+  "id": 11813014021,
+  "lat": 34.0898751,
+  "lon": -117.6885134,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "ramen;japanese",
+    "name": "Ramen Ichiraku"
+  }
+},
+{
+  "type": "node",
+  "id": 11824015305,
+  "lat": 34.0774502,
+  "lon": -117.6685953,
+  "tags": {
+    "addr:housenumber": "1050",
+    "amenity": "pharmacy",
+    "brand": "Rite Aid",
+    "brand:wikidata": "Q3433273",
+    "healthcare": "pharmacy",
+    "name": "Rite Aid",
+    "phone": "+1 909-986-1509",
+    "shop": "chemist"
+  }
+},
+{
+  "type": "node",
+  "id": 11824015309,
+  "lat": 34.0770445,
+  "lon": -117.6686293,
+  "tags": {
+    "addr:housenumber": "1020",
+    "amenity": "restaurant",
+    "brand": "Round Table Pizza",
+    "brand:wikidata": "Q7371139",
+    "cuisine": "pizza",
+    "name": "Round Table Pizza"
+  }
+},
+{
+  "type": "node",
+  "id": 11824015313,
+  "lat": 34.0758538,
+  "lon": -117.6686064,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "Mr. You Chinese Food"
+  }
+},
+{
+  "type": "node",
+  "id": 11824015317,
+  "lat": 34.0755487,
+  "lon": -117.6686028,
+  "tags": {
+    "addr:housenumber": "970",
+    "amenity": "clinic",
+    "name": "San Antonio Urgent Care",
+    "opening_hours": "Mo-Fr 09:00-20:00; Sa-Su 09:00-17:00"
+  }
+},
+{
+  "type": "node",
+  "id": 11827110561,
+  "lat": 34.0981597,
+  "lon": -117.6486166,
+  "tags": {
+    "addr:housenumber": "377",
+    "amenity": "clinic",
+    "name": "Upland Chiropractic Clinic"
+  }
+},
+{
+  "type": "node",
+  "id": 11827110564,
+  "lat": 34.0971285,
+  "lon": -117.6486136,
+  "tags": {
+    "addr:housenumber": "291",
+    "amenity": "restaurant",
+    "name": "JD Allison's Bar & Grill"
+  }
+},
+{
+  "type": "node",
+  "id": 11831948706,
+  "lat": 34.0683521,
+  "lon": -117.6693848,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "La Victoria"
+  }
+},
+{
+  "type": "node",
+  "id": 11836043624,
+  "lat": 34.0602780,
+  "lon": -117.5974952,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "american",
+    "name": "Brewery X",
+    "opening_hours": "Mo-Su,PH 04:00-11:30",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 11840645594,
+  "lat": 34.0800527,
+  "lon": -117.6892437,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "Mr. You"
+  }
+},
+{
+  "type": "node",
+  "id": 11840677084,
+  "lat": 34.0745268,
+  "lon": -117.6905720,
+  "tags": {
+    "amenity": "doctors",
+    "name": "Khai D Medical Clinic"
+  }
+},
+{
+  "type": "node",
+  "id": 11840696380,
+  "lat": 34.0822841,
+  "lon": -117.6891856,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "tacos",
+    "name": "Al Pastor Taqueria"
+  }
+},
+{
+  "type": "node",
+  "id": 11840749402,
+  "lat": 34.1056657,
+  "lon": -117.6888908,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mediterranean",
+    "name": "Le Chef"
+  }
+},
+{
+  "type": "node",
+  "id": 11840749403,
+  "lat": 34.1054608,
+  "lon": -117.6889026,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "thai",
+    "name": "Thai Ivory Cuisine"
+  }
+},
+{
+  "type": "node",
+  "id": 11840749405,
+  "lat": 34.1052096,
+  "lon": -117.6888972,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "3rd Base Sports Bar"
+  }
+},
+{
+  "type": "node",
+  "id": 11843344186,
+  "lat": 34.0698379,
+  "lon": -117.6506661,
+  "tags": {
+    "addr:housenumber": "612",
+    "amenity": "restaurant",
+    "cuisine": "seafood",
+    "name": "The Bucket Crabs & Crawfish"
+  }
+},
+{
+  "type": "node",
+  "id": 11843344187,
+  "lat": 34.0696647,
+  "lon": -117.6506595,
+  "tags": {
+    "addr:housenumber": "602",
+    "addr:unit": "B",
+    "amenity": "clinic",
+    "name": "Ontario Health Services"
+  }
+},
+{
+  "type": "node",
+  "id": 11843390722,
+  "lat": 34.0695718,
+  "lon": -117.6514003,
+  "tags": {
+    "addr:housenumber": "601",
+    "amenity": "clinic",
+    "healthcare": "clinic",
+    "name": "California Health and Rehab Center"
+  }
+},
+{
+  "type": "node",
+  "id": 11846161078,
+  "lat": 34.0680979,
+  "lon": -117.6515270,
+  "tags": {
+    "amenity": "clinic",
+    "healthcare": "clinic",
+    "name": "Unicare Community Health Center"
+  }
+},
+{
+  "type": "node",
+  "id": 11846161158,
+  "lat": 34.0712094,
+  "lon": -117.6518577,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Tortas Ahogadas"
+  }
+},
+{
+  "type": "node",
+  "id": 11846161160,
+  "lat": 34.0712098,
+  "lon": -117.6517311,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "tacos"
+  }
+},
+{
+  "type": "node",
+  "id": 11846161165,
+  "lat": 34.0712101,
+  "lon": -117.6516045,
+  "tags": {
+    "addr:city": "Ontario",
+    "addr:housenumber": "715",
+    "addr:postcode": "91762",
+    "addr:state": "CA",
+    "addr:street": "North Euclid Avenue",
+    "amenity": "restaurant",
+    "brand": "Pizza Hut",
+    "brand:wikidata": "Q191615",
+    "cuisine": "pizza",
+    "name": "Pizza Hut",
+    "phone": "+1 909-986-8111",
+    "website": "https://locations.pizzahut.com/ca/ontario/715-n-euclid-ave"
+  }
+},
+{
+  "type": "node",
+  "id": 11849283520,
+  "lat": 34.0908187,
+  "lon": -117.6719633,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "sushi",
+    "name": "Sake Sake"
+  }
+},
+{
+  "type": "node",
+  "id": 11849283524,
+  "lat": 34.0909994,
+  "lon": -117.6719672,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "sandwich",
+    "name": "Old World Deli"
+  }
+},
+{
+  "type": "node",
+  "id": 11849283525,
+  "lat": 34.0910833,
+  "lon": -117.6719917,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "vietnamese",
+    "name": "Pho Rex"
+  }
+},
+{
+  "type": "node",
+  "id": 11874487462,
+  "lat": 34.0215800,
+  "lon": -117.8120840,
+  "tags": {
+    "addr:city": "Diamond Bar",
+    "addr:housenumber": "233",
+    "addr:postcode": "91765",
+    "addr:state": "CA",
+    "addr:street": "Gentle Springs Lane",
+    "amenity": "restaurant",
+    "cuisine": "thai",
+    "name": "Silver Spoons",
+    "opening_hours": "Su-Th 11:00-21:00, Fr-Sa 11:00-21:30",
+    "phone": "+1-909-612-0166",
+    "website": "https://www.silverspoonsthai.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 11880057020,
+  "lat": 34.0100605,
+  "lon": -117.7420154,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "thai",
+    "name": "Thai BBQ",
+    "opening_hours": "Mo-Th 11:00-14:30,05:00-20:30; Fr-Su 11:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 12007550796,
+  "lat": 33.8536252,
+  "lon": -117.8152094,
+  "tags": {
+    "addr:city": "Anaheim Hills",
+    "addr:housenumber": "414",
+    "addr:postcode": "92807",
+    "addr:state": "CA",
+    "addr:street": "North Lakeview Ave",
+    "amenity": "restaurant",
+    "cuisine": "sushi;japanese;ramen;udon",
+    "name": "Sushi@Sushi",
+    "phone": "+1-714-998-4094"
+  }
+},
+{
+  "type": "node",
+  "id": 12048681162,
+  "lat": 34.0940677,
+  "lon": -117.6696540,
+  "tags": {
+    "addr:city": "Upland",
+    "addr:housenumber": "110",
+    "addr:postcode": "91786",
+    "addr:street": "South Mountain Avenue",
+    "addr:unit": "E",
+    "amenity": "restaurant",
+    "cuisine": "indonesian",
+    "name": "Kedai"
+  }
+},
+{
+  "type": "node",
+  "id": 12048681163,
+  "lat": 34.0940670,
+  "lon": -117.6697161,
+  "tags": {
+    "addr:city": "Upland",
+    "addr:housenumber": "110",
+    "addr:postcode": "91786",
+    "addr:street": "South Mountain Avenue",
+    "addr:unit": "D",
+    "amenity": "restaurant",
+    "cuisine": "sushi",
+    "name": "Poki & Maki"
+  }
+},
+{
+  "type": "node",
+  "id": 12048711570,
+  "lat": 34.0932666,
+  "lon": -117.6693617,
+  "tags": {
+    "addr:housenumber": "130",
+    "addr:unit": "P",
+    "amenity": "restaurant",
+    "cuisine": "thai",
+    "name": "Thai Family"
+  }
+},
+{
+  "type": "node",
+  "id": 12074382979,
+  "lat": 34.1184927,
+  "lon": -117.7781575,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Santa Ana"
+  }
+},
+{
+  "type": "node",
+  "id": 12103141956,
+  "lat": 34.1080459,
+  "lon": -117.7482920,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Castaneda's"
+  }
+},
+{
+  "type": "node",
+  "id": 12150174269,
+  "lat": 34.0798235,
+  "lon": -117.7196154,
+  "tags": {
+    "addr:city": "Claremont",
+    "addr:housenumber": "400",
+    "addr:postcode": "91711",
+    "addr:state": "CA",
+    "addr:street": "Auto Center Drive",
+    "amenity": "restaurant",
+    "cuisine": "vietnamese",
+    "name": "Hanoi Kitchen"
+  }
+},
+{
+  "type": "node",
+  "id": 12251724349,
+  "lat": 34.0787224,
+  "lon": -117.6129165,
+  "tags": {
+    "amenity": "pharmacy",
+    "healthcare": "pharmacy",
+    "name": "Rite Aid"
+  }
+},
+{
+  "type": "node",
+  "id": 12365985325,
+  "lat": 34.0870541,
+  "lon": -117.6948467,
+  "tags": {
+    "addr:city": "Montclair",
+    "addr:postcode": "91763",
+    "addr:state": "CA",
+    "addr:unit": "2020",
+    "amenity": "restaurant",
+    "level": "1",
+    "name": "The Canyon Grill"
+  }
+},
+{
+  "type": "node",
+  "id": 12365985339,
+  "lat": 34.0870336,
+  "lon": -117.6932122,
+  "tags": {
+    "addr:city": "Montclair",
+    "addr:postcode": "91763",
+    "addr:state": "CA",
+    "addr:unit": "2112",
+    "amenity": "restaurant",
+    "cuisine": "noodle",
+    "level": "1",
+    "name": "Noodle World"
+  }
+},
+{
+  "type": "node",
+  "id": 12375149346,
+  "lat": 34.0559852,
+  "lon": -117.8212546,
+  "tags": {
+    "addr:city": "Pomona",
+    "addr:housenumber": "3801",
+    "addr:postcode": "91768",
+    "addr:state": "CA",
+    "addr:street": "West Temple Avenue",
+    "addr:unit": "Building 35",
+    "amenity": "restaurant",
+    "cuisine": "asian",
+    "name": "Hivachi-San",
+    "operator": "Panda Restaurant Group",
+    "website": "https://foundation.cpp.edu/dining/restaurants-hibachi-san.aspx"
+  }
+},
+{
+  "type": "node",
+  "id": 12375149347,
+  "lat": 34.0563010,
+  "lon": -117.8212326,
+  "tags": {
+    "addr:city": "Pomona",
+    "addr:housenumber": "3801",
+    "addr:postcode": "91768",
+    "addr:state": "CA",
+    "addr:street": "West Temple Avenue",
+    "addr:unit": "Building 35",
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "description": "its where round table pizza used to be located",
+    "name": "The Patio",
+    "website": "https://foundation.cpp.edu/dining/restaurants-the-patio.aspx"
+  }
+},
+{
+  "type": "node",
+  "id": 12375154698,
+  "lat": 34.0577267,
+  "lon": -117.8232468,
+  "tags": {
+    "addr:city": "Pomona",
+    "addr:housenumber": "3801",
+    "addr:postcode": "91768",
+    "addr:state": "CA",
+    "addr:street": "West Temple Avenue",
+    "addr:unit": "Building 97",
+    "amenity": "restaurant",
+    "cuisine": "soup",
+    "name": "Fresh Escape",
+    "website": "https://foundation.cpp.edu/dining/restaurants-fresh-escapes.aspx"
+  }
+},
+{
+  "type": "node",
+  "id": 12375154700,
+  "lat": 34.0577648,
+  "lon": -117.8230194,
+  "tags": {
+    "addr:city": "Pomona",
+    "addr:housenumber": "3801",
+    "addr:postcode": "91768",
+    "addr:state": "CA",
+    "addr:street": "West Temple Avenue",
+    "addr:unit": "Building 97",
+    "amenity": "restaurant",
+    "cuisine": "korean",
+    "name": "TaKorean",
+    "website": "https://foundation.cpp.edu/dining/restaurants-takorean.aspx"
+  }
+},
+{
+  "type": "node",
+  "id": 12389356168,
+  "lat": 34.1080093,
+  "lon": -117.7212672,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Elvira's Mexican Grill"
+  }
+},
+{
+  "type": "node",
+  "id": 12511740333,
+  "lat": 34.0564946,
+  "lon": -117.8247601,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Restaurant at Kellog West"
+  }
+},
+{
+  "type": "node",
+  "id": 12518058175,
+  "lat": 33.9853404,
+  "lon": -117.7126782,
+  "tags": {
+    "amenity": "doctors",
+    "healthcare": "doctor",
+    "healthcare:speciality": "dermatology",
+    "name": "My Addiction Skin Care & Eyelash Studio"
+  }
+},
+{
+  "type": "node",
+  "id": 12518060850,
+  "lat": 33.9834494,
+  "lon": -117.7140895,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "noodle",
+    "name": "Noodology"
+  }
+},
+{
+  "type": "node",
+  "id": 12518060853,
+  "lat": 33.9834236,
+  "lon": -117.7143016,
+  "tags": {
+    "addr:city": "Chino Hills",
+    "addr:housenumber": "4200",
+    "addr:postcode": "91709",
+    "addr:state": "CA",
+    "addr:street": "Chino Hills Parkway",
+    "addr:unit": "130",
+    "amenity": "restaurant",
+    "cuisine": "korean",
+    "name": "Chodang Tofu",
+    "phone": "+1-909-606-7524"
+  }
+},
+{
+  "type": "node",
+  "id": 12518060855,
+  "lat": 33.9834236,
+  "lon": -117.7144556,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "thai",
+    "name": "Royal Thai Restaurant"
+  }
+},
+{
+  "type": "node",
+  "id": 12518060858,
+  "lat": 33.9833913,
+  "lon": -117.7148191,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Cantina Urbana Kalaveras"
+  }
+},
+{
+  "type": "node",
+  "id": 12524993644,
+  "lat": 33.8717703,
+  "lon": -117.6225241,
+  "tags": {
+    "addr:city": "Corona",
+    "addr:housenumber": "2721",
+    "addr:postcode": "92882",
+    "addr:state": "CA",
+    "addr:street": "Green River Road",
+    "addr:unit": "101",
+    "amenity": "restaurant",
+    "cuisine": "mediterranean",
+    "name": "Alsham Mediterranean Kitchen",
+    "opening_hours": "Mo off; Tu-Th 11:00-21:00; Fr-Sa 11:00-22:00; Su 11:00-21:00",
+    "phone": "+1-951-339-9451",
+    "website": "https://alshamkitchens.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 12749089501,
+  "lat": 34.0691727,
+  "lon": -117.7590325,
+  "tags": {
+    "addr:housenumber": "1180",
+    "addr:postcode": "91768",
+    "addr:street": "North White Avenue",
+    "amenity": "restaurant",
+    "cuisine": "asian;chinese",
+    "name": "Miss Sichuan",
+    "opening_hours": "Tu-Sa 11:00-15:00, 17:00-21:30; Su 11:00-15:00, 17:00-20:30",
+    "phone": "+1-626-828-9237",
+    "website": "http://misssichuanpomona.com"
+  }
+},
+{
+  "type": "node",
+  "id": 12815486183,
+  "lat": 33.9994880,
+  "lon": -117.7190220,
+  "tags": {
+    "amenity": "restaurant",
+    "brand": "Pieology Pizzeria",
+    "brand:wikidata": "Q60746053",
+    "cuisine": "pizza",
+    "name": "Pieology Pizzeria"
+  }
+},
+{
+  "type": "node",
+  "id": 12815486185,
+  "lat": 33.9990634,
+  "lon": -117.7187050,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Louie's Chicken Cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 12815486189,
+  "lat": 33.9966634,
+  "lon": -117.7156725,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Ichi Poki"
+  }
+},
+{
+  "type": "node",
+  "id": 12815486191,
+  "lat": 33.9977156,
+  "lon": -117.7167043,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "asian",
+    "name": "Yoshiharu Ramin"
+  }
+},
+{
+  "type": "node",
+  "id": 12815572470,
+  "lat": 34.0149047,
+  "lon": -117.7446974,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "asian"
+  }
+},
+{
+  "type": "node",
+  "id": 12815604972,
+  "lat": 33.9856726,
+  "lon": -117.7154722,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Roscoes"
+  }
+},
+{
+  "type": "node",
+  "id": 12817079834,
+  "lat": 34.0878943,
+  "lon": -117.6759477,
+  "tags": {
+    "addr:city": "Upland",
+    "addr:housenumber": "1410",
+    "addr:postcode": "91786",
+    "addr:state": "CA",
+    "addr:street": "W Seventh St",
+    "amenity": "restaurant",
+    "cuisine": "indian",
+    "name": "Swad of India"
+  }
+},
+{
+  "type": "node",
+  "id": 12887774695,
+  "lat": 33.9959429,
+  "lon": -117.7161409,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "sandwich",
+    "name": "Philly's Best Cheesesteaks"
+  }
+},
+{
+  "type": "node",
+  "id": 12887774696,
+  "lat": 33.9959959,
+  "lon": -117.7161287,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "name": "Pizzita Circle"
+  }
+},
+{
+  "type": "node",
+  "id": 12960245967,
+  "lat": 34.1220752,
+  "lon": -117.6139419,
+  "tags": {
+    "addr:city": "Rancho Cucamonga",
+    "addr:housenumber": "8802",
+    "addr:postcode": "91701",
+    "addr:state": "CA",
+    "addr:street": "Base Line Road",
+    "amenity": "restaurant",
+    "contact:facebook": "https://m.facebook.com/NoodleandGrills",
+    "cuisine": "vietnamese",
+    "email": "aifgroup80@gmail.com",
+    "name": "Pho Spot",
+    "opening_hours": "Mo-Sa 10:30-20:00; Su off",
+    "phone": "+1 909 989 1382"
+  }
+},
+{
+  "type": "node",
+  "id": 13009975137,
+  "lat": 33.8725898,
+  "lon": -117.7197635,
+  "tags": {
+    "addr:city": "Yorba Linda",
+    "addr:housenumber": "23761",
+    "addr:postcode": "92887",
+    "addr:state": "CA",
+    "addr:street": "La Palma Avenue",
+    "amenity": "restaurant",
+    "cuisine": "burger",
+    "diet:meat": "yes",
+    "name": "Fantasy Burger",
+    "opening_hours": "Mo-Su 07:00-21:00",
+    "phone": "+1-714-692-5005"
+  }
+},
+{
+  "type": "node",
+  "id": 13062022648,
+  "lat": 33.9980812,
+  "lon": -117.8541718,
+  "tags": {
+    "addr:housenumber": "20657",
+    "addr:street": "Golden Springs Drive",
+    "amenity": "restaurant",
+    "name": "Mr. Dragon Noodle House",
+    "opening_hours": "Mo, We-Su 11:00-21:00",
+    "website": "https://www.mrdragonnoodle.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 13062023974,
+  "lat": 33.9983101,
+  "lon": -117.8437347,
+  "tags": {
+    "addr:housenumber": "1119",
+    "addr:street": "S Brea Canyon Rd",
+    "amenity": "restaurant",
+    "name": "Seoul BBQ",
+    "opening_hours": "Mo-Sa 12:00-22:00; Su 12:00-21:00",
+    "phone": "+1-909-480-0084"
+  }
+},
+{
+  "type": "node",
+  "id": 13062153488,
+  "lat": 34.0096970,
+  "lon": -117.7420120,
+  "tags": {
+    "addr:housenumber": "2923",
+    "addr:street": "Chino Ave",
+    "addr:unit": "h4",
+    "amenity": "restaurant",
+    "name": "Tasty Dim Sum House - Chino Hills"
+  }
+},
+{
+  "type": "node",
+  "id": 13100996964,
+  "lat": 34.0043947,
+  "lon": -117.6513761,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Casa Diaz Sabor a Mexico"
+  }
+},
+{
+  "type": "node",
+  "id": 13120944700,
+  "lat": 34.1064054,
+  "lon": -117.6655883,
+  "tags": {
+    "addr:city": "Upland",
+    "addr:housenumber": "1004",
+    "addr:postcode": "91786",
+    "addr:street": "West Foothill Boulevard",
+    "addr:unit": "101",
+    "amenity": "pharmacy",
+    "brand": "Good Neighbor Pharmacy",
+    "brand:wikidata": "Q5582813",
+    "healthcare": "pharmacy",
+    "name": "Alta Care Pharmacy",
+    "opening_hours": "Mo-FR 09:00-18:00; Sa,Su,PH off",
+    "phone": "+1-909-360-8352",
+    "website": "https://www.mygnp.com/pharmacies/alta-care-pharmacy-upland-ca-91786-2804/"
+  }
+},
+{
+  "type": "node",
+  "id": 13158408427,
+  "lat": 33.8780125,
+  "lon": -117.6494098,
+  "tags": {
+    "addr:city": "Corona",
+    "addr:housenumber": "4300",
+    "addr:postcode": "92880",
+    "addr:state": "CA",
+    "addr:street": "Green River Road",
+    "addr:unit": "110,111",
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "name": "Big Al's Pizza",
+    "opening_hours": "Mo-Th 11:00-20:00; Fr-Sa 11:00-21:00; Su 11:00-20:00",
+    "phone": "+1-951-278-8514",
+    "website": "https://www.bigalspizzacorona.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 13158408434,
+  "lat": 33.8779332,
+  "lon": -117.6499791,
+  "tags": {
+    "addr:city": "Corona",
+    "addr:housenumber": "4300",
+    "addr:postcode": "92880",
+    "addr:state": "CA",
+    "addr:street": "Green River Road",
+    "addr:unit": "118",
+    "amenity": "restaurant",
+    "cuisine": "thai",
+    "name": "Thai E-San"
+  }
+},
+{
+  "type": "node",
+  "id": 13158531546,
+  "lat": 33.8781562,
+  "lon": -117.6484552,
+  "tags": {
+    "addr:city": "Corona",
+    "addr:housenumber": "4300",
+    "addr:postcode": "92880",
+    "addr:state": "CA",
+    "addr:street": "Green River Road",
+    "addr:unit": "101",
+    "amenity": "restaurant",
+    "cuisine": "mexican",
+    "name": "Maiz Cocina",
+    "phone": "+1-951-432-7352"
+  }
+},
+{
+  "type": "node",
+  "id": 13158531550,
+  "lat": 33.8781221,
+  "lon": -117.6488944,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "sushi",
+    "name": "J Sushi & Grill"
+  }
+},
+{
+  "type": "node",
+  "id": 13165332347,
+  "lat": 33.9994337,
+  "lon": -117.7185500,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "italian",
+    "name": "Ristorante Italiano"
+  }
+},
+{
+  "type": "node",
+  "id": 13165332348,
+  "lat": 33.9997193,
+  "lon": -117.7181292,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "sushi",
+    "name": "Dono Sushi Cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 13165332349,
+  "lat": 33.9989913,
+  "lon": -117.7186781,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "Chopstick's House"
+  }
+},
+{
+  "type": "node",
+  "id": 13165332354,
+  "lat": 34.0013144,
+  "lon": -117.7212048,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "noodle",
+    "name": "California Noodle & Grill"
+  }
+},
+{
+  "type": "node",
+  "id": 13166029905,
+  "lat": 34.0340544,
+  "lon": -117.6855126,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Paradise Biryani Pointe Chino Hills"
+  }
+}
+
+  ]
+}
