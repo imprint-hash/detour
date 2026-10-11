@@ -111,18 +111,22 @@ def street_names(orders, only_missing=False):
                 o["street"] = o.get("street", "")
 
 
+def borrow_streets(orders):
+    """Still nothing (a car park, a private lane, or OSRM unreachable): borrow the street of the closest stop that has one."""
+    named = [o for o in orders if o.get("street")]
+    for o in orders:
+        if not o.get("street") and named:
+            near = min(named, key=lambda x: km((o["lat"], o["lng"]), (x["lat"], x["lng"])))
+            o["street"] = near["street"]
+
+
 def fill_missing_streets():
     """Patch data/day.json in place: names only the stops that have none, nothing else moves."""
     path = DATA / "day.json"
     day = json.loads(path.read_text())
     todo = [o for o in day["orders"] if not o.get("street")]
     street_names(todo, only_missing=True)
-    # Still nothing (a car park, a private lane): borrow the street of the closest stop that has one.
-    named = [o for o in day["orders"] if o.get("street")]
-    for o in todo:
-        if not o["street"] and named:
-            near = min(named, key=lambda x: km((o["lat"], o["lng"]), (x["lat"], x["lng"])))
-            o["street"] = near["street"]
+    borrow_streets(day["orders"])
     path.write_text(json.dumps(day))
     print(f"filled {sum(1 for o in todo if o['street'])}/{len(todo)} missing street names")
 

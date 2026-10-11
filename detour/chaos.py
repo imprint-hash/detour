@@ -12,14 +12,12 @@ from .world import hhmm
 
 
 def _pick(world, rng, kinds=None, on_van=None, pending=True):
-    cands = []
-    for v in world.vans.values():
-        if on_van and v["id"] != on_van:
-            continue
-        for n in v["plan"]:
-            o = world.orders[n - 1]
-            if (kinds is None or o["kind"] in kinds) and (not pending or n not in world.delivered):
-                cands.append((v["id"], n))
+    """A target for an event: any order not yet delivered, whichever van holds it, so the
+    same seed hits the same order whatever the dispatcher did earlier."""
+    holder = {n: v["id"] for v in world.vans.values() for n in v["plan"]}
+    cands = [(holder.get(n), n) for n, o in enumerate(world.orders, 1)
+             if (kinds is None or o["kind"] in kinds) and (not pending or n not in world.delivered)
+             and (not on_van or holder.get(n) == on_van)]
     return rng.choice(cands) if cands else (None, None)
 
 

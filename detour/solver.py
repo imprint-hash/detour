@@ -12,7 +12,11 @@ DROP_COST = 10_000_000  # only if a stop truly cannot fit
 MOVE_COST = 60          # handing a stop to a different driver; about 15 min late for a house
 
 
-def plan(day, vans, todo, *, travel, now_min, extra_priority=(), earliest=None, current=None, seconds=3, max_stops=24):
+class NoSolution(Exception):
+    """The solver ran out of time or found nothing feasible."""
+
+
+def plan(day, vans, todo, *, travel, now_min, extra_priority=(), earliest=None, current=None, seconds=3, max_stops=24, polish=True):
     """
     vans:  [{"id", "at": node, "free_min": minute it can leave}]   (node 0 = depot)
     todo:  [order index (1-based node)]                            stops left
@@ -70,11 +74,12 @@ def plan(day, vans, todo, *, travel, now_min, extra_priority=(), earliest=None, 
 
     p = pywrapcp.DefaultRoutingSearchParameters()
     p.first_solution_strategy = routing_enums_pb2.FirstSolutionStrategy.PARALLEL_CHEAPEST_INSERTION
-    p.local_search_metaheuristic = routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH
+    if polish:
+        p.local_search_metaheuristic = routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH
     p.time_limit.seconds = seconds
     sol = rt.SolveWithParameters(p)
     if not sol:
-        return {v["id"]: [] for v in vans}, list(todo)
+        raise NoSolution(f"no route found in {seconds}s")
 
     out, seen = {}, set()
     for k, v in enumerate(vans):
@@ -87,3 +92,34 @@ def plan(day, vans, todo, *, travel, now_min, extra_priority=(), earliest=None, 
             i = sol.Value(rt.NextVar(i))
         out[v["id"]] = seq
     return out, [n for n in todo if n not in seen]
+
+
+def greedy(day, vans, todo, *, travel, current=None):
+    """Last-resort plan with no solver: every van keeps the stops it has, and each
+    stop nobody holds goes where it adds the least driving. Always answers."""
+    current = current or {}
+    ids = {v["id"] for v in vans}
+    routes = {v["id"]: [n for n in todo if current.get(n) == v["id"]] for v in vans}
+    # Keep each van's current order.
+    for v in vans:
+        routes[v["id"]].sort(key=lambda n: (current_order(current, v["id"], n)))
+    free = [n for n in todo if current.get(n) not in ids]
+    at = {v["id"]: v["at"] for v in vans}
+    for n in free:
+        best = None
+        for vid, seq in routes.items():
+            path = [at[vid]] + seq
+            for i in range(len(seq) + 1):
+                a = path[i]
+                b = path[i + 1] if i < len(seq) else None
+                add = travel(a, n) + (travel(n, b) - travel(a, b) if b is not None else 0)
+                add += 60 * len(seq)  # spread the work: a longer list costs a minute per stop
+                if best is None or add < best[0]:
+                    best = (add, vid, i)
+        _, vid, i = best
+        routes[vid].insert(i, n)
+    return routes, []
+
+
+def current_order(current, vid, n):
+    return list(current).index(n)  # `current` is built in plan order, so dict order is route order

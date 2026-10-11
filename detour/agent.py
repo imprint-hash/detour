@@ -3,17 +3,23 @@
 The model never moves a van or a dollar directly. It calls tools; the tools act on
 the world and say what happened. Every call is traced in neatlogs.
 """
-import json, os
+import json, os, time
+import openai
 from openai import OpenAI
 import neatlogs
 from neatlogs.decorators import span
 
-from .solver import plan
+from .solver import plan, greedy, NoSolution
+from .faults import Faults
 from .world import hhmm
 from . import payments
 
 AUTO_REFUND_LIMIT = 10.00   # above this, a person approves
 GOODWILL = 25.00            # credit for a business whose delivery was badly late
+
+TELL_V1 = "- Tell every driver whose route changed, in one short plain message."
+TELL_V2 = ("- Tell only the drivers listed in replan's changed_vans, one short plain message each. "
+           'Say what changed, using what_changed (e.g. "+3 stops: O012, O019, O044"). Never send "check your plan".')
 
 SYSTEM = """You are Detour, the dispatcher for a same-morning delivery fleet out of the Amazon DLA7 depot in Chino, California.
 Messages arrive from drivers, customers, the warehouse and the city. For each one, work out what really changed and act with your tools.
@@ -21,11 +27,23 @@ Messages arrive from drivers, customers, the warehouse and the city. For each on
 Rules:
 - Read the inbox, then fix things. A message only counts as handled once you have acted on it and called mark_handled.
 - If something changes what the vans should do (a van out of action, a closed road, an urgent order, a customer asking for a later time), call replan once you have recorded the change, and check the forecast it returns.
-- Tell only the drivers listed in replan's changed_vans, one short plain message each. Say what changed, using what_changed (e.g. "+3 stops: O012, O019, O044"). Never send "check your plan".
+{TELL}
 - Urgent medical deliveries come first: use set_priority with the deadline you were given.
 - A customer who asks for a later time gets it: use set_customer_window. That is not a late delivery.
 - Never invent an order id, van id or time. Use get_fleet to look things up.
 - Be brief. You are on the clock."""
+
+# What each version of the dispatcher does. v1 is the first build, kept so it can be replayed.
+FEATURES = {
+    "v1": {"stable": False, "window": False, "gate": False, "dedupe": False},
+    "v2": {"stable": True, "window": True, "gate": True, "dedupe": True},
+}
+
+# provider -> (base url env, key env, model env, default model)
+PROVIDERS = {
+    "groq": ("LLM_BASE_URL", "LLM_API_KEY", "LLM_MODEL", "openai/gpt-oss-120b"),
+    "litellm": ("LITELLM_BASE_URL", "LITELLM_API_KEY", "LITELLM_MODEL", "claude-sonnet-4.6"),
+}
 
 TOOLS = [
     {"name": "get_fleet", "description": "Every van: status, where it is going next, its remaining stops, and the forecast of late deliveries.", "parameters": {"type": "object", "properties": {}}},
@@ -45,11 +63,18 @@ def _parse_hhmm(s):
 
 
 class Dispatcher:
-    def __init__(self, world, *, model=None, base_url=None, api_key=None, version="v1"):
+    def __init__(self, world, *, model=None, provider="groq", version="v2", faults=None):
         self.w = world
         self.version = version
-        self.client = OpenAI(base_url=base_url or os.environ.get("LLM_BASE_URL"), api_key=api_key or os.environ.get("LLM_API_KEY"))
-        self.model = model or os.environ.get("LLM_MODEL", "openai/gpt-oss-120b")
+        self.f = FEATURES.get(version, FEATURES["v2"])
+        self.system = SYSTEM.replace("{TELL}", TELL_V2 if self.f["gate"] else TELL_V1)
+        self.faults = faults or Faults()
+        url_env, key_env, model_env, default_model = PROVIDERS[provider]
+        self.client = OpenAI(base_url=os.environ.get(url_env), api_key=os.environ.get(key_env), max_retries=0)
+        self.model = model or os.environ.get(model_env, default_model)
+        self.decisions = []   # every tool call the model made, for review
+        self.recoveries = []  # every time something broke and the dispatcher carried on
+        self._turn = 0
         self.forecast = None
         self._last_key, self._last_result = None, None
         self.changes = {}   # van -> what changed in the last replan
@@ -97,7 +122,8 @@ class Dispatcher:
         self.w.earliest[n] = max(self.w.earliest.get(n, 0), _parse_hhmm(not_before))
         o = self.w.orders[n - 1]
         o["customer_window"] = True
-        o["promise_min"] = self.w.earliest[n] + 60  # the plan aims for the hour they asked for
+        if self.f["window"]:
+            o["promise_min"] = self.w.earliest[n] + 60  # the plan aims for the hour they asked for
         return {"ok": True, "order": order_id, "not_before": not_before, "note": "call replan to act on it"}
 
     @span(kind="TOOL", tool_name="retry_later")
@@ -119,22 +145,48 @@ class Dispatcher:
         key = (round(w.clock), tuple(w.pending()), frozenset(w.priority), tuple(sorted(w.earliest.items())),
                len(w.closures), tuple((v["id"], v["at"], v["free_min"]) for v in w.available_vans()),
                tuple(tuple(v["plan"]) for v in w.vans.values()))
-        if self.version != "v1" and key == self._last_key:
+        if self.f["dedupe"] and key == self._last_key:
             return {**self._last_result, "note": "nothing has changed since the last replan"}
         before = {vid: list(v["plan"]) for vid, v in w.vans.items()}
         current = {n: vid for vid, seq in before.items() for n in seq}
-        routes, dropped = plan(w.day, w.available_vans(), w.pending(), travel=w.travel, now_min=int(w.clock),
-                               extra_priority=w.priority, earliest=w.earliest, current=current, seconds=3)
+        routes, dropped, degraded = self._solve(current if self.f["stable"] else None)
         w.assign(routes)
         self.forecast = self._forecast()
-        changed = [vid for vid in routes if set(routes[vid]) != set(before.get(vid, []))]
+        same = (lambda a, b: set(a) == set(b)) if self.f["gate"] else (lambda a, b: a == b)
+        changed = [vid for vid in routes if not same(routes[vid], before.get(vid, []))]
         self.changes = {vid: self._describe(before.get(vid, []), routes[vid]) for vid in changed}
         w.events.append({"t": w.clock, "kind": "replan", "changed": changed, "forecast": self.forecast})
         result = {"changed_vans": changed, "what_changed": self.changes,
                   "dropped": [w.orders[n - 1]["id"] for n in dropped], "forecast": self.forecast}
+        if degraded:
+            result["degraded"] = degraded
         self._last_key = key[:6] + (tuple(tuple(v["plan"]) for v in w.vans.values()),)
         self._last_result = {**result, "changed_vans": [], "what_changed": {}}
         return result
+
+    def _solve(self, current):
+        """Ask the solver; if it times out or breaks, step down to a simpler plan instead of giving up."""
+        w = self.w
+        kw = dict(travel=w.travel, now_min=int(w.clock), extra_priority=w.priority, earliest=w.earliest, current=current)
+        vans, todo = w.available_vans(), w.pending()
+        ladder = [("full", dict(seconds=3)), ("fast", dict(seconds=1, polish=False))]
+        for attempt, (level, opts) in enumerate(ladder):
+            try:
+                self.faults.solver(attempt)
+                routes, dropped = plan(w.day, vans, todo, **kw, **opts)
+                if attempt:
+                    self._recovered("solver", f"{ladder[0][0]} solve failed; used a {level} solve", w)
+                    return routes, dropped, f"{level} solve (the full solver failed)"
+                return routes, dropped, None
+            except (TimeoutError, NoSolution) as e:
+                self.recoveries.append({"t": hhmm(w.clock), "what": "solver", "error": str(e), "tried": level})
+        routes, dropped = greedy(w.day, vans, todo, travel=w.travel, current=current)
+        self._recovered("solver", "solver unavailable; kept current routes and added stops by cheapest insertion", w)
+        return routes, dropped, "no solver: kept current routes, added stops by cheapest insertion"
+
+    def _recovered(self, what, how, w):
+        self.recoveries.append({"t": hhmm(w.clock), "what": what, "recovered": how})
+        w.events.append({"t": w.clock, "kind": "recovered", "what": what, "text": how})
 
     def _describe(self, old, new):
         ids = lambda ns: ", ".join(self.w.orders[n - 1]["id"] for n in ns)
@@ -147,7 +199,7 @@ class Dispatcher:
     def message_driver(self, van_id, text):
         if van_id not in self.w.vans:
             return {"ok": False, "error": f"no van {van_id}"}
-        if self.version != "v1" and van_id not in self.changes and self.w.vans[van_id]["status"] != "broken":
+        if self.f["gate"] and van_id not in self.changes and self.w.vans[van_id]["status"] != "broken":
             return {"ok": False, "error": f"{van_id}'s stops did not change in the last replan, so no message was sent"}
         self.w.messages_out.append({"t": hhmm(self.w.clock), "van": van_id, "text": text})
         self.w.events.append({"t": self.w.clock, "kind": "to_driver", "van": van_id, "text": text})
@@ -174,18 +226,38 @@ class Dispatcher:
         if not fn or name not in {t["name"] for t in TOOLS}:
             return {"error": f"unknown tool {name}"}
         try:
-            return fn(**args)
+            self.faults.tool(name)
+            out = fn(**args)
         except Exception as e:
-            return {"error": str(e)}
+            out = {"error": str(e)}
+        self.decisions.append({"turn": self._turn, "t": hhmm(self.w.clock), "tool": name, "args": args,
+                               "result": json.dumps(out, default=str)[:400], "ok": not (isinstance(out, dict) and ("error" in out or out.get("ok") is False))})
+        return out
+
+    def _chat(self, **kw):
+        """One model call. Rate limits, dropped connections and unparseable output are retried."""
+        for attempt in range(6):
+            try:
+                self.faults.llm()
+                return self.client.chat.completions.create(**kw)
+            except (openai.RateLimitError, openai.APIConnectionError, openai.APITimeoutError, openai.InternalServerError, openai.BadRequestError) as e:
+                if isinstance(e, openai.BadRequestError) and "parse" not in str(e).lower():
+                    raise
+                wait = float(getattr(getattr(e, "response", None), "headers", {}).get("retry-after", 0) or 0) or min(30, 2 ** attempt)
+                self.recoveries.append({"t": hhmm(self.w.clock), "what": "llm", "error": type(e).__name__, "waited_s": wait})
+                time.sleep(wait)
+        raise RuntimeError("model unavailable after 6 tries")
 
     @span(kind="AGENT", role="Dispatcher", goal="Keep every delivery on time through the chaos")
     def handle(self, new_messages, max_rounds=12):
-        msgs = [{"role": "system", "content": SYSTEM},
+        self._turn += 1
+        self.decisions.append({"turn": self._turn, "t": hhmm(self.w.clock), "tool": "<messages>", "messages": [m["id"] for m in new_messages]})
+        msgs = [{"role": "system", "content": self.system},
                 {"role": "user", "content": f"It is {hhmm(self.w.clock)}. New messages just arrived: "
                                             + json.dumps([{k: m[k] for k in ('id', 'from', 'text')} for m in new_messages])}]
         tools = [{"type": "function", "function": t} for t in TOOLS]
         for _ in range(max_rounds):
-            r = self.client.chat.completions.create(model=self.model, messages=msgs, tools=tools, temperature=0.2)
+            r = self._chat(model=self.model, messages=msgs, tools=tools, temperature=0.2)
             m = r.choices[0].message
             msgs.append({"role": "assistant", "content": m.content or "", "tool_calls": [tc.model_dump() for tc in (m.tool_calls or [])]} if m.tool_calls else {"role": "assistant", "content": m.content or ""})
             if not m.tool_calls:
