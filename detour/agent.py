@@ -81,7 +81,16 @@ class Dispatcher:
         self.changes = {}   # van -> what changed in the last replan
 
     # ---------- tools ----------
+    def _van_id(self, van_id):
+        """Accept 'V3', 'v3', 'Van 3' and 'van3' for the van the model means."""
+        key = str(van_id).replace(" ", "").lower()
+        for vid, v in self.w.vans.items():
+            if key in (vid.lower(), v["name"].replace(" ", "").lower()):
+                return vid
+        return van_id
+
     def _order_node(self, oid):
+        oid = str(oid).strip().upper()
         for i, o in enumerate(self.w.orders):
             if o["id"] == oid:
                 return i + 1
@@ -198,6 +207,7 @@ class Dispatcher:
 
     @span(kind="TOOL", tool_name="message_driver")
     def message_driver(self, van_id, text):
+        van_id = self._van_id(van_id)
         if van_id not in self.w.vans:
             return {"ok": False, "error": f"no van {van_id}"}
         if self.f["gate"] and van_id not in self.changes and self.w.vans[van_id]["status"] != "broken":

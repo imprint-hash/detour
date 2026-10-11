@@ -6,6 +6,39 @@ Built for [neatHack 2026](https://neatlogs.com/hackathon) with **neatlogs**, **E
 
 ---
 
+## For judges: 60 seconds
+
+| What | Where |
+|---|---|
+| **neatlogs traces** | TODO: paste trace links. Runs are tagged `final` (seeds 1-5, v1 vs v2), `fault-*` (broken on purpose) and `showcase` (Claude Sonnet 4.6, seed 7) |
+| **Entire checkpoint** | TODO: paste the checkpoint link for the v1 → v2 session |
+| **cfo.ai** | TODO: paste the cfo.ai link |
+| **How we improved it** | [ROUNDS.md](ROUNDS.md): three rounds, each kept or reverted, with numbers |
+| **Raw results** | [results/](results/) |
+
+**v1 vs v2, average of seeds 1-5** (same chaos for both; model `claude-haiku`; 10 runs, $0.60 in total):
+
+| Report card | v1 | v2 |
+|---|---|---|
+| Deliveries on time (of 108) | 107.0 | **107.4** |
+| Urgent medicine on time | 5/5 | 5/5 |
+| Customer's chosen hour honoured | 5/5 | 5/5 |
+| Stops reshuffled between drivers | 129.2 | **9.8** |
+| Dispatcher mistakes per day (wrong id, missed replan, driver spam, ignored request) | 1.8 | **0** |
+| Refunds paid | $5.99 | $4.39 |
+
+**Showcase day, Claude Sonnet 4.6, seed 7:** v1 108/108 on time but 137 stops reshuffled; v2 105/108 on time (3 late, $19.97 refunded) and 9 reshuffled. Keeping stops with their driver cost three late parcels that day; we say so in [ROUNDS.md](ROUNDS.md#known-trade-off).
+
+**Broken on purpose** (seed 1, v2; `python -m detour.run --fault <name>`):
+
+| What broke | What Detour did | On time |
+|---|---|---|
+| Solver times out on every replan | Retried with a faster solve and carried on | 105/108 |
+| Solver never answers | Kept each van's stops and added the rest by cheapest insertion | 95/108 (worse, but nothing dropped) |
+| Model endpoint fails (dropped connections, rate limits) | Waited and retried; every message still handled | 107/108 |
+| Every tool fails once | Retried each call once; found by this test: before the retry, one message was left unhandled (5/6), after it 6/6 | 107/108 |
+| Road-name service (OSRM) down | The street-name lookup falls back to the nearest named stop (`python -m detour.faults`). A running day reads saved road times, so it does not depend on OSRM | n/a |
+
 ## The problem
 
 A delivery day never goes to plan. A van breaks down at 10:15 with twelve parcels on board. Police close the roads around a whole neighbourhood. The warehouse calls: insulin for a pharmacy, needed by 10:45. A customer texts that she won't be home until two. A driver is standing at a locked gate.

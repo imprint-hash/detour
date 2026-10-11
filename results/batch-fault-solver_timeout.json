@@ -1,0 +1,57 @@
+[
+ {
+  "seed": 1,
+  "version": "v2",
+  "file": "v2-s1-afd073.json",
+  "card": {
+   "on_time": {
+    "value": "105/108",
+    "pass": false
+   },
+   "urgent_medicine_on_time": {
+    "value": "1/1",
+    "pass": true
+   },
+   "customer_requests_honoured": {
+    "value": "1/1",
+    "pass": true,
+    "detail": [
+     {
+      "order": "O027",
+      "asked": "14:00",
+      "came": "14:00",
+      "ok": true
+     }
+    ]
+   },
+   "driver_messages_needed": {
+    "value": "16 needed, 0 noise",
+    "pass": true
+   },
+   "stops_reshuffled_between_drivers": {
+    "value": "15 over 6 replans",
+    "pass": true
+   },
+   "messages_handled": {
+    "value": "6/6",
+    "pass": true
+   },
+   "refunds_usd": {
+    "value": "$21.97",
+    "pass": null
+   }
+  },
+  "mistakes": {
+   "wrong_id": 0,
+   "missed_replan": 0,
+   "driver_spam": 0,
+   "ignored_request": 0,
+   "tool_error": 0
+  },
+  "late": 3,
+  "recoveries": 15,
+  "usd": 0.05711,
+  "calls": 20,
+  "seconds": 109
+ }
+]

@@ -1,0 +1,167 @@
+[
+ {
+  "seed": 1,
+  "version": "v2",
+  "file": "v2-s1-537a9a.json",
+  "card": {
+   "on_time": {
+    "value": "108/108",
+    "pass": true
+   },
+   "urgent_medicine_on_time": {
+    "value": "1/1",
+    "pass": true
+   },
+   "customer_requests_honoured": {
+    "value": "1/1",
+    "pass": true,
+    "detail": [
+     {
+      "order": "O027",
+      "asked": "14:00",
+      "came": "14:00",
+      "ok": true
+     }
+    ]
+   },
+   "driver_messages_needed": {
+    "value": "7 needed, 0 noise",
+    "pass": true
+   },
+   "stops_reshuffled_between_drivers": {
+    "value": "5 over 6 replans",
+    "pass": true
+   },
+   "messages_handled": {
+    "value": "6/6",
+    "pass": true
+   },
+   "refunds_usd": {
+    "value": "$0.00",
+    "pass": null
+   }
+  },
+  "mistakes": {
+   "wrong_id": 0,
+   "missed_replan": 0,
+   "driver_spam": 0,
+   "ignored_request": 0,
+   "tool_error": 0
+  },
+  "late": 0,
+  "recoveries": 1,
+  "usd": 0.065821,
+  "calls": 25,
+  "seconds": 137
+ },
+ {
+  "seed": 2,
+  "version": "v2",
+  "file": "v2-s2-23afa8.json",
+  "card": {
+   "on_time": {
+    "value": "108/108",
+    "pass": true
+   },
+   "urgent_medicine_on_time": {
+    "value": "1/1",
+    "pass": true
+   },
+   "customer_requests_honoured": {
+    "value": "1/1",
+    "pass": true,
+    "detail": [
+     {
+      "order": "O010",
+      "asked": "14:00",
+      "came": "14:00",
+      "ok": true
+     }
+    ]
+   },
+   "driver_messages_needed": {
+    "value": "10 needed, 0 noise",
+    "pass": true
+   },
+   "stops_reshuffled_between_drivers": {
+    "value": "4 over 6 replans",
+    "pass": true
+   },
+   "messages_handled": {
+    "value": "6/6",
+    "pass": true
+   },
+   "refunds_usd": {
+    "value": "$0.00",
+    "pass": null
+   }
+  },
+  "mistakes": {
+   "wrong_id": 0,
+   "missed_replan": 0,
+   "driver_spam": 0,
+   "ignored_request": 0,
+   "tool_error": 0
+  },
+  "late": 0,
+  "recoveries": 0,
+  "usd": 0.067877,
+  "calls": 26,
+  "seconds": 71
+ },
+ {
+  "seed": 3,
+  "version": "v2",
+  "file": "v2-s3-d2335a.json",
+  "card": {
+   "on_time": {
+    "value": "107/108",
+    "pass": false
+   },
+   "urgent_medicine_on_time": {
+    "value": "1/1",
+    "pass": true
+   },
+   "customer_requests_honoured": {
+    "value": "1/1",
+    "pass": true,
+    "detail": [
+     {
+      "order": "O054",
+      "asked": "14:00",
+      "came": "14:00",
+      "ok": true
+     }
+    ]
+   },
+   "driver_messages_needed": {
+    "value": "8 needed, 0 noise",
+    "pass": true
+   },
+   "stops_reshuffled_between_drivers": {
+    "value": "5 over 6 replans",
+    "pass": true
+   },
+   "messages_handled": {
+    "value": "6/6",
+    "pass": true
+   },
+   "refunds_usd": {
+    "value": "$5.99",
+    "pass": null
+   }
+  },
+  "mistakes": {
+   "wrong_id": 0,
+   "missed_replan": 0,
+   "driver_spam": 0,
+   "ignored_request": 0,
+   "tool_error": 0
+  },
+  "late": 1,
+  "recoveries": 0,
+  "usd": 0.066148,
+  "calls": 25,
+  "seconds": 71
+ }
+]
