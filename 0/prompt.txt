@@ -1,0 +1,8 @@
+<task-notification>
+<task-id>br94emg0x</task-id>
+<tool-use-id>toolu_01P6uo1eE8rEJts3z5dxFmt7</tool-use-id>
+<output-file>/tmp/claude-1000/-home-imprint-detour/4112e4cb-7521-4d0b-bccb-08533d0d12c5/tasks/br94emg0x.output</output-file>
+<status>completed</status>
+<summary>Background command "set -a; . ./.env; set +a; nohup .venv/bin/python -m detour.batch --seeds 1 2 3 --versions v1 v2 --tag base &gt; /tmp/claude-1000/-home-imprint-detour/4112e4cb-7521-4d0b-bccb-08533d0d12c5/scratchpad/base.log 2&gt;&amp;1 &amp;
+echo started" completed (exit code 0)</summary>
+</task-notification>
