@@ -1,0 +1,10 @@
+<pasted_content id="9bcf">
+Fill in the README TODOs.
+Entire checkpoint links (public):
+
+* v1 → v2 fix: https://entire.io/gh/imprint-hash/detour/commit/7bc42182196ccf901a2a2c60962436a249edec64
+* neatlogs as the dispatcher’s manager: https://entire.io/gh/imprint-hash/detour/commit/fcabb4a94f5e24275a80a79e435b8840ca7bb44e
+* Round 5 (v3): https://entire.io/gh/imprint-hash/detour/commit/71ea7cfbae8e944436acbb308583358b231a0e33
+
+Also replace the 👎 emoji on the live screen with an inline SVG thumbs-down icon (emoji render as empty boxes in headless Chrome, which records the demo video). Then commit and push to origin main.
+</pasted_content id="9bcf">
