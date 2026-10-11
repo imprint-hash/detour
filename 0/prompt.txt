@@ -1,0 +1,7 @@
+<task-notification>
+<task-id>bjiuvgqnu</task-id>
+<tool-use-id>toolu_01EKhGHxrkQsDS1DzMqWAFYM</tool-use-id>
+<output-file>/tmp/claude-1000/-home-imprint-detour/ec5e7437-9799-42d1-aff8-7cae6e9e619f/tasks/bjiuvgqnu.output</output-file>
+<status>completed</status>
+<summary>Background command "Wait until v3 traces are finalized in neatlogs" completed (exit code 0)</summary>
+</task-notification>
