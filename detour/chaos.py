@@ -68,12 +68,14 @@ class Chaos:
 
     def urgent(self, world):
         vid, n = _pick(world, self.rng, kinds={"pharmacy"})
+        if not n:  # every pharmacy already served: the medicine is for a clinic instead
+            vid, n = _pick(world, self.rng, kinds={"clinic"})
         if not n:
             return None
         o = world.orders[n - 1]
         return self._msg(world, "warehouse",
                          f"URGENT — order {o['id']} for {o['name']} ({o['street']}) has insulin for a patient. "
-                         f"Pharmacy says it must be there by 10:45 latest.", order=o["id"])
+                         f"The {o['kind']} says it must be there by 10:45 latest.", order=o["id"])
 
     def breakdown(self, world):
         live = [v for v in world.vans.values() if v["status"] in ("driving", "serving", "idle") and len(v["plan"]) >= 4]

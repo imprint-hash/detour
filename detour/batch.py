@@ -50,12 +50,14 @@ def main():
     ap.add_argument("--versions", nargs="+", default=["v1", "v2"])
     ap.add_argument("--tag", required=True)
     ap.add_argument("--workers", type=int, default=5)
-    ap.add_argument("--extra", nargs="*", default=[], help="passed to detour.run, e.g. --provider litellm")
+    ap.add_argument("--provider", default="litellm")
+    ap.add_argument("--model", default="claude-haiku")
+    ap.add_argument("--fault", action="append", default=[])
     a = ap.parse_args()
     out = []
     jobs = [(seed, v) for seed in a.seeds for v in a.versions]
     with ThreadPoolExecutor(max_workers=a.workers) as pool:
-        for res in pool.map(lambda j: run_one(j[0], j[1], a.tag, a.extra), jobs):
+        for res in pool.map(lambda j: run_one(j[0], j[1], a.tag, ["--provider", a.provider, "--model", a.model] + [x for f in a.fault for x in ("--fault", f)]), jobs):
             out.append(res)
             print(res["seed"], res["version"], res.get("mistakes", res.get("error")), f"${res.get('usd', 0):.3f}", flush=True)
             (RUNS / f"batch-{a.tag}.json").write_text(json.dumps(out, indent=1))
