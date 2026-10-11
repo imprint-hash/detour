@@ -12,7 +12,7 @@ from neatlogs.decorators import span
 from .solver import plan, greedy, NoSolution
 from .faults import Faults
 from .world import hhmm
-from . import payments
+from . import payments, rules
 
 AUTO_REFUND_LIMIT = 10.00   # above this, a person approves
 GOODWILL = 25.00            # credit for a business whose delivery was badly late
@@ -20,6 +20,10 @@ GOODWILL = 25.00            # credit for a business whose delivery was badly lat
 TELL_V1 = "- Tell every driver whose route changed, in one short plain message."
 TELL_V2 = ("- Tell only the drivers listed in replan's changed_vans, one short plain message each. "
            'Say what changed, using what_changed (e.g. "+3 stops: O012, O019, O044"). Never send "check your plan".')
+# From neatlogs Fixes, applied in v2 only so v1 can still be replayed as it was.
+V2_RULES = ("\n- Record every change first (set_priority, set_customer_window, retry_later), then call replan once for the whole batch, "
+            "then message drivers, then mark_handled. Do not replan after each action."
+            "\n- Always use the short van id (V1, V2, ...) in tool calls, not the display name (Van 1).")
 
 SYSTEM = """You are Detour, the dispatcher for a same-morning delivery fleet out of the Amazon DLA7 depot in Chino, California.
 Messages arrive from drivers, customers, the warehouse and the city. For each one, work out what really changed and act with your tools.
@@ -27,7 +31,7 @@ Messages arrive from drivers, customers, the warehouse and the city. For each on
 Rules:
 - The new messages are in the prompt already: do not call read_inbox or get_fleet unless you need something they would add. Act, then call mark_handled for each message once you have acted on it.
 - If something changes what the vans should do (a van out of action, a closed road, an urgent order, a customer asking for a later time), call replan once you have recorded the change, and check the forecast it returns.
-{TELL}
+{TELL}{V2_RULES}
 - Urgent medical deliveries come first: use set_priority with the deadline you were given.
 - A customer who asks for a later time gets it: use set_customer_window. That is not a late delivery.
 - Never invent an order id, van id or time. Use get_fleet to look things up.
@@ -35,8 +39,8 @@ Rules:
 
 # What each version of the dispatcher does. v1 is the first build, kept so it can be replayed.
 FEATURES = {
-    "v1": {"stable": False, "window": False, "gate": False, "dedupe": False},
-    "v2": {"stable": True, "window": True, "gate": True, "dedupe": True},
+    "v1": {"stable": False, "window": False, "gate": False, "dedupe": False, "orphans": False},
+    "v2": {"stable": True, "window": True, "gate": True, "dedupe": True, "orphans": True},
 }
 
 # provider -> (base url env, key env, model env, default model)
@@ -63,11 +67,11 @@ def _parse_hhmm(s):
 
 
 class Dispatcher:
-    def __init__(self, world, *, model=None, provider="groq", version="v2", faults=None):
+    def __init__(self, world, *, model=None, provider="groq", version="v2", faults=None, manager_rules=None):
         self.w = world
         self.version = version
         self.f = FEATURES.get(version, FEATURES["v2"])
-        self.system = SYSTEM.replace("{TELL}", TELL_V2 if self.f["gate"] else TELL_V1)
+        self.system = SYSTEM.replace("{TELL}", TELL_V2 if self.f["gate"] else TELL_V1).replace("{V2_RULES}", V2_RULES if version == "v2" else "")
         self.faults = faults or Faults()
         url_env, key_env, model_env, default_model = PROVIDERS[provider]
         self.client = OpenAI(base_url=os.environ.get(url_env), api_key=os.environ.get(key_env), max_retries=0)
@@ -79,6 +83,9 @@ class Dispatcher:
         self.forecast = None
         self._last_key, self._last_result = None, None
         self.changes = {}   # van -> what changed in the last replan
+        self.manager_rules = list(manager_rules or [])   # plain-English rules from the 👎 button
+        self.log = []       # one decision record per batch of messages, each linked to its neatlogs span
+        self._rec = None
 
     # ---------- tools ----------
     def _van_id(self, van_id):
@@ -160,7 +167,10 @@ class Dispatcher:
         before = {vid: list(v["plan"]) for vid, v in w.vans.items()}
         current = {n: vid for vid, seq in before.items() for n in seq}
         routes, dropped, degraded = self._solve(current if self.f["stable"] else None)
-        w.assign(routes)
+        moved = w.assign(routes)
+        if self._rec is not None:   # for the decision record: which drivers really got different stops
+            self._rec["moved"] += moved
+            self._rec["changed_vans"].update(vid for vid in routes if set(routes[vid]) != set(before.get(vid, [])))
         self.forecast = self._forecast()
         same = (lambda a, b: set(a) == set(b)) if self.f["gate"] else (lambda a, b: a == b)
         changed = [vid for vid in routes if not same(routes[vid], before.get(vid, []))]
@@ -247,8 +257,11 @@ class Dispatcher:
             except Exception as e:
                 out = {"error": str(e)}
                 break
-        self.decisions.append({"turn": self._turn, "t": hhmm(self.w.clock), "tool": name, "args": args,
-                               "result": json.dumps(out, default=str)[:400], "ok": not (isinstance(out, dict) and ("error" in out or out.get("ok") is False))})
+        d = {"turn": self._turn, "t": hhmm(self.w.clock), "tool": name, "args": args,
+             "result": json.dumps(out, default=str)[:400], "ok": not (isinstance(out, dict) and ("error" in out or out.get("ok") is False))}
+        self.decisions.append(d)
+        if self._rec is not None:
+            self._rec["calls"].append({**d, "van": self._van_id(args.get("van_id", ""))})
         return out
 
     def _chat(self, **kw):
@@ -282,6 +295,7 @@ class Dispatcher:
     @span(kind="AGENT", role="Dispatcher", goal="Keep every delivery on time through the chaos")
     def handle(self, new_messages, max_rounds=12):
         self._turn += 1
+        self._rec = {"calls": [], "moved": 0, "changed_vans": set()}
         self.decisions.append({"turn": self._turn, "t": hhmm(self.w.clock), "tool": "<messages>", "messages": [m["id"] for m in new_messages]})
         msgs = [{"role": "system", "content": self.system},
                 {"role": "user", "content": f"It is {hhmm(self.w.clock)}. New messages just arrived: "
@@ -300,7 +314,53 @@ class Dispatcher:
                     args = {}
                 out = self._call(tc.function.name, args)
                 msgs.append({"role": "tool", "tool_call_id": tc.id, "content": json.dumps(out, default=str)[:6000]})
+        if self.f["orphans"]:
+            self._catch_orphans()
+        self.decide(new_messages, m.content)
+        self._rec = None
         return m.content
+
+    def _catch_orphans(self):
+        """Safety net (found by the neatlogs rule 'A parcel was left with no van'): if the model finished a
+        batch with a stop on nobody's list, e.g. retry_later with no replan, replan before the van drives on."""
+        w = self.w
+        planned = {n for v in w.vans.values() if v["status"] != "broken" for n in v["plan"]}
+        orphans = [w.orders[n - 1]["id"] for n in w.pending() if n not in planned]
+        if orphans:
+            self._recovered("dispatcher", f"{', '.join(orphans)} had no van after the model finished; replanned", w)
+            self._call("replan", {})
+            self._rec["safety_net"] = orphans
+
+    @span(kind="CHAIN", name="dispatcher_decision")
+    def decide(self, new_messages, reply):
+        """The decision record for one batch of messages, in plain English, with every rule it broke.
+        neatlogs detections read the RULE BROKEN lines; the live screen shows the record with a 👎 button."""
+        w, rec = self.w, self._rec
+        rec.update(messages=new_messages, forecast=self.forecast)
+        did = [f"{c['tool']}({', '.join(f'{k}={v}' for k, v in c['args'].items())})" + ("" if c["ok"] else " -> refused")
+               for c in rec["calls"]]
+        lines = [f"At {hhmm(w.clock)} Detour ({self.version}) handled " + "; ".join(f"{m['id']} from {m['from']}: \"{m['text']}\"" for m in new_messages),
+                 "Did: " + ("; ".join(did) or "nothing"),
+                 f"Stops moved between drivers: {rec['moved']}",
+                 "Vans whose stops changed: " + (", ".join(sorted(rec["changed_vans"])) or "none"),
+                 "Drivers messaged: " + (", ".join(c["van"] for c in rec["calls"] if c["tool"] == "message_driver" and c["ok"]) or "none"),
+                 f"Forecast late after this: {(self.forecast or {}).get('late_count', '?')}",
+                 f"Reply: {(reply or '').strip()[:300]}"]
+        if rec.get("safety_net"):
+            lines.append(f"Safety net: {', '.join(rec['safety_net'])} had no van, so Detour replanned on its own")
+        record = "\n".join(lines)
+        broken = [(rules.RULES[k], why) for k, why in rules.check(rec, w)]
+        broken += rules.judge(self.client, self.model, record, self.manager_rules)
+        record += "\n" + ("\n".join(f"RULE BROKEN: {r} ({why})" for r, why in broken) if broken else "Rules: all kept")
+        carrier = {}   # neatlogs keeps its span private; the W3C traceparent says which trace and span this is
+        neatlogs.inject_trace_context(carrier)
+        _, trace_id, span_id, _ = (carrier.get("traceparent") or "-".join([""] * 4)).split("-")
+        self.log.append({"turn": self._turn, "t": hhmm(w.clock), "messages": [m["id"] for m in new_messages],
+                         "summary": "; ".join(m.get("summary", "") for m in new_messages if m.get("summary")) or (reply or "")[:200],
+                         "did": did, "broken": [{"rule": r, "why": why} for r, why in broken], "record": record,
+                         "trace_id": trace_id or None, "span_id": span_id or None,
+                         "traceparent": carrier.get("traceparent")})
+        return record
 
     @span(kind="CHAIN", name="close_out_late_deliveries")
     def close_out(self, approve=lambda req: True):

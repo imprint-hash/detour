@@ -8,6 +8,7 @@ import argparse, json, subprocess, sys, os
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from .review import review, counts, CATEGORIES
+from .rules import RULES
 
 RUNS = Path(__file__).resolve().parent.parent / "runs"
 
@@ -40,7 +41,8 @@ def run_one(seed, version, tag, extra):
         return {"seed": seed, "version": version, "error": (r.stderr or r.stdout)[-400:]}
     run = json.load(open(new[0]))
     return {"seed": seed, "version": version, "file": os.path.basename(new[0]), "card": run["report"],
-            "mistakes": counts(review(run)), "late": len(run["late"]), "recoveries": len(run["recoveries"]),
+            "mistakes": counts(review(run)), "trace_id": run.get("trace_id"),
+            "rules_broken": {r: sum(1 for x in run.get("decision_log", []) for b in x["broken"] if b["rule"] == r) for r in RULES.values()}, "late": len(run["late"]), "recoveries": len(run["recoveries"]),
             "usd": run["usage"].get("usd", 0), "calls": run["usage"]["calls"], "seconds": run["seconds"]}
 
 
@@ -80,6 +82,12 @@ def print_table(out):
             xs = [r["mistakes"][c] for r in good if r["version"] == v]
             row.append(f"{sum(xs) / len(xs):10.1f}" if xs else f"{'-':>10s}")
         print(f"{'mistake: ' + c:36s}" + "".join(row))
+    for r in RULES.values():
+        row = []
+        for v in versions:
+            xs = [x.get("rules_broken", {}).get(r, 0) for x in good if x["version"] == v]
+            row.append(f"{sum(xs) / len(xs):10.1f}" if xs else f"{'-':>10s}")
+        print(f"{'rule: ' + r[:30]:36s}" + "".join(row))
     print("spend: $%.2f over %d model calls" % (sum(r["usd"] for r in good), sum(r["calls"] for r in good)))
     print("runs:", {v: sum(1 for r in good if r["version"] == v) for v in versions}, "failed:", len(out) - len(good))
 

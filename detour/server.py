@@ -12,6 +12,7 @@ from neatlogs.decorators import span
 from .world import World, hhmm
 from .chaos import Chaos
 from .agent import Dispatcher
+from . import neat
 
 WEB = Path(__file__).resolve().parent.parent / "web"
 TICK_S = float(os.environ.get("DETOUR_TICK_S", "0.25"))  # real seconds per simulated minute
@@ -27,6 +28,7 @@ class Live:
         self.running = False
         self.approvals = {}      # id -> {"req", "decision"}
         self.version = os.environ.get("DETOUR_VERSION", "v1")
+        self.feedback = {}       # turn -> what happened to the manager's 👎
 
     def start(self, seed=7, scripted=True):
         if self.running:
@@ -35,7 +37,9 @@ class Live:
         self.chaos = Chaos(seed)
         if not scripted:
             self.chaos.script = []
-        self.d = Dispatcher(self.w, version=self.version)
+        self.d = Dispatcher(self.w, version=self.version, manager_rules=neat.manager_rules(),
+                            provider=os.environ.get("DETOUR_PROVIDER", "groq"), model=os.environ.get("DETOUR_MODEL") or None)
+        self.feedback = {}
         self.running = True
         threading.Thread(target=self._run, daemon=True).start()
         return True
@@ -94,8 +98,41 @@ class Live:
             "refunds": list(w.refunds.values()),
             "approvals": [a for a in self.approvals.values() if a["decision"] is None],
             "forecast": self.d.forecast,
+            "decisions": [dict(x, link=neat.trace_url(x["trace_id"], x["span_id"]), feedback=self.feedback.get(x["turn"]))
+                          for x in self.d.log[-12:]],
+            "manager_rules": [r[len(neat.MANAGER):] for r in self.d.manager_rules],
         })
         return snap
+
+    def thumbs_down(self, turn, note):
+        """The manager disagrees with a decision. Their note becomes a rule neatlogs watches on every future run."""
+        rec = next((x for x in self.d.log if x["turn"] == turn), None) if self.d else None
+        note = " ".join(str(note).split())[:200]
+        if not rec or not note or turn in self.feedback:
+            return False
+        rule = neat.MANAGER + note
+        self.feedback[turn] = {"note": note, "status": "adding"}
+
+        def work():
+            try:
+                # The 👎 lands inside the decision's own trace, as a span the new detection flags right away.
+                with neatlogs.extract_trace_context({"traceparent": rec["traceparent"]} if rec.get("traceparent") else {}):
+                    _manager_feedback(rec, rule, note)
+                neatlogs.flush()
+                made = neat.Neat().ensure(rule, f"Manager rule, from a 👎 on the {rec['t']} decision "
+                                                f"(trace {rec['trace_id']}): {note}")
+                if rule not in self.d.manager_rules:
+                    self.d.manager_rules.append(rule)   # this day's next decisions are judged against it too
+                self.feedback[turn] = {"note": note, "status": "watching", "detection": made["id"]}
+            except Exception as e:
+                self.feedback[turn] = {"note": note, "status": "failed", "error": str(e)[:200]}
+        threading.Thread(target=work, daemon=True).start()
+        return True
+
+
+@span(kind="CHAIN", name="manager_feedback")
+def _manager_feedback(rec, rule, note):
+    return f"RULE BROKEN: {rule} (the manager gave a thumbs down to the {rec['t']} decision)\n\n{rec['record']}"
 
 
 LIVE = Live()
@@ -132,6 +169,8 @@ class H(BaseHTTPRequestHandler):
         if self.path == "/api/chaos" and LIVE.chaos:
             LIVE.chaos.press(body.get("kind", ""))
             return self._json({"ok": True})
+        if self.path == "/api/thumbs":
+            return self._json({"ok": LIVE.thumbs_down(int(body.get("turn", -1)), body.get("note", ""))})
         if self.path == "/api/approve":
             a = LIVE.approvals.get(body.get("id"))
             if a:
@@ -141,7 +180,7 @@ class H(BaseHTTPRequestHandler):
 
 
 def main():
-    neatlogs.init(workflow_name="detour-live", tags=["detour", "live", LIVE.version])
+    neatlogs.init(workflow_name="detour-live", instrumentations=["openai"], tags=["detour", "live", LIVE.version])
     port = int(os.environ.get("PORT", 8787))
     print(f"Detour live on http://localhost:{port}")
     ThreadingHTTPServer(("0.0.0.0", port), H).serve_forever()

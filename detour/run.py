@@ -12,15 +12,16 @@ from .chaos import Chaos
 from .agent import Dispatcher
 from .faults import Faults
 from .evals import report, print_report
+from . import neat
 
 RUNS = Path(__file__).resolve().parent.parent / "runs"
 
 
 @span(kind="WORKFLOW", name="detour_day")
-def play(seed, version, end_min=16 * 60, on_step=None, provider="groq", model=None, faults=()):
+def play(seed, version, end_min=16 * 60, on_step=None, provider="groq", model=None, faults=(), manager_rules=()):
     w = World()
     chaos = Chaos(seed)
-    d = Dispatcher(w, version=version, provider=provider, model=model, faults=Faults(faults))
+    d = Dispatcher(w, version=version, provider=provider, model=model, faults=Faults(faults), manager_rules=manager_rules)
     d.replan()  # the morning plan, before anything goes wrong
     while w.clock < end_min and len(w.delivered) < len(w.orders):
         new = chaos.due(w)
@@ -43,15 +44,16 @@ def main():
     ap.add_argument("--tag", default="", help="label for this run, e.g. a round name")
     a = ap.parse_args()
     run_id = f"{a.version}-s{a.seed}-{uuid.uuid4().hex[:6]}"
-    neatlogs.init(workflow_name="detour", tags=["detour", a.version, f"seed-{a.seed}", a.provider] + a.fault + ([a.tag] if a.tag else []))
+    neatlogs.init(workflow_name="detour", instrumentations=["openai"], tags=["detour", a.version, f"seed-{a.seed}", a.provider] + a.fault + ([a.tag] if a.tag else []))
     t0 = time.time()
-    w, d = play(a.seed, a.version, provider=a.provider, model=a.model, faults=a.fault)
+    w, d = play(a.seed, a.version, provider=a.provider, model=a.model, faults=a.fault, manager_rules=neat.manager_rules())
     neatlogs.flush()
     s = w.score()
     card = report(w)
     unhandled = [m for m in w.inbox if not m["handled"]]
     out = {"run": run_id, "version": a.version, "seed": a.seed, "provider": a.provider, "model": d.model, "faults": a.fault, "tag": a.tag,
-           "usage": d.usage, "decisions": d.decisions, "recoveries": d.recoveries, "injected": d.faults.injected, "score": s, "seconds": round(time.time() - t0),
+           "trace_id": next((x["trace_id"] for x in d.log if x["trace_id"]), None),
+           "usage": d.usage, "decisions": d.decisions, "decision_log": d.log, "recoveries": d.recoveries, "injected": d.faults.injected, "score": s, "seconds": round(time.time() - t0),
            "unhandled_messages": [m["text"][:80] for m in unhandled],
            "inbox": w.inbox, "to_drivers": w.messages_out, "refunds": list(w.refunds.values()),
            "late": [e for e in w.events if e["kind"] == "delivered" and e["late_min"] > 0],
@@ -60,6 +62,9 @@ def main():
     (RUNS / f"{run_id}.json").write_text(json.dumps(out, indent=1, default=str))
     print("RUNFILE", RUNS / f"{run_id}.json")
     print(json.dumps({k: out[k] for k in ("run", "score", "seconds", "unhandled_messages")}, indent=1))
+    for x in d.log:
+        for b in x["broken"]:
+            print(f"  rule broken at {x['t']}: {b['rule']} ({b['why']})")
     print("late:", [(e["order"], e["late_min"]) for e in out["late"]][:15])
     print_report(card, f"Report card · {a.version} · seed {a.seed}")
 

@@ -10,24 +10,45 @@ Built for [neatHack 2026](https://neatlogs.com/hackathon) with **neatlogs**, **E
 
 | What | Where |
 |---|---|
-| **neatlogs traces** | TODO: paste trace links. Runs are tagged `final` (seeds 1-5, v1 vs v2), `fault-*` (broken on purpose) and `showcase` (Claude Sonnet 4.6, seed 7) |
+| **neatlogs: the rules** | 7 business rules, plus every rule the manager adds with 👎, live as neatlogs detections in the group **Dispatcher rules** (e.g. "Customer's requested time was not honoured", "A replan reshuffled many stops between drivers"). Every dispatcher decision is a `dispatcher_decision` span; neatlogs flags the ones that break a rule. [How it works](#neatlogs-is-the-dispatchers-manager) |
+| **neatlogs: v1 vs v2, counted by neatlogs** | The detections fire on v1 and not on v2 (table below, read back from neatlogs' own detection hits: [results/neatlogs-final.json](results/neatlogs-final.json)) |
+| **neatlogs: the 👎 button** | On the live screen, 👎 a decision and write what it should have done. The note becomes a new neatlogs detection, and the model checks every future decision against it, live and headless |
+| **neatlogs: Fixes** | neatlogs raised 2 Fixes from our traces (van name used as id; replanning after every action). Both applied, verified on the `final` runs, and marked resolved in neatlogs with the evidence |
+| **neatlogs traces** | TODO: paste share links. Tags: `final` (seeds 1-5, v1 and v2, trace ids in [results/batch-final.json](results/batch-final.json)), `showcase` (Claude Sonnet 4.6, seed 7: v1 `e6de1d6bc4208df5ee3c797bde4a83bf`, v2 `1ac7216384de59cb7209ca8f699aaee4`), `fault-*` (broken on purpose) |
 | **Entire checkpoint** | TODO: paste the checkpoint link for the v1 → v2 session |
-| **cfo.ai** | TODO: paste the cfo.ai link |
-| **How we improved it** | [ROUNDS.md](ROUNDS.md): three rounds, each kept or reverted, with numbers |
+| **cfo.ai** | The business plan: [cfo.ai/s/BG0Igr7QyRwQsLW5](https://cfo.ai/s/BG0Igr7QyRwQsLW5) · spreadsheet [docs/cfo/detour-cfo-plan.xlsx](docs/cfo/detour-cfo-plan.xlsx) |
+| **How we improved it** | [ROUNDS.md](ROUNDS.md): four rounds, each kept or reverted, with numbers |
 | **Raw results** | [results/](results/) |
 
-**v1 vs v2, average of seeds 1-5** (same chaos for both; model `claude-haiku`; 10 runs, $0.60 in total):
+**v1 vs v2, seeds 1-5** (same chaos for both; model `claude-haiku`; 10 runs, $0.61 in total for the dispatcher, plus one small model call per decision to check the manager's rule):
 
-| Report card | v1 | v2 |
+| Report card (average per day) | v1 | v2 |
 |---|---|---|
-| Deliveries on time (of 108) | 107.0 | **107.4** |
+| Deliveries on time (of 108) | **107.4** | 107.0 |
+| Parcels never delivered (all 5 days) | 2 | **0** |
 | Urgent medicine on time | 5/5 | 5/5 |
 | Customer's chosen hour honoured | 5/5 | 5/5 |
-| Stops reshuffled between drivers | 129.2 | **9.8** |
-| Dispatcher mistakes per day (wrong id, missed replan, driver spam, ignored request) | 1.8 | **0** |
-| Refunds paid | $5.99 | $4.39 |
+| Stops reshuffled between drivers | 126.8 | **10.8** |
+| Refunds paid | $1.20 | $5.99 |
 
-**Showcase day, Claude Sonnet 4.6, seed 7:** v1 108/108 on time but 137 stops reshuffled; v2 105/108 on time (3 late, $19.97 refunded) and 9 reshuffled. Keeping stops with their driver cost three late parcels that day; we say so in [ROUNDS.md](ROUNDS.md#known-trade-off).
+**The same days, judged by neatlogs** (detection hits on the `final` traces, from the neatlogs API):
+
+| neatlogs detection | v1: runs flagged (hits) | v2: runs flagged (hits) |
+|---|---|---|
+| A replan reshuffled many stops between drivers | 5/5 (20) | **0/5** |
+| Customer's requested time was not honoured | 5/5 (5) | **0/5** |
+| A parcel was left with no van to deliver it | 3/5 (3) | **0/5** |
+| Dispatcher messaged a driver whose route did not change | 0/5 | 0/5 |
+| Dispatcher used an id that does not exist (neatlogs Fix 1) | 0/5 | 0/5 |
+| Dispatcher replanned more than once for one batch (neatlogs Fix 2) | 0/5 | 0/5 |
+| Urgent medicine order was not prioritised | 0/5 | 2/5 (2) ⚠️ |
+| Manager: When a van breaks down, tell that driver who is collecting their parcels and when (from 👎) | 5/5 (5) | 5/5 (5) |
+
+The ⚠️ is a real catch: on two v2 days the 09:50 plan left the insulin 47-54 minutes late, the dispatcher saw that in its own forecast and accepted it, and the parcel was only on time because the 10:15 breakdown forced a better replan. The manager's rule fires on both versions because neither does it yet. Both are the next things to fix.
+
+v2 is slightly behind on time: keeping stops with their driver costs a few late parcels on some days ([ROUNDS.md](ROUNDS.md#known-trade-off)). In exchange drivers see about 12x fewer reshuffled stops, and v2 delivered every parcel (v1 left one with no van on 2 of 5 days).
+
+**Showcase day, Claude Sonnet 4.6, seed 7:** v1 108/108 on time, 146 stops reshuffled, 6 rule breaks flagged (5 reshuffles, 1 ignored customer time); v2 106/108 (2 late, $13.98 refunded), 20 reshuffled, the only flag the manager's breakdown rule. $0.51 for both.
 
 **Broken on purpose** (seed 1, v2; `python -m detour.run --fault <name>`):
 
@@ -38,6 +59,18 @@ Built for [neatHack 2026](https://neatlogs.com/hackathon) with **neatlogs**, **E
 | Model endpoint fails (dropped connections, rate limits) | Waited and retried; every message still handled | 107/108 |
 | Every tool fails once | Retried each call once; found by this test: before the retry, one message was left unhandled (5/6), after it 6/6 | 107/108 |
 | Road-name service (OSRM) down | The street-name lookup falls back to the nearest named stop (`python -m detour.faults`). A running day reads saved road times, so it does not depend on OSRM | n/a |
+
+## neatlogs is the dispatcher's manager
+
+A dispatch manager doesn't read every log line. They hold the dispatcher to a few rules. Detour gives neatlogs those rules:
+
+1. **Every decision is a span.** After each batch of messages, the dispatcher writes a `dispatcher_decision` span in plain English: what came in, every tool it called, which drivers' stops changed, who it messaged, the forecast, and one `RULE BROKEN: <rule>` line for each rule it broke ([detour/rules.py](detour/rules.py)).
+2. **Every rule is a detection.** Each rule is a neatlogs detection named in plain English (`python -m detour.neat sync`), so neatlogs flags, counts and trends rule breaks on every trace, live or headless.
+3. **The manager adds rules with 👎.** On the live screen, each decision has a neatlogs trace link and a 👎. The manager writes what should have happened; Detour adds a `manager_feedback` span inside that decision's trace and creates a neatlogs detection `Manager: <note>`. From then on, the model checks every decision against the manager's rules, which are read from neatlogs at the start of each run.
+4. **neatlogs Fixes drive the fixes.** neatlogs read our traces and proposed two Fixes. We applied them, checked them on the `final` runs, and marked them resolved. Each Fix also became a detection, so it can't quietly come back.
+5. **neatlogs keeps the score.** `python -m detour.neat report results/batch-final.json` reads the detection hits back from neatlogs and splits them by version (the table above).
+
+neatlogs' detections are regex, conditional, PII or one of four preset classifiers; there is no free-text classifier in its API. So the plain-English judging happens in Detour (the code, plus the model for the manager's rules), and neatlogs does the watching, counting and alerting.
 
 ## The problem
 
@@ -72,7 +105,7 @@ Every decision is traced in **neatlogs**. When Detour gets something wrong, the 
 
 ## The live screen
 
-A map of the fleet, the inbox with what Detour did about each message, what it told the drivers, refunds, and a **Chaos Button**: break a van, close a road, send an urgent medicine order, a traffic jam, a customer who's out, a locked gate.
+A map of the fleet, the inbox with what Detour did about each message, every **decision** with its neatlogs trace link, the rules it broke and a 👎 button, what it told the drivers, refunds, and a **Chaos Button**: break a van, close a road, send an urgent medicine order, a traffic jam, a customer who's out, a locked gate.
 
 ```bash
 ./serve.sh            # then open http://localhost:8787
@@ -97,7 +130,7 @@ python -m detour.run --seed 7 --version v1
 
 | Tool | What it does in Detour |
 |---|---|
-| **neatlogs** | Traces every model call, tool call and decision; catches where the dispatcher went wrong |
+| **neatlogs** | Traces every model call, tool call and decision; holds the business rules as detections; turns the manager's 👎 into new rules; its Fixes drove two of the improvements |
 | **Entire** | Checkpoints of every change to the dispatcher, so each fix can be seen and rewound |
 | **cfo.ai** | The business plan: pricing per van, costs, revenue, runway |
 | Google OR-Tools | The route maths |
