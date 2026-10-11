@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4P9JKC0H2QG6W2QPCJ76Y5Q",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "README.md",
+    "ROUNDS.md",
+    "detour/agent.py",
+    "results/batch-fault-llm_flaky.json",
+    "results/batch-fault-solver_down.json",
+    "results/batch-fault-solver_timeout.json",
+    "results/batch-fault-tool_flaky2.json",
+    "results/batch-final.json",
+    "results/batch-mc250.json",
+    "results/batch-mc60.json",
+    "results/batch-r2prompt.json",
+    "results/batch-r3.json",
+    "results/showcase-sonnet-v1-s7.json",
+    "results/showcase-sonnet-v2-s7.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0/metadata.json",
+      "transcript": "/0/full.jsonl",
+      "compact_transcript": "/0/transcript.jsonl",
+      "content_hash": "/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 16,
+    "cache_creation_tokens": 8755,
+    "cache_read_tokens": 1131551,
+    "output_tokens": 6198,
+    "api_call_count": 8
+  }
+}

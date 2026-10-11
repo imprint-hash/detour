@@ -1,0 +1,53 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4P9JKC0H2QG6W2QPCJ76Y5Q",
+  "session_id": "4112e4cb-7521-4d0b-bccb-08533d0d12c5",
+  "strategy": "manual-commit",
+  "created_at": "2026-10-11T20:13:29.4980288Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "README.md",
+    "ROUNDS.md",
+    "detour/agent.py",
+    "results/batch-fault-llm_flaky.json",
+    "results/batch-fault-solver_down.json",
+    "results/batch-fault-solver_timeout.json",
+    "results/batch-fault-tool_flaky2.json",
+    "results/batch-final.json",
+    "results/batch-mc250.json",
+    "results/batch-mc60.json",
+    "results/batch-r2prompt.json",
+    "results/batch-r3.json",
+    "results/showcase-sonnet-v1-s7.json",
+    "results/showcase-sonnet-v2-s7.json"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-5-5",
+  "turn_id": "6b23d5cec63b",
+  "checkpoint_transcript_start": 537,
+  "transcript_lines_at_start": 537,
+  "compact_transcript_start": 82,
+  "token_usage": {
+    "input_tokens": 16,
+    "cache_creation_tokens": 8755,
+    "cache_read_tokens": 1131551,
+    "output_tokens": 6198,
+    "api_call_count": 8
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-10-11T20:13:29.4349952Z",
+    "agent_lines": 4954,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 4954,
+    "total_lines_changed": 4954,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}
