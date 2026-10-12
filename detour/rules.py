@@ -6,7 +6,7 @@ neatlogs) listing what it saw, what it did, and any rule it broke as
 "RULE BROKEN: <rule>". A neatlogs detection per rule watches for that line, so the
 rules run on every trace, live and headless, and trend in the neatlogs dashboard.
 
-Manager rules come from the 👎 button on the live screen: the manager's own note,
+Manager rules come from the Correct button on the live screen: the manager's own note,
 judged by the model against each decision record.
 """
 import json

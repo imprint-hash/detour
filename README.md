@@ -10,9 +10,9 @@ Built for [neatHack 2026](https://neatlogs.com/hackathon) with **neatlogs**, **E
 
 | What | Where |
 |---|---|
-| **neatlogs: the rules** | 7 business rules, plus every rule the manager adds with 👎, live as neatlogs detections in the group **Dispatcher rules** (e.g. "Customer's requested time was not honoured", "A replan reshuffled many stops between drivers"). Every dispatcher decision is a `dispatcher_decision` span; neatlogs flags the ones that break a rule. [How it works](#neatlogs-is-the-dispatchers-manager) |
+| **neatlogs: the rules** | 7 business rules, plus every rule the manager adds with the **Correct** button, live as neatlogs detections in the group **Dispatcher rules** (e.g. "Customer's requested time was not honoured", "A replan reshuffled many stops between drivers"). Every dispatcher decision is a `dispatcher_decision` span; neatlogs flags the ones that break a rule. [How it works](#neatlogs-is-the-dispatchers-manager) |
 | **neatlogs: v1 → v2 → v3, counted by neatlogs** | The detections fire on v1; v2 fixed most of them; v3 (round 5) fixed the two neatlogs still flagged on v2. 0 alarms on v3 (table below, read back from neatlogs' own detection hits: [results/neatlogs-final.json](results/neatlogs-final.json), [results/neatlogs-round5.json](results/neatlogs-round5.json)) |
-| **neatlogs: the 👎 button** | On the live screen, 👎 a decision and write what it should have done. The note becomes a new neatlogs detection, and the model checks every future decision against it, live and headless |
+| **neatlogs: the Correct button** | On the live screen, press **Correct** on any decision and write what Detour should have done, in plain English. The note becomes a new neatlogs detection, and the model checks every future decision against it, live and headless |
 | **neatlogs: Fixes** | neatlogs raised 2 Fixes from our traces (van name used as id; replanning after every action). Both applied, verified on the `final` runs, and marked resolved in neatlogs with the evidence |
 | **neatlogs traces** | Every run records its neatlogs trace id, and each decision on the live screen links to its trace. Tags: `final` (seeds 1-5, v1 and v2, trace ids in [results/batch-final.json](results/batch-final.json)), `round5` (seeds 1-5, v3, trace ids in [results/batch-round5.json](results/batch-round5.json)), `showcase` (Claude Sonnet 4.6, seed 7: v1 `e6de1d6bc4208df5ee3c797bde4a83bf`, v2 `1ac7216384de59cb7209ca8f699aaee4`), `fault-*` (broken on purpose) |
 | **Entire checkpoints** | Every change to the dispatcher, recorded by Entire: [v1 → v2 fix](https://entire.io/gh/imprint-hash/detour/commit/7bc42182196ccf901a2a2c60962436a249edec64) · [neatlogs as the dispatcher's manager](https://entire.io/gh/imprint-hash/detour/commit/fcabb4a94f5e24275a80a79e435b8840ca7bb44e) · [Round 5 (v3)](https://entire.io/gh/imprint-hash/detour/commit/71ea7cfbae8e944436acbb308583358b231a0e33) |
@@ -42,9 +42,9 @@ Built for [neatHack 2026](https://neatlogs.com/hackathon) with **neatlogs**, **E
 | Dispatcher used an id that does not exist (neatlogs Fix 1) | 0/5 | 0/5 | 0/5 |
 | Dispatcher replanned more than once for one batch (neatlogs Fix 2) | 0/5 | 0/5 | 0/5 |
 | Urgent medicine order was not prioritised | 0/5 | 2/5 (2) | **0/5** |
-| Manager: When a van breaks down, tell that driver who is collecting their parcels and when (from 👎) | 5/5 (5) | 5/5 (5) | **0/5** |
+| Manager: When a van breaks down, tell that driver who is collecting their parcels and when (from Correct) | 5/5 (5) | 5/5 (5) | **0/5** |
 
-On v2, neatlogs caught two things. On two days the 09:50 plan left the insulin 47-54 minutes late and the dispatcher accepted it; it was only on time because the 10:15 breakdown forced a better replan. And the manager's 👎 rule (tell a stranded driver who is collecting their parcels, and when) failed every day on both versions. **v3 (round 5) fixes both:** after each replan, an urgent order forecast late is moved to wherever on the fleet it arrives on time at the least cost to everyone else, and `replan` hands the dispatcher the breakdown handoff ("V2 collects O020, O062…; V5 collects O017…, from about 10:40") to pass on. All 30 v3 decisions keep every rule ([ROUNDS.md](ROUNDS.md)).
+On v2, neatlogs caught two things. On two days the 09:50 plan left the insulin 47-54 minutes late and the dispatcher accepted it; it was only on time because the 10:15 breakdown forced a better replan. And the manager's rule from the Correct button (tell a stranded driver who is collecting their parcels, and when) failed every day on both versions. **v3 (round 5) fixes both:** after each replan, an urgent order forecast late is moved to wherever on the fleet it arrives on time at the least cost to everyone else, and `replan` hands the dispatcher the breakdown handoff ("V2 collects O020, O062…; V5 collects O017…, from about 10:40") to pass on. All 30 v3 decisions keep every rule ([ROUNDS.md](ROUNDS.md)).
 
 v3 matches v1 on time and keeps v2's stability: about 13x fewer reshuffled stops than v1, and every parcel delivered (v1 left one with no van on 2 of 5 days).
 
@@ -66,7 +66,7 @@ A dispatch manager doesn't read every log line. They hold the dispatcher to a fe
 
 1. **Every decision is a span.** After each batch of messages, the dispatcher writes a `dispatcher_decision` span in plain English: what came in, every tool it called, which drivers' stops changed, who it messaged, the forecast, and one `RULE BROKEN: <rule>` line for each rule it broke ([detour/rules.py](detour/rules.py)).
 2. **Every rule is a detection.** Each rule is a neatlogs detection named in plain English (`python -m detour.neat sync`), so neatlogs flags, counts and trends rule breaks on every trace, live or headless.
-3. **The manager adds rules with 👎.** On the live screen, each decision has a neatlogs trace link and a 👎. The manager writes what should have happened; Detour adds a `manager_feedback` span inside that decision's trace and creates a neatlogs detection `Manager: <note>`. From then on, the model checks every decision against the manager's rules, which are read from neatlogs at the start of each run.
+3. **The manager adds rules with Correct.** On the live screen, each decision has a neatlogs trace link and a **Correct** button. The manager writes what should have happened; Detour adds a `manager_feedback` span inside that decision's trace and creates a neatlogs detection `Manager: <note>`. From then on, the model checks every decision against the manager's rules, which are read from neatlogs at the start of each run.
 4. **neatlogs Fixes drive the fixes.** neatlogs read our traces and proposed two Fixes. We applied them, checked them on the `final` runs, and marked them resolved. Each Fix also became a detection, so it can't quietly come back.
 5. **neatlogs keeps the score.** `python -m detour.neat report results/batch-final.json` reads the detection hits back from neatlogs and splits them by version (the table above).
 
@@ -105,7 +105,7 @@ Every decision is traced in **neatlogs**. When Detour gets something wrong, the 
 
 ## The live screen
 
-A map of the fleet, the inbox with what Detour did about each message, every **decision** with its neatlogs trace link, the rules it broke and a 👎 button, what it told the drivers, refunds, and a **Chaos Button**: break a van, close a road, send an urgent medicine order, a traffic jam, a customer who's out, a locked gate.
+A map of the fleet, the inbox with what Detour did about each message, every **decision** with its neatlogs trace link, the rules it broke and a **Correct** button, what it told the drivers, refunds, and a **Chaos Button**: break a van, close a road, send an urgent medicine order, a traffic jam, a customer who's out, a locked gate.
 
 ```bash
 ./serve.sh            # then open http://localhost:8787
@@ -130,7 +130,7 @@ python -m detour.run --seed 7 --version v1
 
 | Tool | What it does in Detour |
 |---|---|
-| **neatlogs** | Traces every model call, tool call and decision; holds the business rules as detections; turns the manager's 👎 into new rules; its Fixes drove two of the improvements |
+| **neatlogs** | Traces every model call, tool call and decision; holds the business rules as detections; turns the manager's corrections into new rules; its Fixes drove two of the improvements |
 | **Entire** | Checkpoints of every change to the dispatcher, so each fix can be seen and rewound |
 | **cfo.ai** | The business plan: pricing per van, costs, revenue, runway |
 | Google OR-Tools | The route maths |

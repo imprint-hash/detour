@@ -10,7 +10,7 @@ Submission window: Mon 12 Oct 2026, 7:00–11:55 pm IST (14:30–19:25 WAT). Req
 - `detour/chaos.py` holds the scripted, seeded events plus the Chaos Button.
 - `detour/agent.py` is the dispatcher: an OpenAI-SDK tool loop, traced in neatlogs with `@span`.
 - Versions: v1 (first build), v2 (stable routes, window, gated messages, Fixes, orphan safety net), v3 (round 5: urgent rush check + breakdown handoff). `DETOUR_VERSION` picks one for the live screen.
-- `detour/rules.py` holds the business rules; after each batch of messages the dispatcher writes a `dispatcher_decision` span (plain-English record + `RULE BROKEN: <rule>` lines). Manager rules from the live screen's 👎 are judged by the model.
+- `detour/rules.py` holds the business rules; after each batch of messages the dispatcher writes a `dispatcher_decision` span (plain-English record + `RULE BROKEN: <rule>` lines). Manager rules from the live screen's Correct button are judged by the model.
 - `detour/neat.py` manages the neatlogs detections (one regex detection per rule, group "Dispatcher rules"; `python -m detour.neat sync|list`). Uses `NEATLOGS_TOKEN` (service account) or falls back to the MCP token. Manager rules are detections named `Manager: …`; neatlogs is their store.
 - `detour/evals.py` is the report card. `detour/run.py` plays a headless day; `detour/server.py` + `web/index.html` give the live map (`./serve.sh`, port 8787).
 

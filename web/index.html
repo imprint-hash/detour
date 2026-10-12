@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
 <title>Detour</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap">
@@ -72,7 +73,7 @@
   #map { position:absolute; inset:0; background:#0e1013; }
   .leaflet-container { font-family:var(--sans); background:#0e1013; }
   /* OpenStreetMap, turned to night: every street and name stays readable. */
-  .leaflet-tile-pane { filter:invert(1) hue-rotate(180deg) brightness(.82) contrast(.92) saturate(.35); }
+  .leaflet-tile-pane { filter:invert(1) hue-rotate(180deg) brightness(.7) contrast(.95) saturate(.25); }
   .leaflet-control-attribution { background:#0b0c0ecc !important; color:var(--mute) !important; font:10px var(--mono); }
   .leaflet-control-attribution a { color:var(--ink2) !important; }
   .leaflet-bar a { background:var(--panel2) !important; color:var(--ink2) !important; border-color:var(--line) !important; }
@@ -82,6 +83,13 @@
   .pill i { width:7px; height:7px; border-radius:50%; display:inline-block; }
   .live i { background:var(--ok); box-shadow:0 0 8px var(--ok); }
   .vpin { font:600 11px/22px var(--mono); height:24px; padding:0 8px; border-radius:6px; color:#0b0c0e; white-space:nowrap; border:1px solid #0b0c0e; text-align:center; }
+  .glow { filter: drop-shadow(0 0 3px rgba(255,255,255,.35)); }
+  .truck { position:relative; width:46px; height:46px; }
+  .truck svg { position:absolute; left:1px; top:12px; width:44px; height:22px; transition:transform .5s ease; filter:drop-shadow(0 2px 5px #000c); }
+  .truck .tag { position:absolute; left:50%; top:-12px; transform:translateX(-50%); font:600 10px/17px var(--mono); padding:0 6px 0 5px; border-radius:5px; color:#e9ebef; background:#15171bf0 !important; white-space:nowrap; border:1px solid #ffffff22; display:flex; align-items:center; gap:4px; }
+  .truck .tag b { width:7px; height:7px; border-radius:50%; display:inline-block; }
+  .truck.broken .tag { background:#2a0f10 !important; color:var(--late); border-color:var(--late); }
+  .truck.broken svg { filter:grayscale(1) brightness(.6) drop-shadow(0 2px 5px #000c); }
   .vpin.broken { background:#2a0f10 !important; color:var(--late); border-color:var(--late); }
   .hq { font:600 10px/20px var(--mono); padding:0 7px; border-radius:5px; background:var(--ink); color:#0b0c0e; letter-spacing:.06em; text-align:center; }
   .leaflet-tooltip.tt { background:#111316f2; color:var(--ink); border:1px solid var(--line2); border-radius:7px; font:500 11px var(--mono); box-shadow:none; padding:5px 8px; }
@@ -110,7 +118,7 @@
   .chip.ok { background:#3ecf8e17; color:var(--ok); } .chip.no { background:#ff5d5d1c; color:var(--late); }
   .chip.mgr { background:#ff7a2e17; color:var(--sign); border:1px solid #ff7a2e40; display:inline-flex; align-items:center; gap:6px; }
   .chip.mgr .ico { width:13px; height:13px; }
-  .thumb { background:var(--raise); border:1px solid var(--line2); border-radius:6px; padding:3px 6px; line-height:1; color:var(--ink2); }
+  .thumb { background:var(--raise); border:1px solid var(--line2); border-radius:6px; padding:3px 7px; line-height:1; color:var(--ink2); font:600 11px var(--sans, inherit); display:inline-flex; align-items:center; gap:5px; }
   .thumb:hover { border-color:var(--sign); color:var(--sign); }
   .thumb .ico { width:14px; height:14px; vertical-align:-2px; }
   .fb { margin-top:10px; display:grid; gap:6px; }
@@ -188,7 +196,7 @@
       <button data-tab="inbox">Inbox<span class="n" id="n-in">0</span></button>
       <button data-tab="drivers">Told drivers<span class="n" id="n-dr">0</span></button>
       <button data-tab="refunds">Refunds<span class="n" id="n-rf">0</span></button>
-      <span class="hint"><svg class="ico" viewBox="0 0 24 24"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/></svg>a decision to teach neatlogs a rule</span>
+      <span class="hint"><svg class="ico" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Correct Detour in plain words · neatlogs makes it a rule</span>
     </div>
     <div class="pane on" id="p-decisions">
       <div id="approvals"></div>
@@ -206,7 +214,8 @@
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
 const VAN_COLORS = ["#ff7a2e","#6f9bff","#3ecf8e","#c792ff","#4dd7e0","#ff8fb1","#d4e157","#ffb86b"];
-const THUMB = `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/></svg>`;
+const THUMB = `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`;
+const TRUCK = (c) => `<svg viewBox="0 0 44 22" aria-hidden="true"><rect x="1" y="2" width="30" height="18" rx="2" fill="#f4f5f7" stroke="#9aa0aa" stroke-width=".8"/><path d="M3 6.5h26M3 11h26M3 15.5h26" stroke="#d3d6dc" stroke-width=".7"/><rect x="1" y="2" width="3" height="18" rx="1" fill="${c}"/><path d="M31.5 3.5h6.5a4 4 0 0 1 4 4v7a4 4 0 0 1-4 4h-6.5z" fill="#e8eaee" stroke="#9aa0aa" stroke-width=".8"/><rect x="35.6" y="5" width="3.6" height="12" rx="1.4" fill="#1b1e24"/></svg>`;
 const EYE = `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>`;
 
 const map = L.map("map", { zoomControl:false, zoomSnap:0.25, zoomDelta:0.5 }).setView([33.97, -117.72], 11);
@@ -244,15 +253,23 @@ function draw(s) {
   s.vans.forEach((v, i) => {
     const col = VAN_COLORS[i % VAN_COLORS.length];
     const label = v.status === "broken" ? `${v.id} ✕` : v.id;
-    const html = `<div class="vpin ${v.status === "broken" ? "broken" : ""}" style="background:${col};box-shadow:0 0 14px ${col}88">${esc(label)}</div>`;
-    const icon = L.divIcon({ className:"", html, iconSize:[40,24], iconAnchor:[20,12] });
+    const html = `<div class="truck ${v.status === "broken" ? "broken" : ""}"><span class="tag"><b style="background:${col};box-shadow:0 0 6px ${col}"></b>${esc(label)}</span>${TRUCK(col)}</div>`;
+    const icon = L.divIcon({ className:"", html, iconSize:[46,46], iconAnchor:[23,23] });
     if (!vans[v.id]) { vans[v.id] = L.marker(v.pos, { icon, zIndexOffset:1000 }).addTo(map); vans[v.id]._to = v.pos; }
     glide(vans[v.id], v.pos);
     if (vans[v.id]._html !== html) { vans[v.id].setIcon(icon); vans[v.id]._html = html; }
+    // Turn the truck to face the road ahead (the next point on its street route).
+    const ahead = v.route && v.route.length > 1 ? v.route[1] : null;
+    if (ahead) {
+      const a = map.latLngToLayerPoint(v.pos), b = map.latLngToLayerPoint(ahead);
+      if (Math.hypot(b.x - a.x, b.y - a.y) > 0.5) vans[v.id]._deg = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+    }
+    const svg = vans[v.id].getElement() && vans[v.id].getElement().querySelector(".truck svg");
+    if (svg && vans[v.id]._deg != null) svg.style.transform = `rotate(${vans[v.id]._deg}deg)`;
     const nxt = v.plan[0] && byId[v.plan[0]];
     vans[v.id].bindTooltip(`<b>${esc(v.name)}</b> · ${esc(v.status)}<br><small>${v.done} delivered · ${v.plan.length} to go${nxt ? " · next " + esc(nxt.id) + " " + esc(nxt.street || "") : ""}</small>`, { className:"tt", direction:"top" });
     const pts = v.route && v.route.length ? v.route : [v.pos, ...v.plan.map((id) => [byId[id].lat, byId[id].lng])];
-    if (!lines[v.id]) lines[v.id] = L.polyline(pts, { color: col, weight: 3, opacity: .9, lineCap: "round", lineJoin: "round" }).addTo(map);
+    if (!lines[v.id]) lines[v.id] = L.polyline(pts, { color: col, weight: 3.5, opacity: .95, lineCap: "round", lineJoin: "round", className: "glow" }).addTo(map);
     lines[v.id].setLatLngs(v.status === "broken" ? [] : pts);
   });
   closures.forEach((c) => map.removeLayer(c));
@@ -301,7 +318,7 @@ function decision(d) {
   const fb = d.feedback;
   const chips = d.broken.length ? d.broken.map((b) => `<span class="chip no" title="${esc(b.why)}">✕ ${esc(b.rule)}</span>`).join("") : '<span class="chip ok">✓ rules kept</span>';
   const link = d.link ? `<a href="${esc(d.link)}" target="_blank" rel="noopener">neatlogs trace ↗</a>` : "";
-  const thumb = fb ? "" : `<button class="thumb" data-t="${d.turn}" aria-label="Thumbs down on the ${esc(d.t)} decision" title="Not how I'd do it">${THUMB}</button>`;
+  const thumb = fb ? "" : `<button class="thumb" data-t="${d.turn}" aria-label="Correct the ${esc(d.t)} decision" title="Tell Detour what it should have done">${THUMB}Correct</button>`;
   const fbLine = fb ? `<div class="fb-done">${THUMB}<span>“${esc(fb.note)}” · ${fb.status === "watching" ? "neatlogs now watches for this on every run" : fb.status === "adding" ? "adding the rule to neatlogs…" : "could not add: " + esc(fb.error || "")}</span></div>` : "";
   return `<div class="card ${d.broken.length ? "bad" : ""}" data-turn="${d.turn}"><div class="who"><span>${esc(d.t)} · ${esc(d.messages.join(", "))}</span><span>${link} ${thumb}</span></div>`
     + `<p>${esc(d.summary)}</p><div class="chips">${chips}</div>${fbLine}</div>`;

@@ -86,7 +86,7 @@ class Dispatcher:
         self.forecast = None
         self._last_key, self._last_result = None, None
         self.changes = {}   # van -> what changed in the last replan
-        self.manager_rules = list(manager_rules or [])   # plain-English rules from the 👎 button
+        self.manager_rules = list(manager_rules or [])   # plain-English rules from the live screen's Correct button
         self.log = []       # one decision record per batch of messages, each linked to its neatlogs span
         self._rec = None
         self._handed_off = set()   # broken vans whose driver has been told who collects their parcels
@@ -404,7 +404,7 @@ class Dispatcher:
     @span(kind="CHAIN", name="dispatcher_decision")
     def decide(self, new_messages, reply):
         """The decision record for one batch of messages, in plain English, with every rule it broke.
-        neatlogs detections read the RULE BROKEN lines; the live screen shows the record with a 👎 button."""
+        neatlogs detections read the RULE BROKEN lines; the live screen shows the record with a Correct button."""
         w, rec = self.w, self._rec
         rec.update(messages=new_messages, forecast=self.forecast)
         did = [f"{c['tool']}({', '.join(f'{k}={v}' for k, v in c['args'].items())})" + ("" if c["ok"] else " -> refused")

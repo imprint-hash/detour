@@ -1,5 +1,5 @@
 """Detour's side of neatlogs beyond tracing: a detection for every business rule, and
-the manager's 👎 rules.
+the manager's rules (from the Correct button).
 
 Uses the neatlogs Public API with the service-account token NEATLOGS_TOKEN. Without it,
 falls back to the neatlogs MCP server (token from NEATLOGS_MCP_TOKEN or the git-ignored
@@ -18,7 +18,7 @@ from .rules import RULES
 ROOT = Path(__file__).resolve().parent.parent
 GROUP = "Dispatcher rules"
 SPANS = ["dispatcher_decision", "manager_feedback"]
-MANAGER = "Manager: "   # name prefix of a rule added from the 👎 button
+MANAGER = "Manager: "   # name prefix of a rule added from the Correct button
 CACHE = ROOT / "runs" / "manager-rules.json"
 API = os.environ.get("NEATLOGS_HOST", "https://app.neatlogs.com") + "/api/v1/public"
 MCP_URL = os.environ.get("NEATLOGS_MCP_URL", "https://ingest.neatlogs.com/mcp")

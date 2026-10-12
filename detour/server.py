@@ -29,7 +29,7 @@ class Live:
         self.running = False
         self.approvals = {}      # id -> {"req", "decision"}
         self.version = os.environ.get("DETOUR_VERSION", "v1")
-        self.feedback = {}       # turn -> what happened to the manager's 👎
+        self.feedback = {}       # turn -> what happened to the manager's correction
 
     def start(self, seed=7, scripted=True):
         if self.running:
@@ -118,11 +118,11 @@ class Live:
 
         def work():
             try:
-                # The 👎 lands inside the decision's own trace, as a span the new detection flags right away.
+                # The correction lands inside the decision's own trace, as a span the new detection flags right away.
                 with neatlogs.extract_trace_context({"traceparent": rec["traceparent"]} if rec.get("traceparent") else {}):
                     _manager_feedback(rec, rule, note)
                 neatlogs.flush()
-                made = neat.Neat().ensure(rule, f"Manager rule, from a 👎 on the {rec['t']} decision "
+                made = neat.Neat().ensure(rule, f"Manager rule, from a Correct on the {rec['t']} decision "
                                                 f"(trace {rec['trace_id']}): {note}")
                 if rule not in self.d.manager_rules:
                     self.d.manager_rules.append(rule)   # this day's next decisions are judged against it too
@@ -135,7 +135,7 @@ class Live:
 
 @span(kind="CHAIN", name="manager_feedback")
 def _manager_feedback(rec, rule, note):
-    return f"RULE BROKEN: {rule} (the manager gave a thumbs down to the {rec['t']} decision)\n\n{rec['record']}"
+    return f"RULE BROKEN: {rule} (the manager corrected the {rec['t']} decision)\n\n{rec['record']}"
 
 
 LIVE = Live()
